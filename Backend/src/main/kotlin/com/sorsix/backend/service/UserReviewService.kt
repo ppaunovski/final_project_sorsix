@@ -1,7 +1,7 @@
 package com.sorsix.backend.service
 
 import com.sorsix.backend.domain.entities.UserReview
-import com.sorsix.backend.repository.user_review.UserReviewRepository
+import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import org.springframework.stereotype.Service
 
 @Service

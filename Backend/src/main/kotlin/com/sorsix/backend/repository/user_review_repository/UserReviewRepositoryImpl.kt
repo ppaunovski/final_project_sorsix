@@ -1,4 +1,4 @@
-package com.sorsix.backend.repository.user_review
+package com.sorsix.backend.repository.user_review_repository
 
 import com.sorsix.backend.domain.entities.UserReview
 import org.springframework.stereotype.Repository
