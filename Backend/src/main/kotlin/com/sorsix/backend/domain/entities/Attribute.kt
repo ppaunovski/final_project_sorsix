@@ -1,0 +1,15 @@
+package com.sorsix.backend.domain.entities
+
+import jakarta.persistence.*
+
+@Entity
+@Table(name = "attribute")
+data class Attribute(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "a_id", nullable = false)
+    val id: Long,
+    @Column(name = "a_name", nullable = false)
+    var name: String,
+    @Column(name = "a_description", nullable = false)
+    var description: String,
+)
