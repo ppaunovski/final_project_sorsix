@@ -1,0 +1,44 @@
+<div class="grid justify-center items-center h-3/4 w-full">
+  <div class="example-form">
+    <h1 class="text-xxl text-center">Register</h1>
+
+    <div class="flex justify-between">
+      <mat-form-field class="w-[48%]">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput placeholder="" />
+      </mat-form-field>
+
+      <mat-form-field class="w-[48%]">
+        <mat-label>Surname</mat-label>
+        <input type="text" matInput placeholder="" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput placeholder="example@example.com" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput placeholder="" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Confirm Password</mat-label>
+      <input type="password" matInput placeholder="" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Birth Date</mat-label>
+      <input type="date" matInput placeholder="" />
+    </mat-form-field>
+
+    <div class="flex justify-center">
+      <button mat-flat-button color="primary">Sign Up</button>
+    </div>
+    <div class="mt-4 flex justify-center text-blue-700">
+      <a [routerLink]="['/login']">Already have an account?</a>
+    </div>
+  </div>
+</div>

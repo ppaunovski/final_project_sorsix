@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <div class="w-full flex justify-between items-center p-10">
+    <div class="w-1/4">
+      <span>Smeshtaj dan trebit?</span>
+    </div>
+
+    <div class="w-1/2 flex justify-center">
+      <mat-form-field class="example-full-width example-form">
+        <mat-label>Search</mat-label>
+
+        <input type="text" matInput placeholder="Find your place?" />
+
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="w-1/4 flex flex-row-reverse">
+      <a [routerLink]="['/login']">
+        <button mat-button>Sign In</button>
+      </a>
+    </div>
+  </div>
+</mat-toolbar>
