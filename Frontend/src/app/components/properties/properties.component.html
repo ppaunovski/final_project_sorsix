@@ -1,8 +1,11 @@
-<div class="flex flex-col items-center">
-  @for (property of this.properties; track property.id) {
-  <app-property-preview
-    class="max-w-[750px] min-w-[350px] w-full m-2"
-    [property]="property"
-  ></app-property-preview>
-  }
+<div class="w-full flex justify-center">
+  <div class="flex justify-center flex-wrap w-4/5">
+    @for (item of [1,2,3,4,5]; track $index) { @for (property of
+    this.properties; track property.id) {
+    <app-property-preview
+      class="max-w-[400px] min-w-[300px] w-full sm:w-full md:w-1/2 lg:w-1/6 p-2"
+      [property]="property"
+    ></app-property-preview>
+    } }
+  </div>
 </div>

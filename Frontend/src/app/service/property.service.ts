@@ -15,9 +15,9 @@ export class PropertyService {
     return this.http.get<Property[]>(this.url);
   }
 
-  // getPropertyById(id: Number): Observable<Property | undefined> {
-  //   return this.http.get<Property | undefined>(this.url + `/${id}`);
-  // }
+  getPropertyById(id: Number): Observable<Property | undefined> {
+    return this.http.get<Property | undefined>(this.url + `/${id}`);
+  }
 
   // getPropertiesByCity(city: String): Observable<Property[]>{
   //   return this.http.get<Property[]>(this.url + ``)

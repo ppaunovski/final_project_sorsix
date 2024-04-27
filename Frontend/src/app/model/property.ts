@@ -1,20 +1,21 @@
-import { Host } from './host';
+import { City } from './City';
+import { PropertyType } from './PropertyType';
+import { UserAccount } from './UserAccount';
 
 export interface Property {
   id: Number;
-  name: String;
-  streetName: String;
-  streetNumber: Number;
-  city: String;
+  name: string;
+  nightlyPrice: Number;
+  guests: Number;
+  beds: Number;
+  bedrooms: Number;
+  bathrooms: Number;
+  isGuestFavorite: Boolean;
+  description: string;
+  address: string;
   longitude: Number;
   latitude: Number;
-  host: Host;
-  swiftOfIban: String;
-  transactionalNumber: String;
-  allowDynamicPrice: Boolean;
-  checkInFrom: String;
-  checkInTo: String;
-  checkOutFrom: String;
-  checkOutTo: String;
-  description: String;
+  host: UserAccount;
+  city: City;
+  propertyType: PropertyType;
 }

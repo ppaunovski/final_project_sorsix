@@ -4,6 +4,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PropertiesComponent } from './components/properties/properties.component';
 import { UnitsComponent } from './components/units/units.component';
 import { PropertyComponent } from './components/property/property.component';
+import { CreatePropertyComponent } from './components/create-property/create-property.component';
 
 export const routes: Routes = [
   {
@@ -19,9 +20,14 @@ export const routes: Routes = [
     component: PropertiesComponent,
   },
   {
+    path: 'properties/create',
+    component: CreatePropertyComponent,
+  },
+  {
     path: 'properties/:id',
     component: PropertyComponent,
   },
+
   {
     path: 'units',
     component: UnitsComponent,
