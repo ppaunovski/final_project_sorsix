@@ -5,7 +5,7 @@ import com.sorsix.backend.service.PropertyService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/property")
+@RequestMapping("/api/properties")
 class PropertyController(val propertyService: PropertyService) {
     @GetMapping
     fun findAllProperties() = propertyService.findAllProperties()
