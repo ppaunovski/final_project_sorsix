@@ -4,11 +4,13 @@ import { PropertyService } from '../../service/property.service';
 import { ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-property',
   standalone: true,
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, MatIconModule, MatButtonModule],
   templateUrl: './property.component.html',
   styleUrl: './property.component.css',
 })

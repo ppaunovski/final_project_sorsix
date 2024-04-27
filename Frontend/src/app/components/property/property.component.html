@@ -5,8 +5,143 @@
   </div>
   } @else {
   <div class="w-4/5 flex flex-col">
-    <div class="text-4xl p-2">
+    <div class="text-4xl font-bold p-2">
       {{ this.property?.name }}
+    </div>
+
+    <div class="grid grid-rows-2 grid-cols-4 gap-2">
+      <img
+        class="col-span-2 row-span-2 rounded-md"
+        src="https://a0.muscache.com/im/pictures/cbd1ae40-77b6-46c3-90bc-842eca043e5c.jpg?im_w=960"
+      />
+      <img
+        class="col-span-1 row-span-1 rounded-md"
+        src="https://a0.muscache.com/im/pictures/cbd1ae40-77b6-46c3-90bc-842eca043e5c.jpg?im_w=960"
+      />
+      <img
+        class="col-span-1 row-span-1 rounded-md"
+        src="https://a0.muscache.com/im/pictures/cbd1ae40-77b6-46c3-90bc-842eca043e5c.jpg?im_w=960"
+      />
+      <img
+        class="col-span-1 row-span-1 rounded-md"
+        src="https://a0.muscache.com/im/pictures/cbd1ae40-77b6-46c3-90bc-842eca043e5c.jpg?im_w=960"
+      />
+      <img
+        class="col-span-1 row-span-1 rounded-md"
+        src="https://a0.muscache.com/im/pictures/cbd1ae40-77b6-46c3-90bc-842eca043e5c.jpg?im_w=960"
+      />
+    </div>
+
+    <div class="flex justify-between">
+      <div class="w-1/2 flex flex-col gap-20">
+        <div class="p-2">
+          <span class="text-2xl font-semibold">
+            {{ this.property?.propertyType?.typeName }}
+            in
+            {{ this.property?.city?.name }}
+          </span>
+          <span class="text-lg font-light text-gray-400">
+            {{ this.property?.address }}
+          </span>
+          <div>
+            <span class="text-md font-light text-gray-600">
+              {{ this.property?.beds }} beds
+            </span>
+            <span class="text-md font-light text-gray-600 p-2">|</span>
+
+            <span class="text-md font-light text-gray-600">
+              {{ this.property?.bedrooms }} bedrooms
+            </span>
+            <span class="text-md font-light text-gray-600 p-2">|</span>
+
+            <span class="text-md font-light text-gray-600">
+              {{ this.property?.bathrooms }} bathrooms
+            </span>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <div class="flex items-center gap-12">
+            <img
+              class="rounded-full w-16"
+              src="https://media.licdn.com/dms/image/D5603AQH4k97Y0TrKxQ/profile-displayphoto-shrink_200_200/0/1678138894982?e=2147483647&v=beta&t=nJi2pg0L8-qamlUIugXbGhhFa27_9ZIRMJjis03RtRY"
+            />
+            <div class="flex flex-col justify-center">
+              <div>
+                Hosted by
+                <span>
+                  {{ this.property?.host?.firstName }}
+                </span>
+                <span>
+                  {{ this.property?.host?.lastName }}
+                </span>
+              </div>
+              <div class="text-gray-400">
+                Hosting since
+                <span>
+                  {{ this.property?.host?.dateHostSince }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-around w-1/3">
+            <div class="flex flex-col justify-center items-center">
+              <!-- {{this.propert}} -->
+              <div class="text-2xl font-bold">4.92</div>
+              <div>rating</div>
+            </div>
+            <div class="flex flex-col justify-center items-center">
+              <div class="text-2xl font-bold">42</div>
+              <div>reviews</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-2xl pb-2">What this place offers</p>
+
+          <div class="flex flex-wrap p-4">
+            <!-- ova ke bidat od baza prvite 8 atributi -->
+            @for (item of [1,2,3,4,5,6,7,8]; track $index) {
+            <div class="w-1/2 flex gap-12 items-center p-3">
+              <div>
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Example home icon"
+                  fontIcon="home"
+                ></mat-icon>
+              </div>
+
+              <div>
+                <div>Ime na atribut</div>
+              </div>
+            </div>
+            }
+          </div>
+
+          <button
+            mat-stroked-button
+            class="w-1/3"
+            style="margin-left: 2rem; padding: 1rem"
+          >
+            Show all attributes
+          </button>
+        </div>
+      </div>
+
+      <div class="w-1/2 h-full flex justify-center items-center">
+        <div class="border-solid border-2 border-black rounded-lg w-4/5 h-5/6">
+          <div class="p-5">
+            <span class="text-xl font-bold"
+              >{{ this.property?.nightlyPrice }} MKD</span
+            >
+            <span class="font-light"> nightly</span>
+          </div>
+        </div>
+
+        <div></div>
+      </div>
     </div>
   </div>
 
