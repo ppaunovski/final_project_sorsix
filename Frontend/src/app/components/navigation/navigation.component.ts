@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-navigation',
@@ -16,6 +17,7 @@ import { RouterLink } from '@angular/router';
     MatInputModule,
     MatIconModule,
     RouterLink,
+    MatButtonModule,
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css',

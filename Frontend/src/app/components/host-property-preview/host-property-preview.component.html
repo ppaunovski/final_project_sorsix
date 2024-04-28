@@ -1,0 +1,23 @@
+<div class="flex items-center gap-12">
+  <img
+    class="rounded-full w-16"
+    src="https://media.licdn.com/dms/image/D5603AQH4k97Y0TrKxQ/profile-displayphoto-shrink_200_200/0/1678138894982?e=2147483647&v=beta&t=nJi2pg0L8-qamlUIugXbGhhFa27_9ZIRMJjis03RtRY"
+  />
+  <div class="flex flex-col justify-center">
+    <div>
+      Hosted by
+      <span>
+        {{ host?.firstName }}
+      </span>
+      <span>
+        {{ host?.lastName }}
+      </span>
+    </div>
+    <div class="text-gray-400">
+      Hosting since
+      <span>
+        {{ host?.dateHostSince }}
+      </span>
+    </div>
+  </div>
+</div>

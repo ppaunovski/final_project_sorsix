@@ -1,0 +1,55 @@
+<div class="w-full h-full flex justify-center items-center">
+  <div class="border-solid border-2 border-black rounded-3xl w-4/5 h-5/6">
+    <div class="p-10">
+      <span class="text-xl font-bold"
+        >{{ this.property?.nightlyPrice }} MKD</span
+      >
+      <span class="font-light"> nightly</span>
+    </div>
+
+    <div class="w-full flex justify-center">
+      <div class="grid grid-cols-2 grid-rows-2 w-4/5">
+        <div
+          class="col-span-1 border border-solid border-black p-2 rounded-tl-2xl"
+        >
+          <mat-label class="font-semibold">CHECK-IN</mat-label>
+          <div class="flex justify-center w-full">
+            <input matInput type="date" placeholder="Ex. Pizza" />
+          </div>
+        </div>
+
+        <div
+          class="col-span-1 border-r border-t border-b border-solid border-black p-2 rounded-tr-2xl"
+        >
+          <mat-label class="font-semibold">CHECK-OUT</mat-label>
+          <div class="flex justify-center w-full">
+            <input matInput type="date" placeholder="Ex. Pizza" />
+          </div>
+        </div>
+
+        <div
+          class="col-span-2 border-b border-r border-l border-solid border-black p-2 rounded-b-2xl"
+        >
+          <mat-label class="font-semibold">GUESTS</mat-label>
+          <div class="flex justify-center w-full">
+            <mat-select>
+              @for (food of [1,2,3,4]; track food) {
+              <mat-option [value]="food">{{ food }}</mat-option>
+              }
+            </mat-select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex w-full justify-center p-5">
+      <button class="w-4/5 h-5 tracking-wide" mat-flat-button color="primary">
+        <div class="tracking-widest text-xl m-2">Reserve</div>
+      </button>
+    </div>
+
+    <div class="flex w-full justify-center">
+      <p>You won't be charged yet</p>
+    </div>
+  </div>
+</div>

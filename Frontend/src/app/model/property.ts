@@ -4,8 +4,8 @@ import { UserAccount } from './UserAccount';
 
 export interface Property {
   id: Number;
-  name: string;
   nightlyPrice: Number;
+  name: string;
   guests: Number;
   beds: Number;
   bedrooms: Number;

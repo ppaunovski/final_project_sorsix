@@ -1,0 +1,25 @@
+<div class="p-2">
+  <span class="text-2xl font-semibold">
+    {{ this.property?.propertyType?.typeName }}
+    in
+    {{ this.property?.city?.name }}
+  </span>
+  <span class="text-lg font-light text-gray-400">
+    {{ this.property?.address }}
+  </span>
+  <div>
+    <span class="text-md font-light text-gray-600">
+      {{ this.property?.beds }} beds
+    </span>
+    <span class="text-md font-light text-gray-600 p-2">|</span>
+
+    <span class="text-md font-light text-gray-600">
+      {{ this.property?.bedrooms }} bedrooms
+    </span>
+    <span class="text-md font-light text-gray-600 p-2">|</span>
+
+    <span class="text-md font-light text-gray-600">
+      {{ this.property?.bathrooms }} bathrooms
+    </span>
+  </div>
+</div>
