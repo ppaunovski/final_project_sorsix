@@ -1,5 +1,6 @@
 package com.sorsix.backend.api
 
+import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.service.UserAccountService
 import org.springframework.web.bind.annotation.*

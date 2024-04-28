@@ -1,8 +1,11 @@
 package com.sorsix.backend.repository.component_rating_repository
 
 import com.sorsix.backend.domain.entities.ComponentRating
+import com.sorsix.backend.domain.entities.UserReview
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Repository
 
+@Repository
 class ComponentRatingRepositoryImpl(
         private val jpaComponentRatingRepository: JpaComponentRatingRepository
 ) : ComponentRatingRepository{
@@ -14,4 +17,7 @@ class ComponentRatingRepositoryImpl(
 
     override fun save(componentRating: ComponentRating): ComponentRating =
             this.jpaComponentRatingRepository.save(componentRating)
+
+    override fun findAllByUserReview(userReview: UserReview): List<ComponentRating> =
+        this.jpaComponentRatingRepository.findAllByUserReview(userReview)
 }

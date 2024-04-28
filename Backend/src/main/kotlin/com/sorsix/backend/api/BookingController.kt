@@ -10,7 +10,7 @@ class BookingController(val bookingService: BookingService) {
     @GetMapping
     fun findAllBookings() = bookingService.findAllBookings()
     @GetMapping("/{id}")
-    fun findBookingById(@PathVariable id: Long) = bookingService.findBookingById(id)
+    fun findBookingById(@PathVariable id: Long) = bookingService.getBookingDTOById(id)
     @PostMapping
     fun saveBooking(@RequestBody booking: Booking) = bookingService.saveBooking(booking)
     @DeleteMapping("/{id}")
