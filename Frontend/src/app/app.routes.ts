@@ -32,4 +32,8 @@ export const routes: Routes = [
     path: 'units',
     component: UnitsComponent,
   },
+  {
+    path: '',
+    component: PropertiesComponent,
+  },
 ];
