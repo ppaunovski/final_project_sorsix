@@ -2,7 +2,9 @@ package com.sorsix.backend.repository.guest_type_repository
 
 import com.sorsix.backend.domain.entities.GuestType
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Repository
 
+@Repository
 class GuestTypeRepositoryImpl(
         private val jpaGuestTypeRepository: JpaGuestTypeRepository
 ) : GuestTypeRepository {
