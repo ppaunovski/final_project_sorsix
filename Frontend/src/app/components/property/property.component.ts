@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Property } from '../../model/property';
 import { PropertyService } from '../../service/property.service';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, mergeMap, tap } from 'rxjs';
+import { filter, forkJoin, map, mergeMap, switchMap, tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +17,11 @@ import { ReserveComponentComponent } from '../reserve-component/reserve-componen
 import { HostPropertyPreviewComponent } from '../host-property-preview/host-property-preview.component';
 import { RatingReviewPreviewComponent } from '../rating-review-preview/rating-review-preview.component';
 import { PropertyInfoComponent } from '../property-info/property-info.component';
+import { ReviewService } from '../../service/review.service';
+import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
+import { ComponentRating } from '../../model/ComponentRating';
+import { ReviewAveragesComponent } from '../review-averages/review-averages.component';
+import { ReviewComponent } from '../review/review.component';
 
 @Component({
   selector: 'app-property',
@@ -34,6 +39,8 @@ import { PropertyInfoComponent } from '../property-info/property-info.component'
     HostPropertyPreviewComponent,
     RatingReviewPreviewComponent,
     PropertyInfoComponent,
+    ReviewAveragesComponent,
+    ReviewComponent,
   ],
   templateUrl: './property.component.html',
   styleUrl: './property.component.css',
@@ -44,13 +51,18 @@ export class PropertyComponent implements OnInit {
   error: any;
   propertyAttributes: PropertyAttribute[] = [];
 
+  reviewsWithComponents: ReviewWithComponents[] = [];
+  componentRating: ComponentRating[][] = [];
+  averageRating: string = '';
+
   loadingAttribs: boolean = false;
   errorAttribs: any;
 
   constructor(
     private propertyService: PropertyService,
     private route: ActivatedRoute,
-    private propertyAttributeService: PropertyAttributeService
+    private propertyAttributeService: PropertyAttributeService,
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
@@ -103,5 +115,63 @@ export class PropertyComponent implements OnInit {
           this.loadingAttribs = false;
         },
       });
+
+    //TODO: na backend da se napravat funkcii za average rating i average za sekoja kategorija
+
+    this.route.paramMap
+      .pipe(
+        filter((params) => params.has('id')),
+        map((params) => params.get('id')!),
+        tap(() => {
+          this.loading = true;
+          this.error = null;
+        }),
+        mergeMap((id) => {
+          return this.propertyService.getPropertyById(+id);
+        })
+      )
+      .pipe(
+        filter((property) => property != undefined),
+        mergeMap((property) =>
+          this.propertyService.getPropertyReviewsByPropertyId(property?.id!)
+        )
+      )
+      .pipe(
+        switchMap((reviews) =>
+          forkJoin(
+            reviews.map((review) =>
+              this.reviewService.getComponentRatingsForReview(review.id)
+            )
+          )
+        )
+      )
+      .subscribe({
+        next: (response) => {
+          response.forEach((review) => {
+            this.reviewsWithComponents.push({
+              review: review[0].userReview,
+              components: review,
+            });
+          });
+          console.log(this.reviewsWithComponents);
+          this.averageRating = this.calculateAverageRating();
+        },
+      });
+  }
+
+  calculateAverageRating() {
+    return (
+      this.reviewsWithComponents
+        .flatMap((rwc) => {
+          return (
+            rwc.components
+              .map((c) => c.rating)
+              .reduce((sum, rating) => sum.valueOf() + rating.valueOf(), 0)
+              .valueOf() / rwc.components.length
+          );
+        })
+        .reduce((sum, reviewRating) => sum + reviewRating, 0) /
+      this.reviewsWithComponents.length
+    ).toPrecision(2);
   }
 }
