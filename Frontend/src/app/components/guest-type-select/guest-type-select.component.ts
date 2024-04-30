@@ -16,18 +16,36 @@ export class GuestTypeSelectComponent {
   @Output()
   countEvent$ = new EventEmitter<CountGuests>();
   count = 0;
+  @Input()
+  maxGuests: number | undefined;
 
   isDisabled() {
     return false;
   }
 
+  getCount() {
+    if (this.guestType?.name == 'ADULT') return Math.max(1, this.count);
+    else return this.count;
+  }
+
   changeCount(number: number) {
-    if (this.guestType) {
-      this.count = Math.max(this.count + number, 0);
+    console.log(this.guestType?.name);
+
+    if (this.guestType && this.maxGuests) {
+      if (this.guestType.name == 'ADULT')
+        this.count = Math.min(
+          Math.max(this.getCount() + number, 1),
+          this.maxGuests
+        );
+      else
+        this.count = Math.min(
+          Math.max(this.getCount() + number, 0),
+          this.maxGuests
+        );
 
       this.countEvent$.emit({
         guestType: this.guestType,
-        count: this.count,
+        count: this.getCount(),
       });
     }
   }

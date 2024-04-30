@@ -1,6 +1,7 @@
 <div class="w-full bg-white border-solid border border-gray-400 rounded-lg p-2">
   @for (guestType of this.guestTypes; track guestType.name) {
   <app-guest-type-select
+    [maxGuests]="maxGuests"
     (countEvent$)="changeCount($event)"
     [guestType]="guestType"
   ></app-guest-type-select>

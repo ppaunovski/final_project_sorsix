@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between">
+<div class="flex items-center justify-between pt-2 pb-2">
   <div class="w-1/2 flex flex-col">
     <span class="font-semibold">{{ this.guestType?.name }}</span>
     <span class="font-light text-xs">{{ this.guestType?.description }}</span>
@@ -15,7 +15,7 @@
         fontIcon="remove"
       ></mat-icon>
     </button>
-    <div>{{ this.count }}</div>
+    <div>{{ this.getCount() }}</div>
     <button
       (click)="changeCount(1)"
       class="border-2 w-8 h-8 border-solid rounded-full border-purple-950 flex justify-center items-center"

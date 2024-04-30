@@ -1,7 +1,4 @@
-<div
-  (click)="toggleGuestsDialog(false)"
-  class="w-full pt-12 flex justify-center items-center"
->
+<div class="w-full pt-12 flex justify-center items-center">
   <div class="border-solid border-2 border-black rounded-3xl w-4/5 h-5/6">
     <div class="p-10">
       <span class="text-xl font-bold"
@@ -10,14 +7,26 @@
       <span class="font-light"> nightly</span>
     </div>
 
-    <div class="w-full flex justify-center">
+    <div class="w-full flex justify-center flex-col items-center">
       <div class="grid grid-cols-2 grid-rows-2 w-4/5">
         <div
           class="col-span-1 border border-solid border-black p-2 rounded-tl-2xl"
         >
           <mat-label class="font-semibold">CHECK-IN</mat-label>
           <div class="flex justify-center w-full">
-            <input matInput type="date" placeholder="Ex. Pizza" />
+            <mat-form-field appearance="outline">
+              <input
+                (dateChange)="changeStartDate($event.value)"
+                matInput
+                [value]="this.startDate"
+                [matDatepicker]="start"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="start"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #start></mat-datepicker>
+            </mat-form-field>
           </div>
         </div>
 
@@ -26,27 +35,67 @@
         >
           <mat-label class="font-semibold">CHECK-OUT</mat-label>
           <div class="flex justify-center w-full">
-            <input matInput type="date" placeholder="Ex. Pizza" />
+            <!-- <input matInput type="date" placeholder="Ex. Pizza" /> -->
+            <mat-form-field appearance="outline" class="bg-white">
+              <mat-date-range-input
+                class="bg-white"
+                [formGroup]="range"
+                [rangePicker]="picker"
+                [disabled]="
+                  this.startDate == undefined || this.startDate == null
+                "
+              >
+                <input
+                  (dateChange)="changeStartDate($event.value)"
+                  [value]="this.startDate"
+                  matStartDate
+                  formControlName="start"
+                />
+                <input
+                  (dateChange)="changeEndDate($event.value)"
+                  matEndDate
+                  formControlName="end"
+                  class="w-full"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+
+              @if (range.controls.start.hasError('matStartDateInvalid')) {
+              <mat-error>Invalid start date</mat-error>
+              } @if (range.controls.end.hasError('matEndDateInvalid')) {
+              <mat-error>Invalid end date</mat-error>
+              }
+            </mat-form-field>
           </div>
         </div>
 
         <div
-          (click)="toggleGuestsDialog(true)"
+          (click)="toggleGuestsDialog(!this.isOpenGuestsDialog)"
           #guestsDialog
           class="relative col-span-2 border-b border-r border-l border-solid border-black p-2 rounded-b-2xl cursor-pointer"
         >
           <mat-label class="font-semibold">GUESTS</mat-label>
-          <div class="flex justify-center w-full">
-            @if (this.isOpenGuestsDialog) {
-            <app-guests-dialog
-              (adults$)="countAdults($event)"
-              (children$)="countChildren($event)"
-              (pets$)="countPets($event)"
-              class="absolute top-full z-10 w-full"
-            ></app-guests-dialog>
-            }
+          <div class="flex items-end w-full h-full">
+            <div class="w-4/5 h-4/5">
+              {{ this.getGuestsText() }}
+            </div>
           </div>
         </div>
+      </div>
+      <div class="flex justify-center w-4/5">
+        @if (this.isOpenGuestsDialog) {
+        <app-guests-dialog
+          (adults$)="countAdults($event)"
+          (children$)="countChildren($event)"
+          (pets$)="countPets($event)"
+          [maxGuests]="this.property?.guests?.valueOf()"
+          class="z-10 w-full"
+        ></app-guests-dialog>
+        }
       </div>
     </div>
 

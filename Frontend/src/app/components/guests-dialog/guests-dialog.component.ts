@@ -32,7 +32,7 @@ import { CountGuests } from '../../model/CountGuests';
 })
 export class GuestsDialogComponent implements OnInit {
   guestTypes: GuestType[] = [];
-  numberOfAdults = 0;
+  numberOfAdults = 1;
   numberOfChildren = 0;
   numberOfPets = 0;
   @Output()
@@ -41,6 +41,8 @@ export class GuestsDialogComponent implements OnInit {
   children$ = new EventEmitter<number>();
   @Output()
   pets$ = new EventEmitter<number>();
+  @Input()
+  maxGuests: number | undefined;
 
   constructor(private guestTypeService: GuestTypeService) {}
 
@@ -60,7 +62,7 @@ export class GuestsDialogComponent implements OnInit {
       case 'CHILD':
         this.children$.emit(countGuests.count);
         break;
-      case 'PETS':
+      case 'PET':
         this.pets$.emit(countGuests.count);
         break;
     }
