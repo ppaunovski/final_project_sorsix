@@ -28,5 +28,11 @@ class ComponentRatingService(
         )
     }
 
+    fun findAverageComponentRatingForUserReview(id: Long): Double {
+        val userReview = this.reviewService.findById(id)
+        val componentRatings = this.componentRatingRepository.findAllByUserReview(userReview)
+        return componentRatings.map { it.rating }.average()
+    }
+
 
 }

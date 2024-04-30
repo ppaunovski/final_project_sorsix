@@ -127,10 +127,10 @@ insert into booking_status (bs_id, bs_status_name) VALUES
                                                        (2, 'CANCELLED'),
                                                        (3, 'WAITING_FOR_APPROVAL'),
                                                        (4, 'REJECTED');
-insert into guest_type (gt_id, gt_type_name) VALUES
-                                                 (1, 'ADULT'),
-                                                 (2, 'CHILD'),
-                                                 (3, 'PET');
+insert into guest_type (gt_id, gt_type_name, gt_description) VALUES
+                                                 (1, 'ADULT','Age 13+'),
+                                                 (2, 'CHILD','Under 12'),
+                                                 (3, 'PET','');
 insert into booking (b_id, b_checkin_date, b_checkout_date, b_nightly_price, b_service_fee, b_cleaning_fee, p_id, u_id, bs_id)
 VALUES
     (1, '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 1, 3, 1);

@@ -10,5 +10,7 @@ data class GuestType(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
     @Column(name = "gt_type_name", nullable = false)
-    val name: String
+    val name: String,
+    @Column(name = "gt_description", nullable = false)
+    val description:String
 )

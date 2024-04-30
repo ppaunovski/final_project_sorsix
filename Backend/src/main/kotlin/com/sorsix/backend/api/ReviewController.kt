@@ -18,4 +18,7 @@ class ReviewController(
     @GetMapping("/{id}/components")
     fun getAllComponentRatingsForReview(@PathVariable id: Long): List<ComponentRatingDTO> =
         this.componentRatingService.findAllComponentRatingsForUserReview(id)
+    @GetMapping("/{id}/components/average")
+    fun getAverageComponentRatingForReview(@PathVariable id: Long): Double =
+        String.format("%.2f", this.componentRatingService.findAverageComponentRatingForUserReview(id)).toDouble()
 }

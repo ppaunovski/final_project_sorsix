@@ -58,7 +58,8 @@ create table property_attribute (
 create table property_images (
     pi_id bigserial primary key ,
     p_id bigint references property(p_id),
-    pi_order int not null
+    pi_order int not null,
+    pi_image bytea not null
 );
 
 create table user_review (
@@ -90,7 +91,8 @@ create table booking_status
 
 create table guest_type (
     gt_id bigserial primary key ,
-    gt_type_name text not null
+    gt_type_name text not null,
+    gt_description text not null
 );
 
 create table booking (
@@ -106,8 +108,8 @@ create table booking (
 );
 
 create table booking_guests (
-    bg_id bigserial primary key ,
-    bg_num_guests int not null ,
+    bg_id bigserial primary key,
+    bg_num_guests int not null,
     b_id bigint references booking(b_id),
     gt_id bigint references guest_type(gt_id)
 );
