@@ -1,0 +1,22 @@
+<div class="w-full flex flex-col justify-center items-center">
+  <div class="text-7xl pb-16">
+    {{ this.averageRating }}
+  </div>
+
+  <div class="flex flex-wrap items-center justify-evenly w-full">
+    @for (item of [ {avg: 5.0, name: 'Cleanliness'}, {avg: 5.0, name:
+    'Check-in'}, {avg: 5.0, name: 'Accuracy'}, {avg: 5.0, name:
+    'Communication'}, {avg: 5.0, name: 'Location'}, {avg: 5.0, name: 'Value'},
+    ]; track $index) {
+    <div>
+      <div class="font-semibold text-xl mb-[-0.1rem]">
+        {{ item.name }}
+      </div>
+      <p class="text-xl font-semibold">
+        {{ item.avg.toPrecision(2) }}
+      </p>
+      <img src="" />
+    </div>
+    }
+  </div>
+</div>

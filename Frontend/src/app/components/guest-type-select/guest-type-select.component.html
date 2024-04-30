@@ -1,0 +1,30 @@
+<div class="flex items-center justify-between">
+  <div class="w-1/2 flex flex-col">
+    <span class="font-semibold">{{ this.guestType?.name }}</span>
+    <span class="font-light text-xs">{{ this.guestType?.description }}</span>
+  </div>
+  <div class="flex w-1/2 items-center justify-around">
+    <button
+      [disabled]="isDisabled()"
+      (click)="changeCount(-1)"
+      class="border-2 w-8 h-8 border-solid rounded-full border-purple-950 font-semibold flex justify-center items-center"
+    >
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="remove"
+      ></mat-icon>
+    </button>
+    <div>{{ this.count }}</div>
+    <button
+      (click)="changeCount(1)"
+      class="border-2 w-8 h-8 border-solid rounded-full border-purple-950 flex justify-center items-center"
+    >
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="add"
+      ></mat-icon>
+    </button>
+  </div>
+</div>

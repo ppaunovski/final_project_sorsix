@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Property } from '../model/property';
+import { Review } from '../model/Review';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,10 @@ export class PropertyService {
 
   getPropertyById(id: Number): Observable<Property | undefined> {
     return this.http.get<Property | undefined>(this.url + `/${id}`);
+  }
+
+  getPropertyReviewsByPropertyId(id: Number): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.url}/${id}/reviews`);
   }
 
   // getPropertiesByCity(city: String): Observable<Property[]>{

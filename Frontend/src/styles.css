@@ -11,3 +11,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.centered-to-anchor-dialog .mat-dialog-container {
+  transform: translateX(-50%) !important;
+}
