@@ -137,3 +137,10 @@ VALUES
 
 insert into booking_guests (bg_id, bg_num_guests, b_id, gt_id) VALUES
                                                                    (1, 2, 1, 1);
+
+insert into property_availabilities (pav_id, pav_start_date, pav_end_date, p_id)
+values
+    (1, '2024-01-01', '2024-12-31', 1),
+    (2, '2024-01-01', '2024-12-31', 2),
+    (3, '2024-01-01', '2024-12-31', 3),
+    (4, '2024-01-01', '2024-12-31', 4);

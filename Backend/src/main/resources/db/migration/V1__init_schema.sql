@@ -49,6 +49,13 @@ create table property (
     pt_id bigint references property_type(pt_id)
 );
 
+create table property_availabilities (
+    pav_id bigserial primary key ,
+    pav_start_date date not null ,
+    pav_end_date date not null ,
+    p_id bigint references property(p_id)
+);
+
 create table property_attribute (
     pa_id bigserial primary key ,
     p_id bigint references property(p_id),
