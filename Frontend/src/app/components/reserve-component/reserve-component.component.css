@@ -14,3 +14,13 @@
 .mdc-text-field--no-label {
   background: white !important;
 }
+
+/* ::ng-deep tr.ng-star-inserted > td > button > span {
+  text-decoration: line-through;
+} */
+
+::ng-deep tr.ng-star-inserted > td > button.mat-calendar-body-disabled > span {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(102, 51, 153, 0.575);
+}

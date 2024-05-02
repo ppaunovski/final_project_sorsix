@@ -5,6 +5,8 @@ import { Property } from '../model/property';
 import { Review } from '../model/Review';
 import { BookingRequest } from '../model/BookingRequest';
 import { PropertyInfo } from '../model/PropertyInfo';
+import { Booking } from '../model/Booking';
+import { PropertyAvailability } from '../model/PropertyAvailability';
 
 @Injectable({
   providedIn: 'root',
@@ -30,8 +32,25 @@ export class PropertyService {
     this.http.get(`${this.url}/${id}/get-offer`);
   }
 
-  bookProperty(id: Number, bookingRequest: BookingRequest) {
-    return this.http.post(`${this.url}/${id}/book`, bookingRequest);
+  bookProperty(
+    id: Number,
+    bookingRequest: BookingRequest
+  ): Observable<Booking> {
+    return this.http.post<Booking>(
+      `${this.url}/${id}/book`,
+      JSON.stringify(bookingRequest),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  }
+
+  getPropertyAvailability(id: Number): Observable<PropertyAvailability[]> {
+    return this.http.get<PropertyAvailability[]>(
+      `${this.url}/${id}/availability`
+    );
   }
 
   // getPropertiesByCity(city: String): Observable<Property[]>{
