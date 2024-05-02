@@ -3,6 +3,7 @@ import { PropertyService } from '../../service/property.service';
 import { Property } from '../../model/property';
 import { JsonPipe } from '@angular/common';
 import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
+import { PropertyInfo } from '../../model/PropertyInfo';
 
 @Component({
   selector: 'app-properties',
@@ -12,7 +13,7 @@ import { PropertyPreviewComponent } from '../property-preview/property-preview.c
   styleUrl: './properties.component.css',
 })
 export class PropertiesComponent implements OnInit {
-  properties: Property[] = [];
+  properties: PropertyInfo[] = [];
 
   constructor(private service: PropertyService) {}
 

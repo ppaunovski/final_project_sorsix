@@ -16,6 +16,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Subject } from 'rxjs';
+import { ReservationInfoComponent } from '../reservation-info/reservation-info.component';
+import { PropertyService } from '../../service/property.service';
 
 @Component({
   selector: 'app-reserve-component',
@@ -30,6 +32,7 @@ import { Subject } from 'rxjs';
     MatDatepickerModule,
     ReactiveFormsModule,
     JsonPipe,
+    ReservationInfoComponent,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './reserve-component.component.html',
@@ -51,6 +54,8 @@ export class ReserveComponentComponent implements OnInit {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+
+  constructor(private propertyService: PropertyService) {}
 
   ngOnInit(): void {
     this.changeStartDate$.subscribe((start) => {
@@ -111,5 +116,13 @@ export class ReserveComponentComponent implements OnInit {
 
   changeEndDate(date: Date) {
     this.changeEndDate$.next(date);
+  }
+
+  reserveProperty() {
+    if (this.property && this.startDate && this.endDate)
+      this.propertyService.bookProperty(this.property?.id, {
+        checkInDate: this.startDate,
+        checkOutDate: this.endDate,
+      });
   }
 }

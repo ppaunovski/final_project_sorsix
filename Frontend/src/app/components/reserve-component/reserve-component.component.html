@@ -99,8 +99,22 @@
       </div>
     </div>
 
+    <div class="w-full flex justify-center">
+      <app-reservation-info
+        class="w-4/5 pt-3 pb-3"
+        [property]="property"
+        [startDate]="startDate"
+        [endDate]="endDate"
+      ></app-reservation-info>
+    </div>
+
     <div class="flex w-full justify-center p-5">
-      <button class="w-4/5 h-5 tracking-wide" mat-flat-button color="primary">
+      <button
+        (click)="reserveProperty()"
+        class="w-4/5 h-5 tracking-wide"
+        mat-flat-button
+        color="primary"
+      >
         <div class="tracking-widest text-xl m-2">Reserve</div>
       </button>
     </div>
