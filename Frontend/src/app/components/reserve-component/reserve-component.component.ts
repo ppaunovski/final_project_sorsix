@@ -212,4 +212,13 @@ export class ReserveComponentComponent implements OnInit {
           console.log(resp);
         });
   }
+
+  minEndDate() {
+    if (this.startDate) {
+      let date = new Date(this.startDate);
+      date.setDate(date.getDate() + 1);
+      return date;
+    }
+    return undefined;
+  }
 }

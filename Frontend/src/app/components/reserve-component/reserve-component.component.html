@@ -50,6 +50,7 @@
                   this.startDate == undefined || this.startDate == null
                 "
                 [max]="maxDate"
+                [min]="minEndDate()"
               >
                 <input
                   (dateChange)="changeStartDate($event.value)"
