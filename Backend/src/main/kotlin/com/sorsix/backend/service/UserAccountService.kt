@@ -11,7 +11,7 @@ class UserAccountService(val userAccountRepository: UserAccountRepository) {
     fun findAllUserAccounts() =
         userAccountRepository.findAll().map { mapUserAccountToDTO(it) }
 
-    fun findUserAccountById(id: Long) = userAccountRepository.findById(id)
+    fun findUserAccountById(id: Long) = userAccountRepository.findById(id) ?: throw UserAccountNotFoundException(id)
 
     fun getUserAccountDTOById(id: Long) =
         userAccountRepository.findById(id)?.let { mapUserAccountToDTO(it) } ?: throw UserAccountNotFoundException(id)

@@ -40,7 +40,9 @@ fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile)
     fun getOfferForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.getOfferForProperty(id, offerRequest)
 
     @PostMapping("/{id}/book")
-    fun createBookingForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.createBookingForProperty(id, offerRequest)
+    fun createBookingForProperty(@PathVariable id: Long,
+                                 @RequestBody offerRequest: OfferRequest) =
+        propertyService.createBookingForProperty(id, offerRequest)
 
 
 }

@@ -16,6 +16,8 @@ data class Booking(
     @ManyToOne
     @JoinColumn(name = "p_id", nullable = false)
     val property: Property,
+    @Column(name = "b_booking_date", nullable = false)
+    val bookingDate: LocalDate,
     @Column(name = "b_checkin_date", nullable = false)
     val checkIn: LocalDate,
     @Column(name = "b_checkout_date", nullable = false)

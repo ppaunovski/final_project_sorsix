@@ -1,7 +1,10 @@
 package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.BookingDTO
+import com.sorsix.backend.api.dtos.PropertyDTO
+import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.Booking
+import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.repository.booking_repository.BookingRepository
 import com.sorsix.backend.service.exceptions.BookingNotFoundException
 import org.springframework.stereotype.Service
@@ -10,7 +13,6 @@ import org.springframework.stereotype.Service
 class BookingService(
     private val bookingRepository: BookingRepository,
     private val userAccountService: UserAccountService,
-    private val propertyService: PropertyService
 ) {
     fun findAllBookings() =
         bookingRepository.findAll().map { this.mapBookingToDTO(it) }
@@ -20,14 +22,14 @@ class BookingService(
     fun getBookingDTOById(id: Long) =
         bookingRepository.findById(id)?.let { this.mapBookingToDTO(it) } ?: throw BookingNotFoundException(id)
 
-    fun saveBooking(booking: Booking) = bookingRepository.save(booking)
+    fun saveBooking(booking: Booking) = bookingRepository.save(booking).let { this.mapBookingToDTO(it) }
     fun deleteBookingById(id: Long) = bookingRepository.deleteById(id)
 
     fun mapBookingToDTO(booking: Booking): BookingDTO {
         return BookingDTO(
             id = booking.id,
             guest = this.userAccountService.mapUserAccountToDTO(booking.guest),
-            property = this.propertyService.mapPropertyToDTO(booking.property),
+            property = this.mapPropertyToDTO(booking.property),
             checkIn= booking.checkIn,
             checkOut = booking.checkOut,
             nightlyPrice = booking.nightlyPrice,
@@ -36,4 +38,32 @@ class BookingService(
             status = booking.status
         )
     }
+
+    fun mapPropertyToDTO(property: Property): PropertyDTO {
+        return PropertyDTO(
+            id = property.id,
+            name = property.name,
+            description = property.description,
+            nightlyPrice = property.nightlyPrice,
+            address = property.address,
+            guests = property.guests,
+            beds = property.beds,
+            bedrooms = property.bedrooms,
+            bathrooms = property.bathrooms,
+            isGuestFavorite = property.isGuestFavorite,
+            longitude = property.longitude,
+            latitude = property.latitude,
+            host = UserAccountDTO(
+                id = property.host.id,
+                email = property.host.email,
+                firstName = property.host.firstName,
+                lastName = property.host.lastName,
+                joinedDate = property.host.joinedDate,
+                dateHostStarted = property.host.dateHostStarted,
+            ),
+            city = property.city,
+            propertyType = property.propertyType
+        )
+    }
+
 }

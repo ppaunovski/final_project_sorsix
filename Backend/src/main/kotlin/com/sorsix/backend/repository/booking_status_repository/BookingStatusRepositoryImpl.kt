@@ -2,7 +2,9 @@ package com.sorsix.backend.repository.booking_status_repository
 
 import com.sorsix.backend.domain.entities.BookingStatus
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Repository
 
+@Repository
 class BookingStatusRepositoryImpl(
         private val jpaBookingStatusRepository: JpaBookingStatusRepository
 ) : BookingStatusRepository {

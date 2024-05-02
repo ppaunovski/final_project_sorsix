@@ -131,9 +131,9 @@ insert into guest_type (gt_id, gt_type_name, gt_description) VALUES
                                                  (1, 'ADULT','Age 13+'),
                                                  (2, 'CHILD','Under 12'),
                                                  (3, 'PET','');
-insert into booking (b_id, b_checkin_date, b_checkout_date, b_nightly_price, b_service_fee, b_cleaning_fee, p_id, u_id, bs_id)
+insert into booking (b_booking_date, b_checkin_date, b_checkout_date, b_nightly_price, b_service_fee, b_cleaning_fee, p_id, u_id, bs_id)
 VALUES
-    (1, '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 1, 3, 1);
+    ('2024-05-02', '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 1, 3, 1);
 
 insert into booking_guests (bg_id, bg_num_guests, b_id, gt_id) VALUES
                                                                    (1, 2, 1, 1);

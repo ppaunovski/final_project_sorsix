@@ -104,6 +104,7 @@ create table guest_type (
 
 create table booking (
     b_id bigserial primary key ,
+    b_booking_date date not null ,
     b_checkin_date date not null ,
     b_checkout_date date not null ,
     b_nightly_price double precision not null ,
