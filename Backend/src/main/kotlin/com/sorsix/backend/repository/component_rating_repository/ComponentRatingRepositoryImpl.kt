@@ -20,4 +20,7 @@ class ComponentRatingRepositoryImpl(
 
     override fun findAllByUserReview(userReview: UserReview): List<ComponentRating> =
         this.jpaComponentRatingRepository.findAllByUserReview(userReview)
+
+    override fun averageRatingByUserReview(userReview: UserReview): Double =
+        this.jpaComponentRatingRepository.averageRatingByUserReview(userReview)
 }

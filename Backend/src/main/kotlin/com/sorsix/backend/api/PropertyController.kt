@@ -1,5 +1,6 @@
 package com.sorsix.backend.api
 
+import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.service.PropertyImagesService
@@ -34,5 +35,12 @@ fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile)
     propertyImagesService.savePropertyImage(
         PropertyImageRequest(id, propertyImagesService.getNextOrder(id), image.bytes)
     )
+
+    @GetMapping("/{id}/get-offer")
+    fun getOfferForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.getOfferForProperty(id, offerRequest)
+
+    @PostMapping("/{id}/book")
+    fun createBookingForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.createBookingForProperty(id, offerRequest)
+
 
 }

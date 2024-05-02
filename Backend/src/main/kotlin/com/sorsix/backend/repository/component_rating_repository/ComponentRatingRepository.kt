@@ -9,4 +9,5 @@ interface ComponentRatingRepository {
     fun findById(id: Long): ComponentRating?
     fun save(componentRating: ComponentRating): ComponentRating
     fun findAllByUserReview(userReview: UserReview): List<ComponentRating>
+    fun averageRatingByUserReview(userReview: UserReview): Double
 }
