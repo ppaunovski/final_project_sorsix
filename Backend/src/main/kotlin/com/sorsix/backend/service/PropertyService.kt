@@ -3,8 +3,8 @@ package com.sorsix.backend.service
 import com.sorsix.backend.api.dtos.*
 import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.domain.entities.Booking
-import com.sorsix.backend.domain.entities.BookingStatus
 import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.PropertyAvailability
 import com.sorsix.backend.domain.enums.BookingStatusEnum
 import com.sorsix.backend.repository.booking_status_repository.BookingStatusRepository
 import com.sorsix.backend.repository.property_availabilities_repository.PropertyAvailabilityRepository
@@ -80,11 +80,11 @@ class PropertyService(private val propertyRepository: PropertyRepository,
         //  The offer should be calculated based on the nightly price of the property and the number of nights the
         //  guest wants to stay, also check for seasonal prices since the period from start to end can be part of two different seasonal prices
 
-        val range = offerRequest.start..offerRequest.end
+        val range = offerRequest.checkInDate..offerRequest.checkOutDate
 
         return OfferForBookingDTO(
-            start = offerRequest.start,
-            end = offerRequest.end,
+            start = offerRequest.checkInDate,
+            end = offerRequest.checkOutDate,
             totalPrice = 0.0,
             nightlyPrices = mapOf(),
             serviceFee = 10.0,
@@ -96,17 +96,27 @@ class PropertyService(private val propertyRepository: PropertyRepository,
         val property = findPropertyById(id);
         //TODO: Check if there is availability for the property for the given period
         val propertyAvailability = this.propertyAvailabilityRepository.findAllForProperty(property)
-            .first { it.startDate <= offerRequest.start && it.endDate >= offerRequest.end }
+            .first { it.startDate <= offerRequest.checkInDate && it.endDate >= offerRequest.checkOutDate }
 
-        if(propertyAvailability.startDate < offerRequest.start){
+        if(propertyAvailability.startDate < offerRequest.checkInDate){
             this.propertyAvailabilityRepository.save(
-                propertyAvailability.copy(endDate = offerRequest.start.minusDays(1))
+                PropertyAvailability(
+                    id = 0,
+                    property = property,
+                    startDate = propertyAvailability.startDate,
+                    endDate = offerRequest.checkInDate.minusDays(1)
+                )
             )
         }
 
-        if(propertyAvailability.endDate > offerRequest.end){
+        if(propertyAvailability.endDate > offerRequest.checkOutDate){
             this.propertyAvailabilityRepository.save(
-                propertyAvailability.copy(startDate = offerRequest.end.plusDays(1))
+                PropertyAvailability(
+                    id = 0,
+                    property = property,
+                    startDate = offerRequest.checkOutDate.plusDays(1),
+                    endDate = propertyAvailability.endDate
+                )
             )
         }
 
@@ -116,17 +126,27 @@ class PropertyService(private val propertyRepository: PropertyRepository,
            id = 0,
             guest = userService.findUserAccountById(1),
             property = property,
-            checkIn = offerRequest.start,
-            checkOut = offerRequest.end,
+            checkIn = offerRequest.checkInDate,
+            checkOut = offerRequest.checkOutDate,
             nightlyPrice = property.nightlyPrice,
             serviceFee = 500.0,
             cleaningFee = 1000.0,
-            status = bookingStatusRepository.findById(BookingStatusEnum.WAITING_FOR_APPROVAL.ordinal.toLong())!!,
+            status = bookingStatusRepository.findById(BookingStatusEnum.APPROVED.ordinal.toLong())!!,
             bookingDate = LocalDate.now()
         )
 
 
         return bookingService.saveBooking(booking)
 
+    }
+
+    fun getPropertyAvailability(id: Long): List<PropertyAvailabilityDTO> {
+        val property = findPropertyById(id)
+        return this.propertyAvailabilityRepository.findAllForProperty(property).map {
+            PropertyAvailabilityDTO(
+                startDate = it.startDate,
+                endDate = it.endDate,
+                )
+        }
     }
 }

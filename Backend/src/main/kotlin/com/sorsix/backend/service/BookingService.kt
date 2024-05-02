@@ -35,7 +35,7 @@ class BookingService(
             nightlyPrice = booking.nightlyPrice,
             serviceFee = booking.serviceFee,
             cleaningFee = booking.cleaningFee,
-            status = booking.status
+            status = booking.status.name
         )
     }
 

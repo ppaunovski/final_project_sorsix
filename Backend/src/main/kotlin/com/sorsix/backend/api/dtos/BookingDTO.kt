@@ -1,6 +1,5 @@
 package com.sorsix.backend.api.dtos
 
-import com.sorsix.backend.domain.entities.BookingStatus
 import java.time.LocalDate
 
 data class BookingDTO (
@@ -12,5 +11,5 @@ data class BookingDTO (
     val nightlyPrice: Double,
     val serviceFee: Double,
     val cleaningFee: Double,
-    val status: BookingStatus
+    val status: String
 )

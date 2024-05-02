@@ -16,25 +16,25 @@ class PropertyController(
     private val reviewService: ReviewService,
     private val propertyImagesService: PropertyImagesService){
     @GetMapping
-fun findAllProperties() = propertyService.findAllProperties()
+    fun findAllProperties() = propertyService.findAllProperties()
 
-@GetMapping("/{id}")
-fun findPropertyById(@PathVariable id: Long) = propertyService.getPropertyDTOById(id)
+    @GetMapping("/{id}")
+    fun findPropertyById(@PathVariable id: Long) = propertyService.getPropertyDTOById(id)
 
-@PostMapping
-fun saveProperty(@RequestBody property: Property) = propertyService.saveProperty(property)
+    @PostMapping
+    fun saveProperty(@RequestBody property: Property) = propertyService.saveProperty(property)
 
-@DeleteMapping("/{id}")
-fun deletePropertyById(@PathVariable id: Long) = propertyService.deletePropertyById(id)
+    @DeleteMapping("/{id}")
+    fun deletePropertyById(@PathVariable id: Long) = propertyService.deletePropertyById(id)
 
-@GetMapping("/{id}/reviews")
-fun findAllReviewsForProperty(@PathVariable id: Long) = reviewService.getAllReviewsForProperty(id)
+    @GetMapping("/{id}/reviews")
+    fun findAllReviewsForProperty(@PathVariable id: Long) = reviewService.getAllReviewsForProperty(id)
 
-@PostMapping("/{id}/images")
-fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile) =
-    propertyImagesService.savePropertyImage(
-        PropertyImageRequest(id, propertyImagesService.getNextOrder(id), image.bytes)
-    )
+    @PostMapping("/{id}/images")
+    fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile) =
+        propertyImagesService.savePropertyImage(
+            PropertyImageRequest(id, propertyImagesService.getNextOrder(id), image.bytes)
+        )
 
     @GetMapping("/{id}/get-offer")
     fun getOfferForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.getOfferForProperty(id, offerRequest)
@@ -44,5 +44,6 @@ fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile)
                                  @RequestBody offerRequest: OfferRequest) =
         propertyService.createBookingForProperty(id, offerRequest)
 
-
+    @GetMapping("/{id}/availability")
+    fun getPropertyAvailability(@PathVariable id: Long) = propertyService.getPropertyAvailability(id)
 }
