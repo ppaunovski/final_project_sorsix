@@ -1,0 +1,38 @@
+@if (this.filter) {
+<mat-form-field appearance="outline" class="bg-white">
+  <mat-date-range-input
+    [dateFilter]="this.filter"
+    class="bg-white"
+    [formGroup]="range"
+    [rangePicker]="picker"
+    [disabled]="this.startDate == undefined || this.startDate == null"
+    [max]="undefined"
+    [min]="min"
+  >
+    <input
+      (dateChange)="changeStartDate($event.value)"
+      [value]="this.startDate"
+      matStartDate
+      formControlName="start"
+    />
+    <input
+      (dateChange)="changeEndDate($event.value)"
+      matEndDate
+      formControlName="end"
+      class="w-full"
+    />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker
+    [startAt]="this.startDate"
+    [opened]="this.startDate"
+    #picker
+  ></mat-date-range-picker>
+
+  <!-- @if (range.controls.start.hasError('matStartDateInvalid')) {
+  <mat-error>Invalid start date</mat-error>
+  } @if (range.controls.end.hasError('matEndDateInvalid')) {
+  <mat-error>Invalid end date</mat-error>
+  } -->
+</mat-form-field>
+}

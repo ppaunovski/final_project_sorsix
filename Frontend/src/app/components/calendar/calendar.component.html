@@ -1,0 +1,9 @@
+<div class="z-10">
+  <mat-card class="demo-inline-calendar-card w-[300px]">
+    <mat-calendar
+      (selectedChange)="changeDate($event)"
+      [dateFilter]="filter"
+      [(selected)]="date"
+    ></mat-calendar>
+  </mat-card>
+</div>
