@@ -7,81 +7,50 @@
       <span class="font-light"> nightly</span>
     </div>
 
-    <div class="w-full flex justify-center flex-col items-center">
+    <div class="w-full flex justify-center flex-col items-center relative">
+      @if(this.filterAvailableDates){
+
+      <div class="absolute top-[100px] z-10">
+        <app-calendar
+          [className]="openStartCalendar == true ? 'block' : 'hidden'"
+          (changeDate$)="changeStartDate($event)"
+          [filter]="filterAvailableDates"
+          [date]="this.startDate"
+        ></app-calendar>
+      </div>
+
+      }
       <div class="grid grid-cols-2 grid-rows-2 w-4/5">
         <div
-          class="col-span-1 border border-solid border-black p-2 rounded-tl-2xl"
+          (click)="openStartCalendar = !openStartCalendar"
+          class="col-span-1 hover:bg-gray-100 cursor-pointer border border-solid border-black p-2 rounded-tl-2xl relative"
         >
           <mat-label class="font-semibold">CHECK-IN</mat-label>
-          <div class="flex justify-center w-full">
-            @if(this.filterAvailableDates){
-            <mat-form-field appearance="outline">
-              <input
-                [matDatepickerFilter]="this.filterAvailableDates"
-                (dateChange)="changeStartDate($event.value)"
-                matInput
-                [value]="this.startDate"
-                [matDatepicker]="start"
-              />
-              <mat-datepicker-toggle
-                matIconSuffix
-                [for]="start"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #start></mat-datepicker>
-            </mat-form-field>
-            }
+          <div class="flex text-lg items-center">
+            {{ this.startDate?.toLocaleDateString() }}
           </div>
         </div>
 
         <div
-          class="col-span-1 border-r border-t border-b border-solid border-black p-2 rounded-tr-2xl"
+          (click)="this.changeStartDate(this.startDate)"
+          class="col-span-1 z-10 border-r border-t border-b border-solid border-black p-2 rounded-tr-2xl hover:bg-gray-100 cursor-pointer"
         >
           <mat-label class="font-semibold">CHECK-OUT</mat-label>
-          <div class="flex justify-center w-full">
-            <!-- <input matInput type="date" placeholder="Ex. Pizza" /> -->
-            @if(this.filterAvailableDates){
-            <mat-form-field appearance="outline" class="bg-white">
-              <mat-date-range-input
-                [dateFilter]="this.filterAvailableDates"
-                class="bg-white"
-                [formGroup]="range"
-                [rangePicker]="picker"
-                [disabled]="
-                  this.startDate == undefined || this.startDate == null
-                "
+          <div class="flex text-lg items-center">
+            <div class="h-1">
+              <app-date-range
+                [className]="this.endDate == undefined ? 'block' : 'hidden'"
                 [max]="maxDate"
                 [min]="minEndDate()"
-              >
-                <input
-                  (dateChange)="changeStartDate($event.value)"
-                  [value]="this.startDate"
-                  matStartDate
-                  formControlName="start"
-                />
-                <input
-                  (dateChange)="changeEndDate($event.value)"
-                  matEndDate
-                  formControlName="end"
-                  class="w-full"
-                />
-              </mat-date-range-input>
-              <mat-datepicker-toggle
-                matIconSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
-              <mat-date-range-picker
-                [opened]="this.startDate != undefined || this.startDate != null"
-                #picker
-              ></mat-date-range-picker>
-
-              @if (range.controls.start.hasError('matStartDateInvalid')) {
-              <mat-error>Invalid start date</mat-error>
-              } @if (range.controls.end.hasError('matEndDateInvalid')) {
-              <mat-error>Invalid end date</mat-error>
-              }
-            </mat-form-field>
-            }
+                [filter]="filterAvailableDates"
+                [startDate]="this.startDate"
+                (changeEndDate$)="changeEndDate($event)"
+                (changeStartDate$)="changeStartDate($event)"
+              ></app-date-range>
+            </div>
+            {{ this.endDate?.toLocaleDateString() }}
           </div>
+          <div class="flex text-lg h-full items-center"></div>
         </div>
 
         <div

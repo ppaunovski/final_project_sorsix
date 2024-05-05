@@ -22,6 +22,8 @@ import { Subject, of } from 'rxjs';
 import { ReservationInfoComponent } from '../reservation-info/reservation-info.component';
 import { PropertyService } from '../../service/property.service';
 import { PropertyAvailability } from '../../model/PropertyAvailability';
+import { CalendarComponent } from '../calendar/calendar.component';
+import { DateRangeComponent } from '../date-range/date-range.component';
 
 @Component({
   selector: 'app-reserve-component',
@@ -37,6 +39,8 @@ import { PropertyAvailability } from '../../model/PropertyAvailability';
     ReactiveFormsModule,
     JsonPipe,
     ReservationInfoComponent,
+    CalendarComponent,
+    DateRangeComponent,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './reserve-component.component.html',
@@ -50,7 +54,7 @@ export class ReserveComponentComponent implements OnInit {
   numberOfChildren = 0;
   numberOfPets = 0;
   changeStartDate$: Subject<Date | undefined | null> = new Subject();
-  changeEndDate$: Subject<Date> = new Subject();
+  changeEndDate$: Subject<Date | undefined> = new Subject();
   startDate: Date | undefined | null;
   endDate: Date | undefined;
   maxDate: Date | undefined;
@@ -67,6 +71,9 @@ export class ReserveComponentComponent implements OnInit {
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+
+  openStartCalendar = false;
+  openEndCalendar = false;
 
   constructor(private propertyService: PropertyService) {}
 
@@ -178,12 +185,15 @@ export class ReserveComponentComponent implements OnInit {
 
   changeStartDate(date: Date | undefined | null) {
     console.log(date);
+    this.openStartCalendar = false;
+    this.openEndCalendar = true;
 
     if (date) {
       const offset = date?.getTimezoneOffset();
 
       date = new Date(date?.getTime() - offset * 60 * 1000);
     }
+    this.changeEndDate$.next(undefined);
     this.changeStartDate$.next(date);
   }
 
