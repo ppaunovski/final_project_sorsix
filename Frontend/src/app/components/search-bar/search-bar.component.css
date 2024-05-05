@@ -1,0 +1,16 @@
+div:hover > input {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+input:active {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+  background: transparent;
+}

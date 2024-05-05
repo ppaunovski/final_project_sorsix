@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-navigation',
@@ -18,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     RouterLink,
     MatButtonModule,
+    SearchBarComponent,
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.css',
