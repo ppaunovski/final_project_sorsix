@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { GuestType } from '../../model/GuestType';
 import { CountGuests } from '../../model/CountGuests';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-guest-type-select',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatButtonModule],
   templateUrl: './guest-type-select.component.html',
   styleUrl: './guest-type-select.component.css',
 })
@@ -19,8 +20,14 @@ export class GuestTypeSelectComponent {
   @Input()
   maxGuests: number | undefined;
 
-  isDisabled() {
-    return false;
+  isDisabledMinus(): boolean {
+    return (
+      (this.count == 1 && this.guestType?.name == 'ADULT') || this.count == 0
+    );
+  }
+
+  isDisabledPlus(): boolean {
+    return this.count == this.maxGuests;
   }
 
   getCount() {

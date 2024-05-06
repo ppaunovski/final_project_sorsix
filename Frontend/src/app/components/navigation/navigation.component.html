@@ -1,34 +1,36 @@
 <div
-  class="w-full flex justify-between items-center pl-20 pr-20 border-b-2 border-gray-300 border-solid mb-5"
+  class="w-full flex flex-col justify-center items-center border-b-2 border-gray-300 border-solid mb-5"
 >
-  <div class="w-1/4">
-    <a [routerLink]="['/properties']">
-      <img src="../.././../assets/logo.png" alt="logo" class="w-24" />
-    </a>
+  <div
+    class="w-full flex justify-between items-center pl-1 pr-1 md:pl-5 md:pr-5 lg:pl-20 lg:pr-20"
+  >
+    <div class="w-1/5">
+      <a [routerLink]="['/properties']">
+        <img src="../.././../assets/logo.png" alt="logo" class="w-24" />
+      </a>
+    </div>
+
+    <div class="w-3/5 2xl:flex justify-center hidden">
+      <app-search-bar class="w-full"></app-search-bar>
+    </div>
+
+    <div
+      class="2xl:w-1/5 w-4/5 flex flex-row-reverse gap-10 items-center pr-2 md:pr-0"
+    >
+      <a [routerLink]="['/login']">
+        <button
+          mat-flat-button
+          color="primary"
+          aria-label="Example icon button with a vertical three dot icon"
+        >
+          Sign In
+          <mat-icon>person</mat-icon>
+        </button>
+      </a>
+      <a> Add your home </a>
+    </div>
   </div>
-
-  <div class="w-1/2 flex justify-center">
-    <!-- <mat-form-field class="example-full-width example-form">
-      <mat-label>Search</mat-label>
-
-      <input type="text" matInput placeholder="Find your place?" />
-
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field> -->
-    <app-search-bar class="w-full"></app-search-bar>
-  </div>
-
-  <div class="w-1/4 flex flex-row-reverse gap-10 items-center">
-    <a [routerLink]="['/login']">
-      <button
-        mat-flat-button
-        color="primary"
-        aria-label="Example icon button with a vertical three dot icon"
-      >
-        Sign In
-        <mat-icon>person</mat-icon>
-      </button>
-    </a>
-    <a> Add your home </a>
-  </div>
+  <app-search-bar
+    class="2xl:w-full xl:w-3/4 lg:w-4/5 w-full 2xl:hidden justify-center flex pb-2"
+  ></app-search-bar>
 </div>

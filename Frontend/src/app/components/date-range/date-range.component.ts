@@ -32,6 +32,8 @@ import { MatInputModule } from '@angular/material/input';
 export class DateRangeComponent {
   @Input()
   startDate: Date | undefined | null;
+  @Input()
+  endDate: Date | undefined | null;
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
@@ -44,11 +46,11 @@ export class DateRangeComponent {
   filter: DateFilterFn<any> | undefined;
 
   @Output()
-  changeEndDate$ = new EventEmitter<Date>();
+  changeEndDate$ = new EventEmitter<Date | null | undefined>();
   @Output()
   changeStartDate$ = new EventEmitter<Date | null | undefined>();
 
-  changeEndDate(date: Date) {
+  changeEndDate(date: Date | null | undefined) {
     this.changeEndDate$.emit(date);
   }
 

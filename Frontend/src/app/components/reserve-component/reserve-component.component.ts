@@ -54,9 +54,9 @@ export class ReserveComponentComponent implements OnInit {
   numberOfChildren = 0;
   numberOfPets = 0;
   changeStartDate$: Subject<Date | undefined | null> = new Subject();
-  changeEndDate$: Subject<Date | undefined> = new Subject();
+  changeEndDate$: Subject<Date | null | undefined> = new Subject();
   startDate: Date | undefined | null;
-  endDate: Date | undefined;
+  endDate: Date | null | undefined;
   maxDate: Date | undefined;
   availablePeriods: PropertyAvailability[] = [];
   filterAvailableDates: DateFilterFn<Date | null> | undefined;
@@ -74,6 +74,9 @@ export class ReserveComponentComponent implements OnInit {
 
   openStartCalendar = false;
   openEndCalendar = false;
+  isCheckinOpen = false;
+  isCheckoutOpen = false;
+  isGuestDialongOpen = false;
 
   constructor(private propertyService: PropertyService) {}
 
@@ -141,11 +144,6 @@ export class ReserveComponentComponent implements OnInit {
       .map((period) => period.endDate)[0];
   }
 
-  toggleGuestsDialog(state: boolean) {
-    console.log(state);
-    this.isOpenGuestsDialog = state;
-  }
-
   countAdults(count: number) {
     this.numberOfAdults = count;
   }
@@ -197,7 +195,7 @@ export class ReserveComponentComponent implements OnInit {
     this.changeStartDate$.next(date);
   }
 
-  changeEndDate(date: Date) {
+  changeEndDate(date: Date | null | undefined) {
     if (date) {
       const offset = date?.getTimezoneOffset();
 
@@ -230,5 +228,31 @@ export class ReserveComponentComponent implements OnInit {
       return date;
     }
     return undefined;
+  }
+
+  changeStateOfReservation(part: 'where' | 'checkin' | 'checkout' | 'who') {
+    switch (part) {
+      case 'where':
+        this.isCheckinOpen = false;
+        this.isGuestDialongOpen = false;
+        break;
+      case 'checkin':
+        this.isCheckinOpen = !this.isCheckinOpen;
+        this.isGuestDialongOpen = false;
+        this.changeStartDate$.next(undefined);
+        this.changeEndDate$.next(undefined);
+        break;
+      case 'checkout':
+        if (this.startDate == undefined)
+          this.isCheckinOpen = !this.isCheckinOpen;
+        this.isGuestDialongOpen = false;
+        this.changeEndDate$.next(undefined);
+        this.changeStartDate(this.startDate);
+        break;
+      case 'who':
+        this.isCheckinOpen = false;
+        this.isGuestDialongOpen = !this.isGuestDialongOpen;
+        break;
+    }
   }
 }

@@ -18,6 +18,7 @@
     <input
       (dateChange)="changeEndDate($event.value)"
       matEndDate
+      [value]="this.endDate"
       formControlName="end"
       class="w-full"
     />

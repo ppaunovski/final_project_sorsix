@@ -4,27 +4,38 @@
     <span class="font-light text-xs">{{ this.guestType?.description }}</span>
   </div>
   <div class="flex w-1/2 items-center justify-around">
-    <button
-      [disabled]="isDisabled()"
-      (click)="changeCount(-1)"
-      class="border-2 w-8 h-8 border-solid rounded-full border-purple-950 font-semibold flex justify-center items-center"
+    <div
+      class="border w-8 h-8 border-solid rounded-full border-purple-950 flex justify-center items-center"
     >
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="remove"
-      ></mat-icon>
-    </button>
+      <button
+        mat-icon-button
+        [disabled]="isDisabledMinus()"
+        (click)="changeCount(-1)"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="remove"
+        ></mat-icon>
+      </button>
+    </div>
     <div>{{ this.getCount() }}</div>
-    <button
-      (click)="changeCount(1)"
-      class="border-2 w-8 h-8 border-solid rounded-full border-purple-950 flex justify-center items-center"
+
+    <div
+      class="border w-8 h-8 border-solid rounded-full border-purple-950 flex justify-center items-center hover"
     >
-      <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="add"
-      ></mat-icon>
-    </button>
+      <button
+        [disabled]="isDisabledPlus()"
+        mat-icon-button
+        (click)="changeCount(1)"
+        class="border-2 w-8 h-8 border-solid rounded-full border-purple-950 flex justify-center items-center"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="add"
+        ></mat-icon>
+      </button>
+    </div>
   </div>
 </div>
