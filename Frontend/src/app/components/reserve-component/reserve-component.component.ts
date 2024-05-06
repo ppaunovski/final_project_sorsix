@@ -59,7 +59,7 @@ export class ReserveComponentComponent implements OnInit {
   endDate: Date | null | undefined;
   maxDate: Date | undefined;
   availablePeriods: PropertyAvailability[] = [];
-  filterAvailableDates: DateFilterFn<Date | null> | undefined;
+  filterAvailableDates: DateFilterFn<Date | null> = () => true;
   disabledDates = [
     new Date('2024-05-10'),
     new Date('2024-05-11'),

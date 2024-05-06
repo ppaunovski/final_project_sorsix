@@ -38,6 +38,7 @@
             [className]="
               isCheckinOpen ? 'absolute top-full w-full z-10' : 'hidden'
             "
+            [filter]="filterAvailableDates"
             [date]="startDate"
             (changeDate$)="changeStartDate($event)"
           ></app-calendar>
