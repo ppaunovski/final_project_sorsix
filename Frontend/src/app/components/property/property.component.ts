@@ -22,6 +22,8 @@ import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
 import { ComponentRating } from '../../model/ComponentRating';
 import { ReviewAveragesComponent } from '../review-averages/review-averages.component';
 import { ReviewComponent } from '../review/review.component';
+import { AverageRating } from '../../model/AverageRating';
+import { Review } from '../../model/Review';
 
 @Component({
   selector: 'app-property',
@@ -51,8 +53,9 @@ export class PropertyComponent implements OnInit {
   error: any;
   propertyAttributes: PropertyAttribute[] = [];
 
-  reviewsWithComponents: ReviewWithComponents[] = [];
-  componentRating: ComponentRating[][] = [];
+  reviews: Review[] = [];
+
+  averageRatings: AverageRating[] = [];
   averageRating: string = '';
 
   loadingAttribs: boolean = false;
@@ -116,7 +119,23 @@ export class PropertyComponent implements OnInit {
         },
       });
 
-    //TODO: na backend da se napravat funkcii za average rating i average za sekoja kategorija
+    this.route.paramMap
+      .pipe(
+        filter((params) => params.has('id')),
+        map((params) => params.get('id')!),
+        tap(() => {
+          this.loading = true;
+          this.error = null;
+        }),
+        mergeMap((id) => {
+          return this.propertyService.getAverageRatings(+id);
+        })
+      )
+      .subscribe({
+        next: (res) => {
+          this.averageRatings = res;
+        },
+      });
 
     this.route.paramMap
       .pipe(
@@ -127,51 +146,19 @@ export class PropertyComponent implements OnInit {
           this.error = null;
         }),
         mergeMap((id) => {
-          return this.propertyService.getPropertyById(+id);
+          return this.propertyService.getPropertyReviewsByPropertyId(+id);
         })
-      )
-      .pipe(
-        filter((property) => property != undefined),
-        mergeMap((property) =>
-          this.propertyService.getPropertyReviewsByPropertyId(property?.id!)
-        )
-      )
-      .pipe(
-        switchMap((reviews) =>
-          forkJoin(
-            reviews.map((review) =>
-              this.reviewService.getComponentRatingsForReview(review.id)
-            )
-          )
-        )
       )
       .subscribe({
-        next: (response) => {
-          response.forEach((review) => {
-            this.reviewsWithComponents.push({
-              review: review[0].userReview,
-              components: review,
-            });
-          });
-          console.log(this.reviewsWithComponents);
-          this.averageRating = this.calculateAverageRating();
+        next: (resp) => {
+          this.reviews = resp;
+          this.averageRating = (
+            resp.reduce(
+              (sum, review) => sum.valueOf() + review.averageRating.valueOf(),
+              0
+            ) / resp.length
+          ).toPrecision(2);
         },
       });
-  }
-
-  calculateAverageRating() {
-    return (
-      this.reviewsWithComponents
-        .flatMap((rwc) => {
-          return (
-            rwc.components
-              .map((c) => c.rating)
-              .reduce((sum, rating) => sum.valueOf() + rating.valueOf(), 0)
-              .valueOf() / rwc.components.length
-          );
-        })
-        .reduce((sum, reviewRating) => sum + reviewRating, 0) /
-      this.reviewsWithComponents.length
-    ).toPrecision(2);
   }
 }

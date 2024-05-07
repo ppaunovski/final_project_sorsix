@@ -7,6 +7,8 @@ import { BookingRequest } from '../model/BookingRequest';
 import { PropertyInfo } from '../model/PropertyInfo';
 import { Booking } from '../model/Booking';
 import { PropertyAvailability } from '../model/PropertyAvailability';
+import { ReviewAveragesComponent } from '../components/review-averages/review-averages.component';
+import { AverageRating } from '../model/AverageRating';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +52,12 @@ export class PropertyService {
   getPropertyAvailability(id: Number): Observable<PropertyAvailability[]> {
     return this.http.get<PropertyAvailability[]>(
       `${this.url}/${id}/availability`
+    );
+  }
+
+  getAverageRatings(id: Number): Observable<AverageRating[]> {
+    return this.http.get<AverageRating[]>(
+      `${this.url}/${id}/average-component-ratings`
     );
   }
 

@@ -11,16 +11,12 @@ import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
 })
 export class ReviewComponent {
   @Input()
-  review: ReviewWithComponents | undefined;
+  review: Review | undefined;
 
   getAverage() {
-    if (this.review)
-      return (
-        this.review?.components
-          .map((c) => c.rating)
-          .reduce((sum, rating) => sum.valueOf() + rating.valueOf(), 0)
-          .valueOf() / this.review?.components.length
-      );
+    console.log('review', this.review);
+
+    if (this.review) return this.review.averageRating;
     return 0;
   }
 }

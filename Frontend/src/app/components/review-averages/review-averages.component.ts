@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
+import { PropertyService } from '../../service/property.service';
+import { AverageRating } from '../../model/AverageRating';
 
 @Component({
   selector: 'app-review-averages',
@@ -12,5 +14,5 @@ export class ReviewAveragesComponent {
   @Input()
   averageRating: string | undefined;
   @Input()
-  reviews: ReviewWithComponents[] = [];
+  averageRatings: AverageRating[] = [];
 }

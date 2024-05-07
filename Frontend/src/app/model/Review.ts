@@ -5,4 +5,5 @@ export interface Review {
   user: UserAccount;
   comment: string;
   reviewDate: Date;
+  averageRating: Number;
 }
