@@ -4,6 +4,7 @@ import com.sorsix.backend.api.dtos.ComponentRatingDTO
 import com.sorsix.backend.api.dtos.ReviewDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.UserReview
+import com.sorsix.backend.repository.component_rating_repository.ComponentRatingRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.UserReviewNotFoundException
 import org.springframework.stereotype.Service
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service
 class ReviewService(
     private val reviewRepository: UserReviewRepository,
     private val propertyService: PropertyService,
+    private val componentRatingRepository: ComponentRatingRepository
 ) {
     fun getAllReviewsForProperty(id: Long): List<ReviewDTO> {
         val property = this.propertyService.findPropertyById(id)
@@ -40,7 +42,8 @@ class ReviewService(
                 joinedDate = userReview.user.joinedDate,
                 dateHostStarted = userReview.user.dateHostStarted
             ),
-            reviewDate = userReview.reviewDate
+            reviewDate = userReview.reviewDate,
+            averageRating = componentRatingRepository.averageRatingByUserReview(userReview)
         )
     }
 }

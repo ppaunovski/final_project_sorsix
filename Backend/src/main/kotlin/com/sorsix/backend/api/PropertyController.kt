@@ -3,6 +3,7 @@ package com.sorsix.backend.api
 import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.service.ComponentRatingService
 import com.sorsix.backend.service.PropertyImagesService
 import com.sorsix.backend.service.PropertyService
 import com.sorsix.backend.service.ReviewService
@@ -14,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile
 class PropertyController(
     private val propertyService: PropertyService,
     private val reviewService: ReviewService,
-    private val propertyImagesService: PropertyImagesService){
+    private val propertyImagesService: PropertyImagesService,
+    private val componentRatingService: ComponentRatingService
+    ){
     @GetMapping
     fun findAllProperties() = propertyService.findAllProperties()
 
@@ -46,4 +49,7 @@ class PropertyController(
 
     @GetMapping("/{id}/availability")
     fun getPropertyAvailability(@PathVariable id: Long) = propertyService.getPropertyAvailability(id)
+
+    @GetMapping("/{id}/average-component-ratings")
+    fun getAverageComponentRatingsForProperty(@PathVariable id: Long) = componentRatingService.findAverageComponentRatingAverageForProperty(id)
 }

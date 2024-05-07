@@ -1,5 +1,6 @@
 package com.sorsix.backend.repository.component_rating_repository
 
+import com.sorsix.backend.api.dtos.AverageComponentRatingDTO
 import com.sorsix.backend.domain.entities.ComponentRating
 import com.sorsix.backend.domain.entities.UserReview
 import org.springframework.data.repository.findByIdOrNull
@@ -23,4 +24,7 @@ class ComponentRatingRepositoryImpl(
 
     override fun averageRatingByUserReview(userReview: UserReview): Double =
         this.jpaComponentRatingRepository.averageRatingByUserReview(userReview)
+
+    override fun averageRatingByPropertyAndComponentRating(propertyId: Long, componentRating: Long): AverageComponentRatingDTO? =
+        this.jpaComponentRatingRepository.averageRatingByPropertyAndComponentRating(propertyId, componentRating)
 }

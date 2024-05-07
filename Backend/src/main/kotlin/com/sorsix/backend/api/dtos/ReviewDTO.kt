@@ -6,5 +6,6 @@ data class ReviewDTO (
     val id: Long,
     val user: UserAccountDTO,
     val comment: String,
-    val reviewDate: LocalDate
+    val reviewDate: LocalDate,
+    val averageRating: Double
 )

@@ -1,13 +1,29 @@
 package com.sorsix.backend.repository.component_rating_repository
 
+import com.sorsix.backend.api.dtos.AverageComponentRatingDTO
 import com.sorsix.backend.domain.entities.ComponentRating
 import com.sorsix.backend.domain.entities.UserReview
 import com.sorsix.backend.repository.review_component_repository.JpaReviewComponentRepository
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
 interface JpaComponentRatingRepository: JpaRepository<ComponentRating, Long> {
     fun findAllByUserReview(userReview: UserReview): List<ComponentRating>
-    @Query("SELECT AVG(cr.rating) FROM ComponentRating cr WHERE cr.userReview = ?1")
+    @Query("SELECT AVG(cr.rating) FROM ComponentRating cr WHERE cr.userReview = :userReview")
     fun averageRatingByUserReview(userReview: UserReview): Double
+
+    @Query(
+            "SELECT new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, AVG(cr.rating)) " +
+            "FROM ReviewComponent rc " +
+            "JOIN  ComponentRating cr on cr.reviewComponent = rc " +
+            "JOIN UserReview ur ON ur.id = cr.userReview.id " +
+            "JOIN Property p ON p.id = ur.property.id " +
+            "WHERE p.id = :propertyId and rc.id = :componentRating " +
+            "GROUP BY cr.reviewComponent.rcComponentName ")
+//    @Query("select new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, cr.rating) " +
+//            "from ComponentRating cr ")
+    fun averageRatingByPropertyAndComponentRating(@Param(value = "propertyId") propertyId: Long, @Param(value = "componentRating") componentRating: Long): AverageComponentRatingDTO?
+
+
 }
