@@ -7,4 +7,5 @@ interface UserAccountRepository {
     fun findById(id: Long): UserAccount?
     fun save(userAccount: UserAccount): UserAccount
     fun deleteById(id: Long)
+    fun findByEmail(email: String): UserAccount?
 }

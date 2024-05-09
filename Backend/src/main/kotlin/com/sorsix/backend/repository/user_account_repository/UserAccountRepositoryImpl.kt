@@ -20,4 +20,8 @@ class UserAccountRepositoryImpl(private val userAccountRepository: JpaUserAccoun
     override fun deleteById(id: Long) =
         userAccountRepository.deleteById(id)
 
+    override fun findByEmail(email: String): UserAccount? =
+        this.userAccountRepository.findByEmail(email)
+
+
 }

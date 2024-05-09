@@ -4,5 +4,6 @@ import com.sorsix.backend.domain.entities.UserAccount
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface JpaUserAccountRepository: JpaRepository<UserAccount, Long> {
+    fun findByEmail(email: String): UserAccount?
 
 }
