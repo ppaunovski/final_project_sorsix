@@ -2,6 +2,7 @@ package com.sorsix.backend.repository.property_repository
 
 import com.sorsix.backend.domain.entities.Property
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 class PropertyRepositoryImpl(private val propertyRepository: JpaPropertyRepository): PropertyRepository{
@@ -18,5 +19,17 @@ class PropertyRepositoryImpl(private val propertyRepository: JpaPropertyReposito
 
     override fun deleteById(id: Long) =
         propertyRepository.deleteById(id)
+
+    override fun findAllByFilterString(
+        filterString: String,
+        checkIn: LocalDate,
+        checkOut: LocalDate,
+        adults: Int,
+        children: Int,
+        pets: Int) =
+            this.propertyRepository.search(filterString, checkIn, checkOut, adults, children, pets)
+
+    override fun suggestProperties(): List<Property> =
+        this.propertyRepository.suggestProperties()
 
 }

@@ -22,8 +22,14 @@ class PropertyService(private val propertyRepository: PropertyRepository,
     private val bookingService: BookingService,
     private val userService: UserAccountService,
     private val bookingStatusRepository: BookingStatusRepository){
-    fun findAllProperties(): List<PropertyCardDTO> =
-        propertyRepository.findAll().map { property ->
+    fun findAllProperties(filterString: String,
+                          checkIn: LocalDate,
+                          checkOut: LocalDate,
+                          adults: Int,
+                          children: Int,
+                          pet: Int
+    ): List<PropertyCardDTO> {
+        return propertyRepository.findAllByFilterString(filterString, checkIn, checkOut, adults, children, pet).map { property ->
             PropertyCardDTO(
                 id = property.id,
                 cityName = property.city.name,
@@ -37,6 +43,8 @@ class PropertyService(private val propertyRepository: PropertyRepository,
                 pricePerNight = property.nightlyPrice
             )
         }
+    }
+
     fun findPropertyById(id: Long): Property =
         propertyRepository.findById(id) ?: throw PropertyNotFoundException(id)
 
@@ -149,4 +157,23 @@ class PropertyService(private val propertyRepository: PropertyRepository,
                 )
         }
     }
+
+    fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO {
+        return PropertyCardDTO(
+            id = property.id,
+            cityName = property.city.name,
+            address = property.address,
+            averageRating = this.reviewRepository
+                .findAllByProperty(property)
+                .map { this.componentRatingService
+                    .findAverageComponentRatingForUserReview(it.id)
+                }.average(),
+            description = property.description,
+            pricePerNight = property.nightlyPrice
+        )
+    }
+
+    fun suggestProperties(): List<PropertyCardDTO> =
+        this.propertyRepository.suggestProperties().map { this.mapPropertyToPropertyCardDTO(it) }
+
 }
