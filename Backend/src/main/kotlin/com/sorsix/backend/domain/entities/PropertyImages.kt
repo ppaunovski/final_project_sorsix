@@ -16,6 +16,26 @@ data class PropertyImages(
     val property: Property,
     @Column(name = "pi_order", nullable = false)
     val order: Int,
-    @Column(name = "pi_image", nullable = false)
+    @Column(name = "pi_image",columnDefinition = "bytea", nullable = false)
     val image: ByteArray
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is PropertyImages) return false
+
+        if (id != other.id) return false
+        if (property != other.property) return false
+        if (order != other.order) return false
+        if (!image.contentEquals(other.image)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + property.hashCode()
+        result = 31 * result + order
+        result = 31 * result + image.contentHashCode()
+        return result
+    }
+}

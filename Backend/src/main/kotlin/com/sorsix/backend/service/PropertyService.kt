@@ -8,6 +8,7 @@ import com.sorsix.backend.domain.entities.PropertyAvailability
 import com.sorsix.backend.domain.enums.BookingStatusEnum
 import com.sorsix.backend.repository.booking_status_repository.BookingStatusRepository
 import com.sorsix.backend.repository.property_availabilities_repository.PropertyAvailabilityRepository
+import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
 import com.sorsix.backend.repository.property_repository.PropertyRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.PropertyNotFoundException
@@ -15,34 +16,48 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class PropertyService(private val propertyRepository: PropertyRepository,
+class PropertyService(
+    private val propertyRepository: PropertyRepository,
     private val reviewRepository: UserReviewRepository,
     private val componentRatingService: ComponentRatingService,
     private val propertyAvailabilityRepository: PropertyAvailabilityRepository,
     private val bookingService: BookingService,
     private val userService: UserAccountService,
-    private val bookingStatusRepository: BookingStatusRepository){
-    fun findAllProperties(filterString: String,
-                          checkIn: LocalDate,
-                          checkOut: LocalDate,
-                          adults: Int,
-                          children: Int,
-                          pet: Int
+    private val bookingStatusRepository: BookingStatusRepository,
+    private val imageRepository: PropertyImagesRepository
+) {
+    fun findAllProperties(
+        filterString: String,
+        checkIn: LocalDate,
+        checkOut: LocalDate,
+        adults: Int,
+        children: Int,
+        pet: Int
     ): List<PropertyCardDTO> {
-        return propertyRepository.findAllByFilterString(filterString, checkIn, checkOut, adults, children, pet).map { property ->
-            PropertyCardDTO(
-                id = property.id,
-                cityName = property.city.name,
-                address = property.address,
-                averageRating = this.reviewRepository
-                    .findAllByProperty(property)
-                    .map { this.componentRatingService
-                        .findAverageComponentRatingForUserReview(it.id)
-                    }.average(),
-                description = property.description,
-                pricePerNight = property.nightlyPrice
-            )
-        }
+        return propertyRepository.findAllByFilterString(filterString, checkIn, checkOut, adults, children, pet)
+            .map { property ->
+                PropertyCardDTO(
+                    id = property.id,
+                    cityName = property.city.name,
+                    address = property.address,
+                    averageRating = this.reviewRepository
+                        .findAllByProperty(property)
+                        .map {
+                            this.componentRatingService
+                                .findAverageComponentRatingForUserReview(it.id)
+                        }.average(),
+                    description = property.description,
+                    pricePerNight = property.nightlyPrice,
+                    images = this.imageRepository.findAllByPropertyId(property.id).map {
+                        PropertyImageDTO(
+                            id = it.id,
+                            propertyId = it.property.id,
+                            order = it.order,
+                            imageByteArray = it.image
+                        )
+                    }
+                )
+            }
     }
 
     fun findPropertyById(id: Long): Property =
@@ -106,7 +121,7 @@ class PropertyService(private val propertyRepository: PropertyRepository,
         val propertyAvailability = this.propertyAvailabilityRepository.findAllForProperty(property)
             .first { it.startDate <= offerRequest.checkInDate && it.endDate >= offerRequest.checkOutDate }
 
-        if(propertyAvailability.startDate < offerRequest.checkInDate){
+        if (propertyAvailability.startDate < offerRequest.checkInDate) {
             this.propertyAvailabilityRepository.save(
                 PropertyAvailability(
                     id = 0,
@@ -117,7 +132,7 @@ class PropertyService(private val propertyRepository: PropertyRepository,
             )
         }
 
-        if(propertyAvailability.endDate > offerRequest.checkOutDate){
+        if (propertyAvailability.endDate > offerRequest.checkOutDate) {
             this.propertyAvailabilityRepository.save(
                 PropertyAvailability(
                     id = 0,
@@ -131,7 +146,7 @@ class PropertyService(private val propertyRepository: PropertyRepository,
         this.propertyAvailabilityRepository.deleteById(propertyAvailability.id)
 
         val booking = Booking(
-           id = 0,
+            id = 0,
             guest = userService.findUserAccountById(1),
             property = property,
             checkIn = offerRequest.checkInDate,
@@ -154,7 +169,7 @@ class PropertyService(private val propertyRepository: PropertyRepository,
             PropertyAvailabilityDTO(
                 startDate = it.startDate,
                 endDate = it.endDate,
-                )
+            )
         }
     }
 
@@ -165,11 +180,20 @@ class PropertyService(private val propertyRepository: PropertyRepository,
             address = property.address,
             averageRating = this.reviewRepository
                 .findAllByProperty(property)
-                .map { this.componentRatingService
-                    .findAverageComponentRatingForUserReview(it.id)
+                .map {
+                    this.componentRatingService
+                        .findAverageComponentRatingForUserReview(it.id)
                 }.average(),
             description = property.description,
-            pricePerNight = property.nightlyPrice
+            pricePerNight = property.nightlyPrice,
+            images = this.imageRepository.findAllByPropertyId(property.id).map {
+                PropertyImageDTO(
+                    id = it.id,
+                    propertyId = it.property.id,
+                    order = it.order,
+                    imageByteArray = it.image
+                )
+            }
         )
     }
 

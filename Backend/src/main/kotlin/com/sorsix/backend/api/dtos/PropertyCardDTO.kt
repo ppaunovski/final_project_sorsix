@@ -13,5 +13,7 @@ data class PropertyCardDTO(
 
     val description: String,
 
-    val pricePerNight: Double
+    val pricePerNight: Double,
+
+    val images: List<PropertyImageDTO>
 )
