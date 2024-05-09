@@ -56,6 +56,8 @@ export class PropertiesComponent implements OnInit {
       .subscribe({
         next: (properties) => {
           this.properties = properties;
+          console.log(properties);
+          
         },
       });
 

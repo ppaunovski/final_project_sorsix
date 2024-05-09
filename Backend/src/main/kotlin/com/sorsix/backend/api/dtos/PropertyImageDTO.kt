@@ -4,7 +4,8 @@ data class PropertyImageDTO(
         val id: Long,
         val propertyId: Long,
         val order: Int,
-        val imageByteArray: ByteArray
+        val imageByteArray: ByteArray,
+        val type: String
 ) {
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true

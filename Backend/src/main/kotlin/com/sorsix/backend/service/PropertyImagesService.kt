@@ -28,7 +28,8 @@ class PropertyImagesService(
             id = propertyImages.id,
             propertyId = propertyImages.property.id,
             order = propertyImages.order,
-            imageByteArray = propertyImages.image
+            imageByteArray = propertyImages.image,
+            type = propertyImages.type
         )
     }
 
@@ -44,7 +45,8 @@ class PropertyImagesService(
             id = 0,
             property = property,
             order = propertyImageRequest.order,
-            image = propertyImageRequest.image
+            image = propertyImageRequest.image,
+            type = propertyImageRequest.type
         )
         this.propertyImagesRepository.save(propertyImages)
 

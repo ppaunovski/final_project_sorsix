@@ -66,7 +66,8 @@ create table property_images (
     pi_id bigserial primary key ,
     p_id bigint references property(p_id),
     pi_order int not null,
-    pi_image bytea not null
+    pi_image bytea not null,
+    pi_type text not null
 );
 
 create table user_review (

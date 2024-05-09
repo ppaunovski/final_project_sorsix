@@ -47,7 +47,7 @@ class PropertyController(
     @PostMapping("/{id}/images")
     fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile) =
         propertyImagesService.savePropertyImage(
-            PropertyImageRequest(id, propertyImagesService.getNextOrder(id), image.bytes)
+            PropertyImageRequest(id, propertyImagesService.getNextOrder(id), image.bytes, image.contentType!!)
         )
 
     @GetMapping("/{id}/get-offer")

@@ -1,3 +1,5 @@
+import { PropertyImage } from './PropertyImage';
+
 export interface PropertyInfo {
   id: number;
 
@@ -10,4 +12,6 @@ export interface PropertyInfo {
   description: string;
 
   pricePerNight: number;
+
+  images: PropertyImage[];
 }

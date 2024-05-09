@@ -11,6 +11,8 @@ data class PropertyImages(
     @Column(name = "pi_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
+    @Column(name = "pi_type", nullable = false)
+    val type: String,
     @ManyToOne
     @JoinColumn(name = "p_id", nullable = false)
     val property: Property,

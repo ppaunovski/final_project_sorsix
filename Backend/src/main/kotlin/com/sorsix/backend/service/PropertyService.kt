@@ -53,7 +53,8 @@ class PropertyService(
                             id = it.id,
                             propertyId = it.property.id,
                             order = it.order,
-                            imageByteArray = it.image
+                            imageByteArray = it.image,
+                            type = it.type
                         )
                     }
                 )
@@ -191,7 +192,8 @@ class PropertyService(
                     id = it.id,
                     propertyId = it.property.id,
                     order = it.order,
-                    imageByteArray = it.image
+                    imageByteArray = it.image,
+                    type = it.type
                 )
             }
         )
