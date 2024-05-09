@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
 import { Subject } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { GuestsDialogComponent } from '../guests-dialog/guests-dialog.component';
+import { PropertyService } from '../../service/property.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -20,6 +22,33 @@ import { GuestsDialogComponent } from '../guests-dialog/guests-dialog.component'
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent implements OnInit {
+  private formatDate(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+  changeFilterString(value: string) {
+    this.filterString = value;
+  }
+  search() {
+    if (this.startDate && this.endDate) {
+      console.log('SEARCH');
+      const queryParams = {
+        filterString: this.filterString,
+        checkIn: this.formatDate(this.startDate),
+        checkOut: this.formatDate(this.endDate),
+        adults: this.numberOfAdults.toString(),
+        children: this.numberOfChildren.toString(),
+        pets: this.numberOfPets.toString(),
+      };
+
+      this.router.navigate(['/properties'], { queryParams: queryParams });
+    }
+  }
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
     this.changeStartDate$.subscribe((date) => {
       this.startDate = date;
@@ -33,11 +62,13 @@ export class SearchBarComponent implements OnInit {
   isGuestDialongOpen = false;
   changeStartDate$: Subject<Date | undefined | null> = new Subject();
   changeEndDate$: Subject<Date | null | undefined> = new Subject();
+
   startDate: Date | undefined | null;
   endDate: Date | undefined | null;
   numberOfAdults = 1;
   numberOfChildren = 0;
   numberOfPets = 0;
+  filterString = '';
 
   changeStartDate(date: Date | undefined | null) {
     if (date) {

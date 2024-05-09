@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Property } from '../../model/property';
 import { RouterLink } from '@angular/router';
@@ -13,7 +13,10 @@ import { PropertyInfo } from '../../model/PropertyInfo';
   templateUrl: './property-preview.component.html',
   styleUrl: './property-preview.component.css',
 })
-export class PropertyPreviewComponent {
+export class PropertyPreviewComponent implements OnInit {
+  ngOnInit(): void {
+    console.log(this.property);
+  }
   @Input()
   property: PropertyInfo | undefined;
 }

@@ -29,7 +29,10 @@
 
       <p>
         <span class="font-bold text-lg">
-          {{ this.property?.pricePerNight }} MKD
+          <span>
+            {{ this.property?.pricePerNight?.toString() }}
+          </span>
+          MKD
         </span>
         <span> per night </span>
       </p>

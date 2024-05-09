@@ -1,6 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { Property } from '../model/property';
 import { Review } from '../model/Review';
 import { BookingRequest } from '../model/BookingRequest';
@@ -14,12 +18,55 @@ import { AverageRating } from '../model/AverageRating';
   providedIn: 'root',
 })
 export class PropertyService {
+  search$ = new Subject<any>();
+
   private url = '/api/properties';
 
   constructor(private http: HttpClient) {}
 
+  private formatDate(date: Date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
   getAllProperties(): Observable<PropertyInfo[]> {
     return this.http.get<PropertyInfo[]>(this.url);
+  }
+
+  getFilteredProperties(
+    filterString: string,
+    checkIn: string,
+    checkOut: string,
+    adults: string,
+    children: string,
+    pets: string
+  ): Observable<PropertyInfo[]> {
+    if (filterString && checkIn && checkOut && adults && children && pets)
+      return this.http
+        .get<PropertyInfo[]>(
+          `${this.url}/search?filterString=${filterString}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&pets=${pets}`
+        )
+        .pipe(catchError(this.handleError));
+    return this.getAllProperties();
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    // Your error handling logic goes here
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+      );
+    }
+    // Return an observable with a user-facing error message.
+    return throwError('Something bad happened; please try again later.');
   }
 
   getPropertyById(id: Number): Observable<Property | undefined> {
