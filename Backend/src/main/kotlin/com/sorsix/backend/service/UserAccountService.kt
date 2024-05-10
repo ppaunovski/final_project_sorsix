@@ -4,6 +4,8 @@ import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 
 @Service
@@ -28,4 +30,5 @@ class UserAccountService(val userAccountRepository: UserAccountRepository) {
             joinedDate = userAccount.joinedDate,
             dateHostStarted = userAccount.dateHostStarted
         )
+
 }

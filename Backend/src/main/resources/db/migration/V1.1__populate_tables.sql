@@ -1,8 +1,8 @@
-insert into user_account (u_id, u_first_name, u_last_name, u_email, u_password, u_joined_date, u_date_host_started)
+insert into user_account (u_first_name, u_last_name, u_email, u_password, u_joined_date, u_date_host_started)
 values
-    (1, 'Pavel', 'Paunovski', 'pavel@pavel.com', 'pp', '2024-01-16', '2024-01-16'),
-    (2, 'Nikola', 'Nacevski', 'nikola@nikola.com', 'nn', '2024-01-16', '2024-01-16'),
-    (3, 'Guest', 'Guestovski', 'guest@guest.com', 'gg', '2024-01-16', null);
+    ('Pavel', 'Paunovski', 'pavel@pavel.com', 'pp', '2024-01-16', '2024-01-16'),
+    ('Nikola', 'Nacevski', 'nikola@nikola.com', 'nn', '2024-01-16', '2024-01-16'),
+    ('Guest', 'Guestovski', 'guest@guest.com', 'gg', '2024-01-16', null);
 
 insert into city (c_id, c_name) values
                                     (1, 'Skopje'),

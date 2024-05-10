@@ -1,6 +1,7 @@
 package com.sorsix.backend.config
 
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.service.UserAccountService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -14,7 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class ApplicationConfig(
-    private val userAccountRepository: UserAccountRepository
+    private val userAccountRepository: UserAccountRepository,
+    private val userAccountService: UserAccountService
 ) {
     @Bean
     fun userDetailsService(): UserDetailsService{
