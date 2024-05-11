@@ -6,11 +6,18 @@ import { PropertyPreviewComponent } from '../property-preview/property-preview.c
 import { PropertyInfo } from '../../model/PropertyInfo';
 import { filter, flatMap, map, mergeMap, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-properties',
   standalone: true,
-  imports: [JsonPipe, PropertyPreviewComponent],
+  imports: [
+    JsonPipe,
+    PropertyPreviewComponent,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css',
 })
@@ -57,7 +64,6 @@ export class PropertiesComponent implements OnInit {
         next: (properties) => {
           this.properties = properties;
           console.log(properties);
-          
         },
       });
 

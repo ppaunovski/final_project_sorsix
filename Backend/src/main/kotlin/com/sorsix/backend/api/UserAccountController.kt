@@ -3,13 +3,16 @@ package com.sorsix.backend.api
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.service.UserAccountService
+import org.apache.tomcat.util.http.parser.Authorization
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/user-account")
+@RequestMapping("/api/users")
 class UserAccountController(val userAccountService: UserAccountService) {
     @GetMapping
-    fun findAllUserAccounts() = userAccountService.findAllUserAccounts()
+    fun findUser(@RequestHeader(name = "Authorization") authorizationHeader: String, auth: Authentication) =
+        userAccountService.findUserAccountByJWT(authorizationHeader, auth)
     @GetMapping("/{id}")
     fun findUserAccountById(@PathVariable id: Long) = userAccountService.findUserAccountById(id)
     @PostMapping

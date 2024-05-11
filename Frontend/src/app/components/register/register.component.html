@@ -2,7 +2,73 @@
   <div class="example-form">
     <h1 class="text-xxl text-center">Register</h1>
 
-    <div class="flex justify-between">
+    <div class="flex">
+      <div class="example-full-width p-2">
+        <label class="pl-2">First Name</label>
+        <input
+          (input)="handleInput('firstName', firstName.value)"
+          #firstName
+          required="true"
+          class="w-full border-solid border-black border rounded-md h-10 p-2"
+          type="text"
+          matInput
+          placeholder="John"
+        />
+      </div>
+      <div class="example-full-width p-2">
+        <label class="pl-2">Last Name</label>
+        <input
+          (input)="handleInput('lastName', lastName.value)"
+          #lastName
+          required="true"
+          class="w-full border-solid border-black border rounded-md h-10 p-2"
+          type="text"
+          matInput
+          placeholder="Smith"
+        />
+      </div>
+    </div>
+
+    <div class="example-full-width p-2">
+      <label class="pl-2">Email</label>
+      <input
+        (input)="handleInput('email', email.value)"
+        #email
+        required="true"
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="email"
+        matInput
+        placeholder="example@example.com"
+      />
+    </div>
+
+    <div class="example-full-width p-2">
+      <label class="pl-2">Password</label>
+      <input
+        (input)="handleInput('password', password.value)"
+        #password
+        required="true"
+        class="w-full border-solid border-black border rounded-md h-10 pl-2"
+        type="password"
+        matInput
+        placeholde="xxxxxxx"
+      />
+    </div>
+
+    <div class="example-full-width p-2">
+      <label class="pl-2">Confirm Password</label>
+      <input
+        (input)="handleInput('confirmPassword', confirmPassword.value)"
+        #confirmPassword
+        required="true"
+        class="w-full border-solid border-black border rounded-md h-10 pl-2"
+        type="password"
+        matInput
+        placeholde="xxxxxxx"
+      />
+    </div>
+
+    <!-- <div class="flex justify-between">
       <mat-form-field class="w-[48%]">
         <mat-label>Name</mat-label>
         <input type="text" matInput placeholder="" />
@@ -32,10 +98,12 @@
     <mat-form-field class="example-full-width">
       <mat-label>Birth Date</mat-label>
       <input type="date" matInput placeholder="" />
-    </mat-form-field>
+    </mat-form-field> -->
 
     <div class="flex justify-center">
-      <button mat-flat-button color="primary">Sign Up</button>
+      <button (click)="handleSubmit()" mat-flat-button color="primary">
+        Sign Up
+      </button>
     </div>
     <div class="mt-4 flex justify-center text-blue-700">
       <a [routerLink]="['/login']">Already have an account?</a>

@@ -77,6 +77,7 @@ export class SearchBarComponent implements OnInit {
       date = new Date(date?.getTime() - offset * 60 * 1000);
     }
     this.isCheckoutOpen = true;
+    this.isCheckinOpen = false;
     this.changeEndDate$.next(undefined);
     this.changeStartDate$.next(date);
   }

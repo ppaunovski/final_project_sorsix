@@ -2,18 +2,40 @@
   <div class="example-form">
     <h1 class="text-xxl text-center">Sign In</h1>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Email</mat-label>
-      <input type="email" matInput placeholder="example@example.com" />
-    </mat-form-field>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Email</label>
+      <input
+        #email
+        (input)="handleInput('email', email.value)"
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="email"
+        matInput
+        placeholder="example@example.com"
+      />
+    </div>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Password</mat-label>
-      <input type="password" matInput placeholder="" />
-    </mat-form-field>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Password</label>
+      <input
+        #password
+        (input)="handleInput('password', password.value)"
+        class="w-full border-solid border-black border rounded-md h-10 pl-2"
+        type="password"
+        matInput
+        placeholde="xxxxxxx"
+      />
+    </div>
 
-    <div class="flex justify-center">
-      <button mat-flat-button color="primary">Sign In</button>
+    <div class="flex justify-center p-2">
+      <button
+        (click)="handleSubmit()"
+        (submit)="handleSubmit()"
+        type="submit"
+        mat-flat-button
+        color="primary"
+      >
+        Sign In
+      </button>
     </div>
     <div class="mt-4 flex justify-center text-blue-700">
       <a [routerLink]="['/register']">Haven't got an account? Register now!</a>

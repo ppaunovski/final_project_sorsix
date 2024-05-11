@@ -191,6 +191,7 @@ export class ReserveComponentComponent implements OnInit {
 
       date = new Date(date?.getTime() - offset * 60 * 1000);
     }
+    this.isCheckinOpen = false;
     this.changeEndDate$.next(undefined);
     this.changeStartDate$.next(date);
   }

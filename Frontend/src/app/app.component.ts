@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Frontend';
+
+  constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    this.authService.refreshAuth$.subscribe(() => {
+      this.router.navigate(['/properties']);
+    });
+  }
 }

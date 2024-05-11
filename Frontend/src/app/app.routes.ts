@@ -5,6 +5,7 @@ import { PropertiesComponent } from './components/properties/properties.componen
 import { UnitsComponent } from './components/units/units.component';
 import { PropertyComponent } from './components/property/property.component';
 import { CreatePropertyComponent } from './components/create-property/create-property.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,10 @@ export const routes: Routes = [
   {
     path: 'units',
     component: UnitsComponent,
+  },
+  {
+    path: 'profiles/:id',
+    component: ProfileComponent,
   },
   {
     path: '',

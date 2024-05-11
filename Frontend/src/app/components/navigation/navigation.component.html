@@ -17,6 +17,7 @@
     <div
       class="2xl:w-1/5 w-4/5 flex flex-row-reverse gap-10 items-center pr-2 md:pr-0"
     >
+      @if(this.user == undefined){
       <a [routerLink]="['/login']">
         <button
           mat-flat-button
@@ -27,6 +28,40 @@
           <mat-icon>person</mat-icon>
         </button>
       </a>
+      } @else {
+
+      <button
+        [matMenuTriggerFor]="menu"
+        mat-flat-button
+        color="primary"
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <span>
+          {{ this.user.firstName }}
+        </span>
+        <mat-icon>person</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a [routerLink]="['/profiles', this.user.id]">
+          <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+        </a>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>bookmark_added</mat-icon>
+          <span>My bookings</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>home</mat-icon>
+          <span>My properties</span>
+        </button>
+      </mat-menu>
+      }
       <a> Add your home </a>
     </div>
   </div>
