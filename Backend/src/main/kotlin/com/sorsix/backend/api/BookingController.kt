@@ -2,6 +2,7 @@ package com.sorsix.backend.api
 
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.service.BookingService
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,4 +16,12 @@ class BookingController(val bookingService: BookingService) {
     fun saveBooking(@RequestBody booking: Booking) = bookingService.saveBooking(booking)
     @DeleteMapping("/{id}")
     fun deleteBookingById(@PathVariable id: Long) = bookingService.deleteBookingById(id)
+    @GetMapping("/user")
+    fun getBookingsForUser(@RequestHeader(name = "Authorization") authorizationHeader: String, authentication: Authentication) =
+        bookingService.getBookingsForUser(authorizationHeader, authentication)
+    @PostMapping("/{id}/confirm")
+    fun confirmBooking(@PathVariable id: Long, authentication: Authentication) = bookingService.confirmBooking(id, authentication)
+    @PostMapping("/{id}/cancel")
+    fun cancelBooking(@PathVariable id: Long, authentication: Authentication) = bookingService.cancelBooking(id, authentication)
+
 }

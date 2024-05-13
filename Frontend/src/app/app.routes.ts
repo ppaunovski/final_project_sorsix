@@ -6,6 +6,8 @@ import { UnitsComponent } from './components/units/units.component';
 import { PropertyComponent } from './components/property/property.component';
 import { CreatePropertyComponent } from './components/create-property/create-property.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { BookingsComponent } from './components/bookings/bookings.component';
+import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,14 @@ export const routes: Routes = [
   {
     path: 'profiles/:id',
     component: ProfileComponent,
+  },
+  {
+    path: 'profiles/:id/bookings',
+    component: BookingsComponent,
+  },
+  {
+    path: 'bookings/:id/confirm',
+    component: ConfirmBookingComponent,
   },
   {
     path: '',

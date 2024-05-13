@@ -8,6 +8,7 @@ import com.sorsix.backend.service.ComponentRatingService
 import com.sorsix.backend.service.PropertyImagesService
 import com.sorsix.backend.service.PropertyService
 import com.sorsix.backend.service.ReviewService
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDate
@@ -62,10 +63,16 @@ class PropertyController(
     @GetMapping("/{id}/get-offer")
     fun getOfferForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.getOfferForProperty(id, offerRequest)
 
-    @PostMapping("/{id}/book")
-    fun createBookingForProperty(@PathVariable id: Long,
-                                 @RequestBody offerRequest: OfferRequest) =
-        propertyService.createBookingForProperty(id, offerRequest)
+//    @PostMapping("/{id}/book")
+//    fun createBookingForProperty(@PathVariable id: Long,
+//                                 @RequestBody offerRequest: OfferRequest,
+//                                 authentication: Authentication) =
+//        propertyService.createBookingForProperty(id, offerRequest, authentication)
+    @PostMapping("/{id}/reserve")
+    fun reserveProperty(@PathVariable id: Long,
+                        @RequestBody offerRequest: OfferRequest,
+                        authentication: Authentication) =
+        propertyService.reserveProperty(id, offerRequest, authentication)
 
     @GetMapping("/{id}/availability")
     fun getPropertyAvailability(@PathVariable id: Long) = propertyService.getPropertyAvailability(id)

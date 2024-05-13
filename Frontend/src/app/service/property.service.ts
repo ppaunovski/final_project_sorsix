@@ -81,12 +81,12 @@ export class PropertyService {
     this.http.get(`${this.url}/${id}/get-offer`);
   }
 
-  bookProperty(
+  reserveProperty(
     id: Number,
     bookingRequest: BookingRequest
   ): Observable<Booking> {
     return this.http.post<Booking>(
-      `${this.url}/${id}/book`,
+      `${this.url}/${id}/reserve`,
       JSON.stringify(bookingRequest),
       {
         headers: {

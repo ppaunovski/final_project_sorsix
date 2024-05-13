@@ -38,4 +38,6 @@ class UserAccountService(val userAccountRepository: UserAccountRepository) {
         return user?.let { mapUserAccountToDTO(it) } ?: throw UserAccountNotFoundException(0L)
     }
 
+    fun findUserByEmail(email: String) = userAccountRepository.findByEmail(email) ?: throw UserAccountNotFoundException(0L)
+
 }

@@ -5,17 +5,28 @@ import com.sorsix.backend.api.dtos.PropertyDTO
 import com.sorsix.backend.api.dtos.PropertyImageDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.Booking
+import com.sorsix.backend.domain.entities.BookingStatus
 import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.PropertyAvailability
+import com.sorsix.backend.domain.enums.BookingStatusEnum
 import com.sorsix.backend.repository.booking_repository.BookingRepository
+import com.sorsix.backend.repository.booking_status_repository.BookingStatusRepository
+import com.sorsix.backend.repository.property_availabilities_repository.PropertyAvailabilityRepository
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
+import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
 import com.sorsix.backend.service.exceptions.BookingNotFoundException
+import jakarta.transaction.Transactional
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 
 @Service
 class BookingService(
     private val bookingRepository: BookingRepository,
     private val userAccountService: UserAccountService,
-    private val imagesRepository: PropertyImagesRepository
+    private val imagesRepository: PropertyImagesRepository,
+    private val userAccountRepository: UserAccountRepository,
+    private val bookingStatusRepository: BookingStatusRepository,
+    private val availabilityRepository: PropertyAvailabilityRepository
 ) {
     fun findAllBookings() =
         bookingRepository.findAll().map { this.mapBookingToDTO(it) }
@@ -76,6 +87,54 @@ class BookingService(
                 )
             }
         )
+    }
+
+    fun getBookingsForUser(authorizationHeader: String, authentication: Authentication): List<BookingDTO> {
+        val guest = this.userAccountRepository.findByEmail(authentication.name)
+        return guest?.let { account -> this.bookingRepository.findAllByGuest(account).map { this.mapBookingToDTO(it) } } ?: throw RuntimeException("User not found")
+    }
+
+    @Transactional
+    fun confirmBooking(id: Long, authentication: Authentication): BookingDTO {
+        val guest = userAccountService.findUserByEmail(authentication.name)
+
+        val booking = bookingRepository.findById(id) ?: throw BookingNotFoundException(id)
+
+        if(booking.guest.id != guest.id) throw RuntimeException("User is not the owner of the booking")
+
+        booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.APPROVED.ordinal.toLong()) ?: throw RuntimeException("Booking status not found")
+        return bookingRepository.save(booking).let { this.mapBookingToDTO(it) }
+    }
+
+    @Transactional
+    fun cancelBooking(id: Long, authentication: Authentication): BookingDTO {
+        val guest = userAccountService.findUserByEmail(authentication.name)
+
+        val booking = bookingRepository.findById(id) ?: throw BookingNotFoundException(id)
+
+        if(booking.guest.id != guest.id || booking.property.host.id != guest.id) throw RuntimeException("User is not the owner of the booking")
+
+        booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.CANCELLED.ordinal.toLong()) ?: throw RuntimeException("Booking status not found")
+
+        val first = this.availabilityRepository.findAllForProperty(booking.property).first {
+            it.endDate == booking.checkIn.minusDays(1)
+        }
+
+        val second = this.availabilityRepository.findAllForProperty(booking.property).first {
+            it.startDate == booking.checkOut.plusDays(1)
+        }
+
+        this.availabilityRepository.deleteById(first.id)
+        this.availabilityRepository.deleteById(second.id)
+
+        this.availabilityRepository.save(PropertyAvailability(
+            id = 0,
+            property = booking.property,
+            startDate = first.startDate,
+            endDate = second.endDate
+        ))
+
+        return bookingRepository.save(booking).let { this.mapBookingToDTO(it) }
     }
 
 }

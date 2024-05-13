@@ -1,0 +1,56 @@
+<div class="w-full flex justify-center gap-5">
+  <img [src]="this.imageUrl" class="w-1/5" />
+  <div>
+    <h2>
+      <span class="text-2xl font-bold">
+        {{ this.booking?.property?.propertyType?.typeName }}
+      </span>
+      <span class="text-2xl font-bold"> in </span>
+      <span class="text-2xl font-bold">
+        {{ this.booking?.property?.city?.name }}
+      </span>
+    </h2>
+    <h3>
+      <span class="text-xl font-semibold">
+        {{ this.booking?.property?.name }}
+      </span>
+    </h3>
+    <p>
+      <span class="text-lg font-semibold">Check in:</span>
+      <span>
+        {{ this.booking?.checkIn }}
+      </span>
+    </p>
+    <p>
+      <span class="text-lg font-semibold">Check out:</span>
+      <span>
+        {{ this.booking?.checkOut }}
+      </span>
+    </p>
+
+    <div>
+      <p>
+        <span class="text-lg font-semibold"> Price: </span>
+        <span class="font-semibold">
+          {{ this.booking?.property?.nightlyPrice }} MKD
+        </span>
+
+        <span class="font-light"> per night </span>
+      </p>
+    </div>
+
+    <div>
+      <p>
+        <span class="text-lg font-semibold"> Fee: </span>
+        <span class="font-semibold"> {{ this.booking?.serviceFee }} MKD </span>
+      </p>
+    </div>
+
+    <div>
+      <span class="text-lg font-semibold">Status: </span>
+      <span>
+        {{ this.booking?.status }}
+      </span>
+    </div>
+  </div>
+</div>

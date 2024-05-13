@@ -12,6 +12,8 @@ import com.sorsix.backend.repository.property_images_repository.PropertyImagesRe
 import com.sorsix.backend.repository.property_repository.PropertyRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.PropertyNotFoundException
+import jakarta.transaction.Transactional
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -144,53 +146,6 @@ class PropertyService(
         )
     }
 
-    fun createBookingForProperty(id: Long, offerRequest: OfferRequest): BookingDTO {
-        val property = findPropertyById(id);
-        //TODO: Check if there is availability for the property for the given period
-        val propertyAvailability = this.propertyAvailabilityRepository.findAllForProperty(property)
-            .first { it.startDate <= offerRequest.checkInDate && it.endDate >= offerRequest.checkOutDate }
-
-        if (propertyAvailability.startDate < offerRequest.checkInDate) {
-            this.propertyAvailabilityRepository.save(
-                PropertyAvailability(
-                    id = 0,
-                    property = property,
-                    startDate = propertyAvailability.startDate,
-                    endDate = offerRequest.checkInDate.minusDays(1)
-                )
-            )
-        }
-
-        if (propertyAvailability.endDate > offerRequest.checkOutDate) {
-            this.propertyAvailabilityRepository.save(
-                PropertyAvailability(
-                    id = 0,
-                    property = property,
-                    startDate = offerRequest.checkOutDate.plusDays(1),
-                    endDate = propertyAvailability.endDate
-                )
-            )
-        }
-
-        this.propertyAvailabilityRepository.deleteById(propertyAvailability.id)
-
-        val booking = Booking(
-            id = 0,
-            guest = userService.findUserAccountById(1),
-            property = property,
-            checkIn = offerRequest.checkInDate,
-            checkOut = offerRequest.checkOutDate,
-            nightlyPrice = property.nightlyPrice,
-            serviceFee = 500.0,
-            cleaningFee = 1000.0,
-            status = bookingStatusRepository.findById(BookingStatusEnum.APPROVED.ordinal.toLong())!!,
-            bookingDate = LocalDate.now()
-        )
-
-
-        return bookingService.saveBooking(booking)
-
-    }
 
     fun getPropertyAvailability(id: Long): List<PropertyAvailabilityDTO> {
         val property = findPropertyById(id)
@@ -229,5 +184,58 @@ class PropertyService(
 
     fun suggestProperties(): List<PropertyCardDTO> =
         this.propertyRepository.suggestProperties().map { this.mapPropertyToPropertyCardDTO(it) }
+
+    @Transactional
+    fun reserveProperty(id: Long, offerRequest: OfferRequest, authentication: Authentication): BookingDTO {
+
+        val guest = this.userService.findUserByEmail(authentication.name)
+
+        val property = findPropertyById(id);
+        //TODO: Check if there is availability for the property for the given period
+        val propertyAvailability = this.propertyAvailabilityRepository.findAllForProperty(property)
+            .first { it.startDate <= offerRequest.checkInDate && it.endDate >= offerRequest.checkOutDate }
+
+        if (propertyAvailability.startDate < offerRequest.checkInDate) {
+            this.propertyAvailabilityRepository.save(
+                PropertyAvailability(
+                    id = 0,
+                    property = property,
+                    startDate = propertyAvailability.startDate,
+                    endDate = offerRequest.checkInDate.minusDays(1)
+                )
+            )
+        }
+
+        if (propertyAvailability.endDate > offerRequest.checkOutDate) {
+            this.propertyAvailabilityRepository.save(
+                PropertyAvailability(
+                    id = 0,
+                    property = property,
+                    startDate = offerRequest.checkOutDate.plusDays(1),
+                    endDate = propertyAvailability.endDate
+                )
+            )
+        }
+
+        this.propertyAvailabilityRepository.deleteById(propertyAvailability.id)
+
+        val booking = Booking(
+            id = 0,
+            guest = guest,
+            property = property,
+            checkIn = offerRequest.checkInDate,
+            checkOut = offerRequest.checkOutDate,
+            nightlyPrice = property.nightlyPrice,
+            serviceFee = 500.0,
+            cleaningFee = 1000.0,
+            status = bookingStatusRepository.findById(BookingStatusEnum.WAITING_FOR_APPROVAL.ordinal.toLong())!!,
+            bookingDate = LocalDate.now()
+        )
+
+
+        return bookingService.saveBooking(booking)
+
+
+    }
 
 }

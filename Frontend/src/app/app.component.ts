@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {
+    this.authService.refreshAuth$.next(true);
     this.authService.refreshAuth$.subscribe(() => {
       this.router.navigate(['/properties']);
     });

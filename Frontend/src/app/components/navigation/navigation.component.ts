@@ -33,6 +33,10 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
   styleUrl: './navigation.component.css',
 })
 export class NavigationComponent implements OnInit {
+  signOut() {
+    localStorage.removeItem('jwt');
+    this.authService.refreshAuth$.next(true);
+  }
   // @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   // someMethod() {
@@ -46,9 +50,11 @@ export class NavigationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userService.getUserInfo().subscribe((user) => {
-      this.user = user;
-      console.log('user', user);
-    });
+    this.authService.refreshAuth$
+      .pipe(mergeMap(() => this.userService.getUserInfo()))
+      .subscribe((user) => {
+        this.user = user;
+        console.log('user', user);
+      });
   }
 }

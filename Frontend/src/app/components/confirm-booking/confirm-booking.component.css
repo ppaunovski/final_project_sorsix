@@ -1,0 +1,3 @@
+::ng-deep .justify-center > button:nth-child(1) {
+  background: rgb(23, 202, 23);
+}

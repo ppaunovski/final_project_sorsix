@@ -24,6 +24,7 @@ import { PropertyService } from '../../service/property.service';
 import { PropertyAvailability } from '../../model/PropertyAvailability';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reserve-component',
@@ -78,7 +79,10 @@ export class ReserveComponentComponent implements OnInit {
   isCheckoutOpen = false;
   isGuestDialongOpen = false;
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(
+    private propertyService: PropertyService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.changeStartDate$.subscribe((start) => {
@@ -213,12 +217,12 @@ export class ReserveComponentComponent implements OnInit {
 
     if (this.property && this.startDate && this.endDate)
       this.propertyService
-        .bookProperty(this.property?.id, {
+        .reserveProperty(this.property?.id, {
           checkInDate: this.startDate.toISOString().split('T')[0],
           checkOutDate: this.endDate.toISOString().split('T')[0],
         })
         .subscribe((resp) => {
-          console.log(resp);
+          this.router.navigate(['/bookings', resp.id, 'confirm']);
         });
   }
 

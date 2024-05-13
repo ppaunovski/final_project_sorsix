@@ -1,0 +1,8 @@
+<div class="flex flex-col items-center w-full">
+  @for (booking of bookings; track booking.id) {
+  <app-booking-preview
+    [booking]="booking"
+    class="w-3/4 p-3"
+  ></app-booking-preview>
+  }
+</div>
