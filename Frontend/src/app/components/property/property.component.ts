@@ -49,6 +49,7 @@ import { Review } from '../../model/Review';
 })
 export class PropertyComponent implements OnInit {
   property: Property | undefined;
+  imagesUrl: string[] = [];
   loading = false;
   error: any;
   propertyAttributes: PropertyAttribute[] = [];
@@ -86,7 +87,14 @@ export class PropertyComponent implements OnInit {
           this.property = response;
           this.loading = false;
           this.error = null;
+          if (this.property && this.property.images) {
+            this.imagesUrl = this.property.images.map((image) =>
+              this.dataURItoBlob(image.imageByteArray, image.type)
+            );
+          }
+          console.log(this.imagesUrl);
           console.log(this.property);
+          
         },
         error: (error) => {
           this.error = error;
@@ -160,5 +168,15 @@ export class PropertyComponent implements OnInit {
           ).toPrecision(2);
         },
       });
+  }
+  dataURItoBlob(dataURI: string, type:string): string {
+    const byteString = window.atob(dataURI);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    var blob = new Blob([ab], { type: type });
+    return URL.createObjectURL(blob);
   }
 }

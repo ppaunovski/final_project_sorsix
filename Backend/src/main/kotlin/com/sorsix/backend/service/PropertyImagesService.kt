@@ -35,7 +35,7 @@ class PropertyImagesService(
 
     fun getNextOrder(id: Long): Int {
         val propertyImages = this.propertyImagesRepository.findAllByPropertyId(id)
-        return if (propertyImages.isEmpty()) 0 else propertyImages.maxBy { it.order }!!.order + 1
+        return if (propertyImages.isEmpty()) 0 else propertyImages.maxBy { it.order }.order + 1
 
     }
 

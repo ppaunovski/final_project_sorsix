@@ -1,5 +1,6 @@
 package com.sorsix.backend.api
 
+import com.sorsix.backend.api.dtos.PropertyDTO
 import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.domain.entities.Property
@@ -36,7 +37,15 @@ class PropertyController(
     fun findPropertyById(@PathVariable id: Long) = propertyService.getPropertyDTOById(id)
 
     @PostMapping
-    fun saveProperty(@RequestBody property: Property) = propertyService.saveProperty(property)
+    fun saveProperty(@RequestBody property: PropertyDTO){
+        propertyService.saveProperty(property)
+        for (image in property.images){
+            propertyImagesService.savePropertyImage(
+                PropertyImageRequest(property.id, image.order, image.imageByteArray, image.type)
+            )
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     fun deletePropertyById(@PathVariable id: Long) = propertyService.deletePropertyById(id)

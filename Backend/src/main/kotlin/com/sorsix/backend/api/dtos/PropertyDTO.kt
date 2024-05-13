@@ -23,4 +23,5 @@ data class PropertyDTO (
     var host: UserAccountDTO,
     var city: City,
     var propertyType: PropertyType,
+    var images: List<PropertyImageDTO>,
 )

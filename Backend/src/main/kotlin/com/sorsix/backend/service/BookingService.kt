@@ -2,10 +2,12 @@ package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.BookingDTO
 import com.sorsix.backend.api.dtos.PropertyDTO
+import com.sorsix.backend.api.dtos.PropertyImageDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.repository.booking_repository.BookingRepository
+import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
 import com.sorsix.backend.service.exceptions.BookingNotFoundException
 import org.springframework.stereotype.Service
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service
 class BookingService(
     private val bookingRepository: BookingRepository,
     private val userAccountService: UserAccountService,
+    private val imagesRepository: PropertyImagesRepository
 ) {
     fun findAllBookings() =
         bookingRepository.findAll().map { this.mapBookingToDTO(it) }
@@ -62,7 +65,16 @@ class BookingService(
                 dateHostStarted = property.host.dateHostStarted,
             ),
             city = property.city,
-            propertyType = property.propertyType
+            propertyType = property.propertyType,
+            images = this.imagesRepository.findAllByPropertyId(property.id).map {
+                PropertyImageDTO(
+                    id = it.id,
+                    propertyId = it.property.id,
+                    order = it.order,
+                    imageByteArray = it.image,
+                    type = it.type
+                )
+            }
         )
     }
 

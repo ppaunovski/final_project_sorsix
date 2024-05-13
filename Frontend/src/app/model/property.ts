@@ -1,6 +1,7 @@
 import { City } from './City';
 import { PropertyType } from './PropertyType';
 import { UserAccount } from './UserAccount';
+import { PropertyImage } from './PropertyImage';
 
 export interface Property {
   id: Number;
@@ -18,4 +19,5 @@ export interface Property {
   host: UserAccount;
   city: City;
   propertyType: PropertyType;
+  images: PropertyImage[];
 }

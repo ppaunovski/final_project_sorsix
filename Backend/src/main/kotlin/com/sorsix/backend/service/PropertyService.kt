@@ -67,7 +67,26 @@ class PropertyService(
     fun getPropertyDTOById(id: Long): PropertyDTO =
         propertyRepository.findById(id)?.let { this.mapPropertyToDTO(it) } ?: throw PropertyNotFoundException(id)
 
-    fun saveProperty(property: Property) = propertyRepository.save(property)
+    fun saveProperty(property: PropertyDTO) =
+        propertyRepository.save(
+            Property(
+                id = property.id,
+                nightlyPrice = property.nightlyPrice,
+                name = property.name,
+                guests = property.guests,
+                beds = property.beds,
+                bedrooms = property.bedrooms,
+                bathrooms = property.bathrooms,
+                isGuestFavorite = property.isGuestFavorite,
+                description = property.description,
+                address = property.address,
+                longitude = property.longitude,
+                latitude = property.latitude,
+                host = userService.findUserAccountById(property.host.id),
+                city = property.city,
+                propertyType = property.propertyType
+            )
+        )
 
     fun deletePropertyById(id: Long) = propertyRepository.deleteById(id)
 
@@ -94,7 +113,16 @@ class PropertyService(
                 dateHostStarted = property.host.dateHostStarted,
             ),
             city = property.city,
-            propertyType = property.propertyType
+            propertyType = property.propertyType,
+            images = this.imageRepository.findAllByPropertyId(property.id).map {
+                PropertyImageDTO(
+                    id = it.id,
+                    propertyId = it.property.id,
+                    order = it.order,
+                    imageByteArray = it.image,
+                    type = it.type
+                )
+            }
         )
     }
 

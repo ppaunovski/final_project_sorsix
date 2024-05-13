@@ -16,6 +16,4 @@ class PropertyImageController(private val propertyImagesService: PropertyImagesS
 
     @PostMapping("/{id}/save")
     fun savePropertyImage(@PathVariable id:Long,@RequestBody image: MultipartFile)  = propertyImagesService.savePropertyImage(PropertyImageRequest(id, propertyImagesService.getNextOrder(id), image.bytes, image.contentType!!))
-
-
 }
