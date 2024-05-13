@@ -1,6 +1,7 @@
 package com.sorsix.backend.repository.property_repository
 
 import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.UserAccount
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
@@ -31,5 +32,8 @@ class PropertyRepositoryImpl(private val propertyRepository: JpaPropertyReposito
 
     override fun suggestProperties(): List<Property> =
         this.propertyRepository.suggestProperties()
+
+    override fun findAllByHost(host: UserAccount): List<Property> =
+        this.propertyRepository.findAllByHost(host)
 
 }

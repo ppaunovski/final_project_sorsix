@@ -3,8 +3,8 @@ package com.sorsix.backend.api.dtos
 data class PropertyCardDTO(
     val id: Long,
 
-//    img,
 
+    val type: String,
     val cityName: String,
 
     val address: String,

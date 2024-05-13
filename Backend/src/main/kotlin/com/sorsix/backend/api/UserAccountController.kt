@@ -19,4 +19,6 @@ class UserAccountController(val userAccountService: UserAccountService) {
     fun saveUserAccount(@RequestBody userAccount: UserAccount) = userAccountService.saveUserAccount(userAccount)
     @DeleteMapping("/{id}")
     fun deleteUserAccountById(@PathVariable id: Long) = userAccountService.deleteUserAccountById(id)
+    @GetMapping("/{id}/properties")
+    fun findPropertiesForUser(@PathVariable id: Long, auth: Authentication) = userAccountService.findPropertiesForUser(id, auth)
 }

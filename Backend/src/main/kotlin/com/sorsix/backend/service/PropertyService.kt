@@ -58,7 +58,8 @@ class PropertyService(
                             imageByteArray = it.image,
                             type = it.type
                         )
-                    }
+                    },
+                    type = property.propertyType.typeName
                 )
             }
     }
@@ -178,7 +179,8 @@ class PropertyService(
                     imageByteArray = it.image,
                     type = it.type
                 )
-            }
+            },
+            type = property.propertyType.typeName
         )
     }
 

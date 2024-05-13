@@ -52,9 +52,23 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     this.authService.refreshAuth$
       .pipe(mergeMap(() => this.userService.getUserInfo()))
-      .subscribe((user) => {
-        this.user = user;
-        console.log('user', user);
+      .subscribe({
+        next: (user) => {
+          this.user = user;
+          console.log('user', user);
+        },
+        error: (error) => {
+          this.user = undefined;
+        },
       });
+
+    this.userService.getUserInfo().subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }

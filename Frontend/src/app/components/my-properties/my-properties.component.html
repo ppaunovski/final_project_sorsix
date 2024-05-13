@@ -1,0 +1,12 @@
+<div class="flex w-full justify-center">
+  @if (this.loading) {
+  <mat-spinner></mat-spinner>
+  } @else {
+
+  <div class="flex w-3/4 flex-wrap gap-4 justify-center">
+    @for (property of this.properties; track property.id) {
+    <app-property-preview [property]="property"></app-property-preview>
+    }
+  </div>
+  }
+</div>

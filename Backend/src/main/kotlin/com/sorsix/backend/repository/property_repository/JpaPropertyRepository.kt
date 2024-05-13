@@ -2,6 +2,7 @@ package com.sorsix.backend.repository.property_repository
 
 import com.sorsix.backend.domain.entities.City
 import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.UserAccount
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import java.time.LocalDate
@@ -23,4 +24,5 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
             "from Property p " +
             "where p.isGuestFavorite = true")
     fun suggestProperties(): List<Property>
+    fun findAllByHost(host: UserAccount): List<Property>
 }

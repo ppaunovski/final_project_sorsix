@@ -1,17 +1,30 @@
 package com.sorsix.backend.service
 
+import com.sorsix.backend.api.dtos.PropertyCardDTO
+import com.sorsix.backend.api.dtos.PropertyImageDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.domain.entities.UserAccount
+import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
+import com.sorsix.backend.repository.property_repository.PropertyRepository
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
+import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
 import org.apache.tomcat.util.http.parser.Authorization
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException.Unauthorized
 
 @Service
-class UserAccountService(val userAccountRepository: UserAccountRepository) {
+class UserAccountService(
+    private val userAccountRepository: UserAccountRepository,
+    private val propertyRepository: PropertyRepository,
+    private val propertyImagesRepository: PropertyImagesRepository,
+    private val reviewRepository: UserReviewRepository,
+    private val componentRatingService: ComponentRatingService
+    ) {
     fun findAllUserAccounts() =
         userAccountRepository.findAll().map { mapUserAccountToDTO(it) }
 
@@ -39,5 +52,38 @@ class UserAccountService(val userAccountRepository: UserAccountRepository) {
     }
 
     fun findUserByEmail(email: String) = userAccountRepository.findByEmail(email) ?: throw UserAccountNotFoundException(0L)
+    fun findPropertiesForUser(id: Long, auth: Authentication): List<PropertyCardDTO> {
+        val host = this.userAccountRepository.findById(id) ?: throw UserAccountNotFoundException(id)
+        if(host.email != auth.name) {
+            throw UnauthorizedAccessException("You are not authorized to view this user's properties")
+        }
+
+        return this.propertyRepository.findAllByHost(host).map { property ->
+            PropertyCardDTO(
+                id = property.id,
+                cityName = property.city.name,
+                address = property.address,
+                averageRating = this.reviewRepository
+                    .findAllByProperty(property)
+                    .map {
+                        this.componentRatingService
+                            .findAverageComponentRatingForUserReview(it.id)
+                    }.average(),
+                description = property.description,
+                pricePerNight = property.nightlyPrice,
+                images = this.propertyImagesRepository.findAllByPropertyId(property.id).map {
+                    PropertyImageDTO(
+                        id = it.id,
+                        propertyId = it.property.id,
+                        order = it.order,
+                        imageByteArray = it.image,
+                        type = it.type
+                    )
+                },
+                type = property.propertyType.typeName
+            )}
+
+
+    }
 
 }

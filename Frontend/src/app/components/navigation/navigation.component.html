@@ -57,10 +57,12 @@
             <span>My bookings</span>
           </button>
         </a>
-        <button mat-menu-item>
-          <mat-icon>home</mat-icon>
-          <span>My properties</span>
-        </button>
+        <a [routerLink]="['/profiles', this.user.id, 'properties']">
+          <button mat-menu-item>
+            <mat-icon>home</mat-icon>
+            <span>My properties</span>
+          </button>
+        </a>
       </mat-menu>
       }
       <a> Add your home </a>

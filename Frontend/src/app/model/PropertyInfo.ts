@@ -14,4 +14,5 @@ export interface PropertyInfo {
   pricePerNight: number;
 
   images: PropertyImage[];
+  type: string;
 }
