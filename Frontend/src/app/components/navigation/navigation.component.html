@@ -47,10 +47,12 @@
           <span>Sign out</span>
         </button>
 
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
-        </button>
+        <a [routerLink]="['/profiles', this.user.id]">
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+        </a>
         <a [routerLink]="['/profiles', this.user.id, 'bookings']">
           <button mat-menu-item>
             <mat-icon>bookmark_added</mat-icon>

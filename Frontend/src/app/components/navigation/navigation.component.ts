@@ -57,6 +57,7 @@ export class NavigationComponent implements OnInit {
           this.user = user;
           console.log('user', user);
         },
+
         error: (error) => {
           this.user = undefined;
         },
@@ -66,9 +67,9 @@ export class NavigationComponent implements OnInit {
       next: (user) => {
         this.user = user;
       },
-      error: (error) => {
-        console.log(error);
-      },
+      // error: (error) => {
+      //   console.log(error);
+      // },
     });
   }
 }

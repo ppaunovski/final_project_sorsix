@@ -44,8 +44,6 @@ export class SignInComponent {
   constructor(private authService: AuthService) {}
 
   handleSubmit() {
-    console.log(this.email, this.password);
-
     if (this.email && this.password)
       this.authService
         .login({
@@ -61,7 +59,7 @@ export class SignInComponent {
           next: (response) => {
             this.loading = false;
             this.error = null;
-            localStorage.setItem('jwt', response.token);
+            if (response) localStorage.setItem('jwt', response.token);
             this.authService.refreshAuth$.next(true);
           },
           error: (err) => {
