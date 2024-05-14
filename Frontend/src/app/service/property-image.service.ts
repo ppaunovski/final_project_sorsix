@@ -17,5 +17,9 @@ export class ImageService {
   getAllImagesByPropertyId(id: Number): Observable<PropertyImage[]>{
     return this.http.get<PropertyImage[]>(this.url + `/property/${id}`);
   }
-  
+  postImage(image: PropertyImage): Observable<any>{
+    return this.http.post(this.url + '/post', image);
+
+  }
+
 }

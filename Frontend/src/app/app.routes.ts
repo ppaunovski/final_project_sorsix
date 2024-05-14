@@ -6,6 +6,7 @@ import { UnitsComponent } from './components/units/units.component';
 import { PropertyComponent } from './components/property/property.component';
 import { CreatePropertyComponent } from './components/create-property/create-property.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PropertyFormComponent } from './components/property-form/property-form.component';
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 import { MyPropertiesComponent } from './components/my-properties/my-properties.component';
@@ -22,6 +23,10 @@ export const routes: Routes = [
   {
     path: 'properties',
     component: PropertiesComponent,
+  },
+  {
+    path: 'properties/create',
+    component: PropertyFormComponent,
   },
   {
     path: 'properties/create',
@@ -57,4 +62,5 @@ export const routes: Routes = [
     path: '',
     component: PropertiesComponent,
   },
+
 ];

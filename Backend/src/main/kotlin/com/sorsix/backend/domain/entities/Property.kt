@@ -5,7 +5,8 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "property")
 data class Property(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "p_id", nullable = false)
     val id: Long,
     @Column(name = "p_nightly_price", nullable = false)

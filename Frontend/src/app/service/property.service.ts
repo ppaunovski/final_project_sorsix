@@ -13,6 +13,9 @@ import { Booking } from '../model/Booking';
 import { PropertyAvailability } from '../model/PropertyAvailability';
 import { ReviewAveragesComponent } from '../components/review-averages/review-averages.component';
 import { AverageRating } from '../model/AverageRating';
+import { PropertyImage } from '../model/PropertyImage';
+import { UserAccount } from '../model/UserAccount';
+import { CityService } from './city.service';
 
 @Injectable({
   providedIn: 'root',
@@ -107,7 +110,12 @@ export class PropertyService {
       `${this.url}/${id}/average-component-ratings`
     );
   }
-
+  createProperty(property: Property, images: PropertyImage[]): Observable<Property> {
+    property.id = 0;
+    property.images = images;
+    console.log("Final Property: ",property);
+    return this.http.post<Property>(this.url, property);
+  }
   // getPropertiesByCity(city: String): Observable<Property[]>{
   //   return this.http.get<Property[]>(this.url + ``)
   // }

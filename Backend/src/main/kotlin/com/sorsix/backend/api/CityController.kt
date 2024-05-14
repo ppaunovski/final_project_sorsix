@@ -15,5 +15,4 @@ class CityController(val cityService: CityService) {
     fun saveCity(@RequestBody city: City) = cityService.saveCity(city)
     @DeleteMapping("/{id}")
     fun deleteCityById(@PathVariable id: Long) = cityService.deleteCityById(id)
-
 }

@@ -2,6 +2,7 @@ package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.*
 import com.sorsix.backend.api.requests.OfferRequest
+import com.sorsix.backend.api.requests.PropertyRequest
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.PropertyAvailability
@@ -70,7 +71,7 @@ class PropertyService(
     fun getPropertyDTOById(id: Long): PropertyDTO =
         propertyRepository.findById(id)?.let { this.mapPropertyToDTO(it) } ?: throw PropertyNotFoundException(id)
 
-    fun saveProperty(property: PropertyDTO) =
+    fun saveProperty(property: PropertyRequest, authentication: Authentication) =
         propertyRepository.save(
             Property(
                 id = property.id,
@@ -85,7 +86,7 @@ class PropertyService(
                 address = property.address,
                 longitude = property.longitude,
                 latitude = property.latitude,
-                host = userService.findUserAccountById(property.host.id),
+                host = userService.findUserByEmail(authentication.name),
                 city = property.city,
                 propertyType = property.propertyType
             )

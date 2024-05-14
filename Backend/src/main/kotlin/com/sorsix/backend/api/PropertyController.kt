@@ -3,6 +3,7 @@ package com.sorsix.backend.api
 import com.sorsix.backend.api.dtos.PropertyDTO
 import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyImageRequest
+import com.sorsix.backend.api.requests.PropertyRequest
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.service.ComponentRatingService
 import com.sorsix.backend.service.PropertyImagesService
@@ -38,13 +39,14 @@ class PropertyController(
     fun findPropertyById(@PathVariable id: Long) = propertyService.getPropertyDTOById(id)
 
     @PostMapping
-    fun saveProperty(@RequestBody property: PropertyDTO){
-        propertyService.saveProperty(property)
+    fun saveProperty(@RequestBody property: PropertyRequest, authentication: Authentication): Property{
+        val p = propertyService.saveProperty(property, authentication)
         for (image in property.images){
             propertyImagesService.savePropertyImage(
-                PropertyImageRequest(property.id, image.order, image.imageByteArray, image.type)
+                PropertyImageRequest(p.id, image.order, image.imageByteArray, image.type)
             )
         }
+        return p
     }
 
 

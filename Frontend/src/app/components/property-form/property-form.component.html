@@ -1,0 +1,195 @@
+
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+<div class="grid justify-center items-center h-3/4 w-full">
+  <div class="example-form">
+    <h1 class="text-xxl text-center">Add Your Booking</h1>
+
+    <div class="example-full-width p-2">
+      <label class="pl-2">Name</label>
+      <input
+        #Name
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="text"
+        matInput
+        formControlName="name"
+        placeholder="Apartment Name"
+      />
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Price per night</label>
+      <input
+        #Price
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="number"
+        formControlName="nightlyPrice"
+        matInput
+        placeholder="150.00"
+      />
+    </div>
+
+    <div class="example-full-width p-2">
+      <div class="flex w-full">
+        <div class="example-full-width p-2">
+          <label class="pl-2">City</label>
+          <select
+            #City
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            formControlName="city"
+          >
+            @for(city of cities; track city.id)
+            {
+              <option value="{{city.id}}">{{city.name}}</option>
+            }
+          </select>
+        </div>
+
+        <div class="example-full-width p-2">
+          <label class="pl-2">Address</label>
+          <input
+            #Address
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="text"
+            formControlName="address"
+            matInput
+            placeholder="Address"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Property Type</label>
+          <select
+            #PropertyType
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            formControlName="propertyType"
+            matInput
+          >
+            @for(type of propertyTypes; track type.id)
+            {
+              <option value="{{type.id}}">{{type.typeName}}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-full-width p-2">
+      <div class="flex">
+        <div class="example-full-width p-2">
+          <label class="pl-2">Longitude</label>
+          <input
+            #Longitude
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="longitude"
+            matInput
+            placeholder="Longitude"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Latitude</label>
+          <input
+            #Latitude
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="latitude"
+            matInput
+            placeholder="Latitude"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Description</label>
+      <textarea
+        #Description
+        class="w-full border-solid border-black border rounded-md h-20 p-2"
+        type="text"
+        formControlName="description"
+        matInput
+        placeholder="Description"
+      ></textarea>
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Images</label>
+      <input
+        #Images
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="file"
+        multiple
+        accept="image/*"
+        matInput
+        placeholder="Images"
+        (change)="onImagePicked($event)"
+      />
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Guests</label>
+      <input
+        #Guests
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="number"
+        formControlName="guests"
+        matInput
+        placeholder="Guests"
+      />
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Beds</label>
+      <input
+        #Beds
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="number"
+        formControlName="beds"
+        matInput
+        placeholder="Beds"
+      />
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Bedrooms</label>
+      <input
+        #Bedrooms
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="number"
+        formControlName="bedrooms"
+        matInput
+        placeholder="Bedrooms"
+      />
+    </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Bathrooms</label>
+      <input
+        #Bathrooms
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="number"
+        formControlName="bathrooms"
+        matInput
+        placeholder="Bathrooms"
+      />
+    </div>
+    <section class="example-full-width p-2">
+      <label class="pl-2">Select Attributes:</label>
+      
+        @for(att of attributes; track att.id)
+        {
+          <div class="flex items-center">
+            <mat-checkbox
+              class="pl-2"
+              [value]="att.id.toString()"
+              (change)="onCheckboxChange($event)"
+              >{{ att.name }}</mat-checkbox
+            >
+          </div>
+        }
+      
+    </section>
+    <div class="flex justify-center p-2">
+      <button
+        mat-flat-button
+        type="submit"
+        color="primary"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
+</form>

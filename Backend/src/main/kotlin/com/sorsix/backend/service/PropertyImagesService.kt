@@ -44,7 +44,7 @@ class PropertyImagesService(
         val propertyImages = PropertyImages(
             id = 0,
             property = property,
-            order = propertyImageRequest.order,
+            order = getNextOrder(property.id),
             image = propertyImageRequest.image,
             type = propertyImageRequest.type
         )

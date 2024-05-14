@@ -22,7 +22,17 @@
             fontIcon="star"
           ></mat-icon>
           <span class="p-2 font-bold text-lg">
-            {{ this.property?.averageRating | number : "0.1-1" }}
+            @if (this.property?.averageRating?.toString() != 'NaN') { {{
+
+              this.property?.averageRating?.valueOf() | number : "0.1-1"
+
+                  }}}
+                  @else {
+                    {{
+                      'Not rated yet'
+                    }}
+                  }
+
           </span>
         </div>
       </div>
