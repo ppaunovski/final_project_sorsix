@@ -24,6 +24,7 @@ import { ReviewAveragesComponent } from '../review-averages/review-averages.comp
 import { ReviewComponent } from '../review/review.component';
 import { AverageRating } from '../../model/AverageRating';
 import { Review } from '../../model/Review';
+import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
 
 @Component({
   selector: 'app-property',
@@ -43,6 +44,7 @@ import { Review } from '../../model/Review';
     PropertyInfoComponent,
     ReviewAveragesComponent,
     ReviewComponent,
+    ImageGalleryComponent,
   ],
   templateUrl: './property.component.html',
   styleUrl: './property.component.css',
@@ -94,7 +96,6 @@ export class PropertyComponent implements OnInit {
           }
           console.log(this.imagesUrl);
           console.log(this.property);
-          
         },
         error: (error) => {
           this.error = error;
@@ -119,7 +120,7 @@ export class PropertyComponent implements OnInit {
           this.propertyAttributes = response;
           this.loadingAttribs = false;
           this.errorAttribs = null;
-          console.log(this.propertyAttributes);
+          console.log('attributes', this.propertyAttributes);
         },
         error: (error) => {
           this.errorAttribs = error;
@@ -169,7 +170,7 @@ export class PropertyComponent implements OnInit {
         },
       });
   }
-  dataURItoBlob(dataURI: string, type:string): string {
+  dataURItoBlob(dataURI: string, type: string): string {
     const byteString = window.atob(dataURI);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);

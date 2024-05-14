@@ -1,0 +1,40 @@
+@if (!this.pageView) {
+<div class="lg:grid lg:grid-rows-2 lg:grid-cols-4 lg:gap-2 relative">
+  @for (image of this.imageUrls; track $index) { @if ($index == 0) {
+
+  <img class="lg:col-span-2 lg:row-span-2 rounded-md" [src]="image" />
+  } @else if($index < 5){
+
+  <div
+    [style]="'background-image: url(' + image + ')'"
+    class="hidden lg:block lg:col-span-1 lg:row-span-1 rounded-md lg:bg-cover"
+  >
+    <!-- <img class="rounded-md w-full h-auto" [src]="image" /> -->
+  </div>
+
+  } } @if (this.imageUrls.length > 5) {
+  <div class="absolute bottom-6 right-6">
+    <button (click)="openAllImages()" mat-flat-button color="accent">
+      Show more
+    </button>
+  </div>
+  }
+</div>
+
+} @else {
+<div class="flex w-full justify-center items-center p-6">
+  <div class="w-3/4 flex flex-wrap gap-3 justify-center">
+    @for (image of imageUrls; track $index) {
+
+    <div class="rounded-md w-1/4">
+      <div
+        [style]="'background-image: url(' + image + ')'"
+        class="rounded-md bg-cover min-h-96 min-w-32 w-full h-full"
+      >
+        <!-- <img class="rounded-md w-full h-auto" [src]="image" /> -->
+      </div>
+    </div>
+    }
+  </div>
+</div>
+}

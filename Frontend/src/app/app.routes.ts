@@ -11,6 +11,7 @@ import { BookingsComponent } from './components/bookings/bookings.component';
 import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 import { MyPropertiesComponent } from './components/my-properties/my-properties.component';
 import { ReviewComponentComponent } from './components/review-component/review-component.component';
+import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
 
 export const routes: Routes = [
   {
@@ -41,7 +42,10 @@ export const routes: Routes = [
     path: 'properties/:id/review',
     component: ReviewComponentComponent,
   },
-
+  {
+    path: 'properties/:id/images',
+    component: ImageGalleryComponent,
+  },
   {
     path: 'units',
     component: UnitsComponent,
@@ -67,5 +71,4 @@ export const routes: Routes = [
     path: '',
     component: PropertiesComponent,
   },
-
 ];

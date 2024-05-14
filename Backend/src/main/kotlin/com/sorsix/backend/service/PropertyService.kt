@@ -201,7 +201,8 @@ class PropertyService(
     }
 
     fun suggestProperties(): List<PropertyCardDTO> =
-        this.propertyRepository.suggestProperties().map { this.mapPropertyToPropertyCardDTO(it) }
+        this.propertyRepository.findAll().map { this.mapPropertyToPropertyCardDTO(it) }
+//        this.propertyRepository.suggestProperties().map { this.mapPropertyToPropertyCardDTO(it) }
 
     @Transactional
     fun reserveProperty(id: Long, offerRequest: OfferRequest, authentication: Authentication?): BookingDTO {

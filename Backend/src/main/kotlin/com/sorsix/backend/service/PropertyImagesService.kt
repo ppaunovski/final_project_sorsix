@@ -14,7 +14,7 @@ class PropertyImagesService(
     fun getAllPropertyImagesForPropertyId(id: Long): List<PropertyImageDTO> {
         return this.propertyImagesRepository.findAllByPropertyId(id).map {
             mapToPropertyImageDTO(it)
-        }.toList()
+        }
     }
 
 

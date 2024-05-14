@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserAccount } from '../../model/UserAccount';
 
 @Component({
@@ -11,4 +11,8 @@ import { UserAccount } from '../../model/UserAccount';
 export class HostPropertyPreviewComponent {
   @Input()
   host: UserAccount | undefined;
+
+  // getHostDate() {
+  //   log;
+  // }
 }

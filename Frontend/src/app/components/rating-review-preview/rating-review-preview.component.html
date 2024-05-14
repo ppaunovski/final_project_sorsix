@@ -2,7 +2,12 @@
   <div class="flex flex-col justify-center items-center">
     <!-- {{this.propert}} -->
     <div class="text-2xl font-bold">
+      @if (this.averageRating?.toString() == 'NaN') {
+      {{ "New" }}
+      } @else {
+
       {{ this.averageRating }}
+      }
     </div>
     <div>rating</div>
   </div>
