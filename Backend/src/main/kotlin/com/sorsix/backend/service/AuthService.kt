@@ -6,6 +6,7 @@ import com.sorsix.backend.api.requests.RegisterRequest
 import com.sorsix.backend.config.JwtService
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.service.exceptions.InvalidCredentialsException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -35,10 +36,10 @@ class AuthService(
 
     fun register(registerRequest: RegisterRequest): AuthResponse {
         if(this.userAccountRepository.findByEmail(registerRequest.email) != null){
-            throw RuntimeException("User with email ${registerRequest.email} already exists")
+            throw InvalidCredentialsException("User with email ${registerRequest.email} already exists")
         }
         if(registerRequest.password != registerRequest.confirmPassword){
-            throw RuntimeException("Passwords do not match")
+            throw InvalidCredentialsException("Passwords do not match")
         }
         val user = this.userAccountRepository.save(UserAccount(
             email = registerRequest.email,

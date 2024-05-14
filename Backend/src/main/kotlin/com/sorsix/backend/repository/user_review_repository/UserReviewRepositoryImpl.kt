@@ -1,6 +1,7 @@
 package com.sorsix.backend.repository.user_review_repository
 
 import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.domain.entities.UserReview
 import org.springframework.stereotype.Repository
 
@@ -24,4 +25,7 @@ class UserReviewRepositoryImpl(private val userReviewRepository: JpaUserReviewRe
 
     override fun findAllByProperty(property: Property): List<UserReview> =
         this.userReviewRepository.findAllByProperty(property)
+
+    override fun hasUserLeftReviewForProperty(guest: UserAccount, property: Property): Boolean =
+        this.userReviewRepository.existsByUserAndProperty(guest, property)
 }

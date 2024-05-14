@@ -15,6 +15,9 @@ import com.sorsix.backend.repository.property_availabilities_repository.Property
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
 import com.sorsix.backend.service.exceptions.BookingNotFoundException
+import com.sorsix.backend.service.exceptions.BookingStatusNotFoundException
+import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
+import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
 import jakarta.transaction.Transactional
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
@@ -91,7 +94,7 @@ class BookingService(
 
     fun getBookingsForUser(authorizationHeader: String, authentication: Authentication): List<BookingDTO> {
         val guest = this.userAccountRepository.findByEmail(authentication.name)
-        return guest?.let { account -> this.bookingRepository.findAllByGuest(account).map { this.mapBookingToDTO(it) } } ?: throw RuntimeException("User not found")
+        return guest?.let { account -> this.bookingRepository.findAllByGuest(account).map { this.mapBookingToDTO(it) } } ?: throw UserAccountNotFoundException("User not found")
     }
 
     @Transactional
@@ -100,9 +103,9 @@ class BookingService(
 
         val booking = bookingRepository.findById(id) ?: throw BookingNotFoundException(id)
 
-        if(booking.guest.id != guest.id) throw RuntimeException("User is not the owner of the booking")
+        if(booking.guest.id != guest.id) throw UnauthorizedAccessException("User is not the owner of the booking")
 
-        booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.APPROVED.ordinal.toLong()) ?: throw RuntimeException("Booking status not found")
+        booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.APPROVED.ordinal.toLong()) ?: throw BookingStatusNotFoundException("Booking status not found")
         return bookingRepository.save(booking).let { this.mapBookingToDTO(it) }
     }
 
@@ -112,9 +115,9 @@ class BookingService(
 
         val booking = bookingRepository.findById(id) ?: throw BookingNotFoundException(id)
 
-        if(booking.guest.id != guest.id || booking.property.host.id != guest.id) throw RuntimeException("User is not the owner of the booking")
+        if(booking.guest.id != guest.id || booking.property.host.id != guest.id) throw UnauthorizedAccessException("User is not the owner of the booking")
 
-        booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.CANCELLED.ordinal.toLong()) ?: throw RuntimeException("Booking status not found")
+        booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.CANCELLED.ordinal.toLong()) ?: throw BookingStatusNotFoundException("Booking status not found")
 
         val first = this.availabilityRepository.findAllForProperty(booking.property).first {
             it.endDate == booking.checkIn.minusDays(1)
@@ -135,6 +138,11 @@ class BookingService(
         ))
 
         return bookingRepository.save(booking).let { this.mapBookingToDTO(it) }
+    }
+
+    fun hasFinishedBooking(findPropertyById: Property, authentication: Authentication): Boolean {
+        val guest = userAccountService.findUserByEmail(authentication.name)
+        return bookingRepository.hasFinishedBooking(findPropertyById, guest)
     }
 
 }

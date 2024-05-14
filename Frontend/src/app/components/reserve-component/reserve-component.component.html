@@ -1,5 +1,10 @@
 <div class="w-full pt-12 flex justify-center items-center">
   <div class="border-solid border-2 border-black rounded-3xl w-4/5 h-5/6">
+    @if(this.error != null) {
+    <p class="pl-6 pt-3 text-red-700">
+      {{ this.error.message }}
+    </p>
+    }
     <div class="p-10">
       <span class="text-xl font-bold"
         >{{ this.property?.nightlyPrice }} MKD</span

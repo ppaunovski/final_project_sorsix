@@ -73,7 +73,7 @@ class PropertyController(
     @PostMapping("/{id}/reserve")
     fun reserveProperty(@PathVariable id: Long,
                         @RequestBody offerRequest: OfferRequest,
-                        authentication: Authentication) =
+                        authentication: Authentication?) =
         propertyService.reserveProperty(id, offerRequest, authentication)
 
     @GetMapping("/{id}/availability")
@@ -81,5 +81,8 @@ class PropertyController(
 
     @GetMapping("/{id}/average-component-ratings")
     fun getAverageComponentRatingsForProperty(@PathVariable id: Long) = componentRatingService.findAverageComponentRatingAverageForProperty(id)
+
+    @GetMapping("{id}/for-review")
+    fun getPropertyForReview(@PathVariable id: Long, authentication: Authentication?) = propertyService.getPropertyForReview(id, authentication)
 
 }

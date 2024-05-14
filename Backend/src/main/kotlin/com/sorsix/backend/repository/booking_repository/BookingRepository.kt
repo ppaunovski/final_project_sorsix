@@ -1,6 +1,7 @@
 package com.sorsix.backend.repository.booking_repository
 
 import com.sorsix.backend.domain.entities.Booking
+import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.UserAccount
 
 interface BookingRepository {
@@ -9,4 +10,5 @@ interface BookingRepository {
     fun save(booking: Booking): Booking
     fun deleteById(id: Long)
     fun findAllByGuest(guest: UserAccount): List<Booking>
+    fun hasFinishedBooking(findPropertyById: Property, guest: UserAccount): Boolean
 }

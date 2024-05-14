@@ -3,11 +3,20 @@ import { Router, RouterOutlet } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AuthService } from './service/auth.service';
+import {
+  MatProgressSpinner,
+  MatProgressSpinnerModule,
+} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatSlideToggleModule, NavigationComponent],
+  imports: [
+    RouterOutlet,
+    MatSlideToggleModule,
+    NavigationComponent,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

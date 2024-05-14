@@ -6,6 +6,7 @@ data class PropertyCardDTO(
 
     val type: String,
     val cityName: String,
+    val name: String,
 
     val address: String,
 

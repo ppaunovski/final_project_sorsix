@@ -24,14 +24,16 @@ class UserAccountService(
     private val propertyImagesRepository: PropertyImagesRepository,
     private val reviewRepository: UserReviewRepository,
     private val componentRatingService: ComponentRatingService
-    ) {
+) {
     fun findAllUserAccounts() =
         userAccountRepository.findAll().map { mapUserAccountToDTO(it) }
 
-    fun findUserAccountById(id: Long) = userAccountRepository.findById(id) ?: throw UserAccountNotFoundException(id)
+    fun findUserAccountById(id: Long) =
+        userAccountRepository.findById(id) ?: throw UserAccountNotFoundException("User account with id $id not found")
 
     fun getUserAccountDTOById(id: Long) =
-        userAccountRepository.findById(id)?.let { mapUserAccountToDTO(it) } ?: throw UserAccountNotFoundException(id)
+        userAccountRepository.findById(id)?.let { mapUserAccountToDTO(it) }
+            ?: throw UserAccountNotFoundException("User account with id $id not found")
 
     fun saveUserAccount(userAccount: UserAccount) = userAccountRepository.save(userAccount)
     fun deleteUserAccountById(id: Long) = userAccountRepository.deleteById(id)
@@ -48,13 +50,18 @@ class UserAccountService(
 
     fun findUserAccountByJWT(authorizationHeader: String, auth: Authentication): UserAccountDTO {
         val user = userAccountRepository.findByEmail(auth.name)
-        return user?.let { mapUserAccountToDTO(it) } ?: throw UserAccountNotFoundException(0L)
+        return user?.let { mapUserAccountToDTO(it) }
+            ?: throw UserAccountNotFoundException("User account with email ${auth.name} not found")
     }
 
-    fun findUserByEmail(email: String) = userAccountRepository.findByEmail(email) ?: throw UserAccountNotFoundException(0L)
+    fun findUserByEmail(email: String) = userAccountRepository.findByEmail(email) ?: throw UserAccountNotFoundException(
+        "User account with email $email not found"
+    )
+
     fun findPropertiesForUser(id: Long, auth: Authentication): List<PropertyCardDTO> {
-        val host = this.userAccountRepository.findById(id) ?: throw UserAccountNotFoundException(id)
-        if(host.email != auth.name) {
+        val host = this.userAccountRepository.findById(id)
+            ?: throw UserAccountNotFoundException("User account with id $id not found")
+        if (host.email != auth.name) {
             throw UnauthorizedAccessException("You are not authorized to view this user's properties")
         }
 
@@ -80,8 +87,10 @@ class UserAccountService(
                         type = it.type
                     )
                 },
-                type = property.propertyType.typeName
-            )}
+                type = property.propertyType.typeName,
+                name = property.name
+            )
+        }
 
 
     }

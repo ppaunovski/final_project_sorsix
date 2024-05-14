@@ -1,8 +1,10 @@
 package com.sorsix.backend.repository.booking_repository
 
 import com.sorsix.backend.domain.entities.Booking
+import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.UserAccount
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 
 @Repository
 class BookingRepositoryImpl(private val bookingRepository: JpaBookingRepository): BookingRepository{
@@ -23,6 +25,9 @@ class BookingRepositoryImpl(private val bookingRepository: JpaBookingRepository)
 
     override fun findAllByGuest(guest: UserAccount): List<Booking> =
         this.bookingRepository.findAllByGuest(guest)
+
+    override fun hasFinishedBooking(findPropertyById: Property, guest: UserAccount): Boolean =
+        this.bookingRepository.existsByGuestAndPropertyAndCheckOutBefore(guest, findPropertyById, LocalDate.now())
 
 
 }

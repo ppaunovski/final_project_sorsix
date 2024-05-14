@@ -1,5 +1,5 @@
-<div class="w-full flex justify-center gap-5">
-  <img [src]="this.imageUrl" class="w-1/5" />
+<div class="w-full flex border border-gray-500 border-solid p-2 gap-5">
+  <img [src]="this.imageUrl" class="w-2/5" />
   <div>
     <h2>
       <span class="text-2xl font-bold">
@@ -52,5 +52,22 @@
         {{ this.booking?.status }}
       </span>
     </div>
+    @if (this.showButtons) {
+    <div class="flex gap-6 p-3">
+      <button
+        [disabled]="!showCancel()"
+        (click)="cancel()"
+        mat-flat-button
+        color="warn"
+      >
+        <mat-icon> cancel </mat-icon>
+        Cancel
+      </button>
+      <button (click)="review()" mat-flat-button color="accent">
+        <mat-icon>reviews</mat-icon>
+        Review
+      </button>
+    </div>
+    }
   </div>
 </div>

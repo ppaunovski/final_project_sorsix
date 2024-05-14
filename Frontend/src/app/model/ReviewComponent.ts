@@ -1,4 +1,4 @@
 export interface ReviewComponent {
-  id: Number;
+  id: number;
   rcComponentName: string;
 }

@@ -2,7 +2,9 @@ package com.sorsix.backend.repository.booking_guests_repository
 
 import com.sorsix.backend.domain.entities.BookingGuest
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Repository
 
+@Repository
 class BookingGuestRepositoryImpl(
         private val jpaBookingGuestRepository: JpaBookingGuestRepository
 ) : BookingGuestsRepository {

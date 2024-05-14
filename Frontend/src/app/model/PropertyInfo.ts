@@ -4,6 +4,7 @@ export interface PropertyInfo {
   id: number;
 
   cityName: string;
+  name: string;
 
   address: string;
 

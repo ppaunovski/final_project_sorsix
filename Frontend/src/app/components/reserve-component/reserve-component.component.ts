@@ -25,6 +25,9 @@ import { PropertyAvailability } from '../../model/PropertyAvailability';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { DateRangeComponent } from '../date-range/date-range.component';
 import { Router } from '@angular/router';
+import { ErrorResponse } from '../../model/ErrorResponse';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from '../../service/error.service';
 
 @Component({
   selector: 'app-reserve-component',
@@ -79,8 +82,12 @@ export class ReserveComponentComponent implements OnInit {
   isCheckoutOpen = false;
   isGuestDialongOpen = false;
 
+  error: ErrorResponse | null = null;
+  loading = false;
+
   constructor(
     private propertyService: PropertyService,
+    private errorService: ErrorService,
     private router: Router
   ) {}
 
@@ -220,9 +227,18 @@ export class ReserveComponentComponent implements OnInit {
         .reserveProperty(this.property?.id, {
           checkInDate: this.startDate.toISOString().split('T')[0],
           checkOutDate: this.endDate.toISOString().split('T')[0],
+          numberOfAdults: this.numberOfAdults,
+          numberOfChildren: this.numberOfChildren,
+          numberOfPets: this.numberOfPets,
         })
-        .subscribe((resp) => {
-          this.router.navigate(['/bookings', resp.id, 'confirm']);
+        .subscribe({
+          next: (resp) => {
+            this.router.navigate(['/bookings', resp.id, 'confirm']);
+          },
+          error: (error: HttpErrorResponse) => {
+            this.error = error.error;
+            this.loading = false;
+          },
         });
   }
 

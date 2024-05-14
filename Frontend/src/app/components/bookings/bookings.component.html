@@ -1,8 +1,15 @@
 <div class="flex flex-col items-center w-full">
-  @for (booking of bookings; track booking.id) {
+  @if (this.loading) {
+  <mat-spinner></mat-spinner>
+  } @else if (this.error != null) {
+  <app-error-page [error]="error"></app-error-page>
+  } @else { @for (booking of bookings; track booking.id) {
   <app-booking-preview
     [booking]="booking"
-    class="w-3/4 p-3"
-  ></app-booking-preview>
-  }
+    [showButtons]="true"
+    class="w-1/2 p-3"
+  >
+  </app-booking-preview>
+
+  } }
 </div>

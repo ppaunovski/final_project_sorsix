@@ -10,6 +10,7 @@ import { PropertyFormComponent } from './components/property-form/property-form.
 import { BookingsComponent } from './components/bookings/bookings.component';
 import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
 import { MyPropertiesComponent } from './components/my-properties/my-properties.component';
+import { ReviewComponentComponent } from './components/review-component/review-component.component';
 
 export const routes: Routes = [
   {
@@ -35,6 +36,10 @@ export const routes: Routes = [
   {
     path: 'properties/:id',
     component: PropertyComponent,
+  },
+  {
+    path: 'properties/:id/review',
+    component: ReviewComponentComponent,
   },
 
   {
