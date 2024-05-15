@@ -115,7 +115,7 @@ class BookingService(
 
         val booking = bookingRepository.findById(id) ?: throw BookingNotFoundException(id)
 
-        if(booking.guest.id != guest.id || booking.property.host.id != guest.id) throw UnauthorizedAccessException("User is not the owner of the booking")
+        if(booking.guest.id != guest.id && booking.property.host.id != guest.id) throw UnauthorizedAccessException("User is not the owner of the booking")
 
         booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.CANCELLED.ordinal.toLong()) ?: throw BookingStatusNotFoundException("Booking status not found")
 
