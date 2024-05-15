@@ -73,6 +73,8 @@ export class PropertyFormComponent implements OnInit {
   attributes: Attribute[] = [];
   selectedAttributes: Attribute[] = [];
   isLinear = false;
+  longitude: number = 0;
+  latitude: number = 0;
   
   
   ngOnInit(): void {
@@ -148,12 +150,15 @@ export class PropertyFormComponent implements OnInit {
     }
     this.form.value.city = this.cities.find((c) => c.id == this.form.value.city);
     this.form.value.propertyType = this.propertyTypes.find((t) => t.id == this.form.value.propertyType);
+    this.form.value.longitude = this.longitude;
+    this.form.value.latitude = this.latitude;
     console.log("Final Form: ",this.form.value);
     this.propertyService.createProperty(this.form.value, this.propertyImages, this.selectedAttributes).subscribe(this.OnResposne);
   }
 
   handleEvent($event: L.LatLng) {
-    this.form.value.latitude = $event.lat;
-    this.form.value.longitude = $event.lng;
+   this.latitude= $event.lat;
+    this.longitude = $event.lng;
+    
   }
 }
