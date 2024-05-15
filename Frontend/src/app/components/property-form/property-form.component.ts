@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PropertyService } from '../../service/property.service';
 import { Property } from '../../model/property';
 import { PropertyRequest } from '../../model/requests/PropertyRequest';
@@ -15,7 +15,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { AttributeService } from '../../service/attribute.service';
 import { Attribute } from '../../model/Attribute';
 import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
-
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import * as L from 'leaflet';
+import { MapComponent } from '../map/map.component';
 
 
 @Component({
@@ -24,14 +27,18 @@ import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
   imports: [ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatStepperModule,
+    FormsModule,
+    MatFormFieldModule,
+    MapComponent
   ],
   templateUrl: './property-form.component.html',
   styleUrl: './property-form.component.css',
 })
 export class PropertyFormComponent implements OnInit {
-
- 
-
+  
+  
+  
   constructor(private typeService: PropertyTypeService, 
     private propertyService: PropertyService, 
     private router: Router,
@@ -40,6 +47,7 @@ export class PropertyFormComponent implements OnInit {
     private propertyTypeService: PropertyTypeService,
     private attributeService: AttributeService,
   ) { }
+  
   form: FormGroup = new FormGroup<PropertyRequest>({
     nightlyPrice: new FormControl<Number>(0,{nonNullable: true}),
     name: new FormControl<string>('',{nonNullable: true}),
@@ -64,8 +72,9 @@ export class PropertyFormComponent implements OnInit {
   cities: City[] = [];
   attributes: Attribute[] = [];
   selectedAttributes: Attribute[] = [];
+  isLinear = false;
   
-
+  
   ngOnInit(): void {
     this.typeService.getAllPropertyTypes().subscribe((types) => {
       this.propertyTypes = types;
@@ -84,7 +93,7 @@ export class PropertyFormComponent implements OnInit {
       this.attributes = att;
       console.log(this.attributes);
     });
-
+    
   }
   onImagePicked(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -108,8 +117,10 @@ export class PropertyFormComponent implements OnInit {
       };
       reader.readAsDataURL(this.images[i]);
     }
-
+    
   }
+  
+  
   onCheckboxChange($event: MatCheckboxChange) {
     if($event.source.checked){
       const att = this.attributes.find((a) => a.id == Number($event.source.value));
@@ -122,14 +133,14 @@ export class PropertyFormComponent implements OnInit {
     
   }
   
-private OnResposne ={
-  next : (result: Property | undefined) => {
-    this.router.navigate(['/properties', result?.id]);
- },
-  error : (error: any) => {
-    console.log(error);
+  private OnResposne ={
+    next : (result: Property | undefined) => {
+      this.router.navigate(['/properties', result?.id]);
+    },
+    error : (error: any) => {
+      console.log(error);
+    }
   }
-}
   handleSubmit() {
     console.log('submitting form');
     if(this.user === undefined){
@@ -138,6 +149,11 @@ private OnResposne ={
     this.form.value.city = this.cities.find((c) => c.id == this.form.value.city);
     this.form.value.propertyType = this.propertyTypes.find((t) => t.id == this.form.value.propertyType);
     console.log("Final Form: ",this.form.value);
-   this.propertyService.createProperty(this.form.value, this.propertyImages, this.selectedAttributes).subscribe(this.OnResposne);
+    this.propertyService.createProperty(this.form.value, this.propertyImages, this.selectedAttributes).subscribe(this.OnResposne);
+  }
+
+  handleEvent($event: L.LatLng) {
+    this.form.value.latitude = $event.lat;
+    this.form.value.longitude = $event.lng;
   }
 }

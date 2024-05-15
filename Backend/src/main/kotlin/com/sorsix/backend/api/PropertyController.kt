@@ -45,7 +45,7 @@ class PropertyController(
             )
         }
         for(attribute in property.attributes){
-            propertyAttributesService.save(p.id, attribute.id)
+            propertyAttributesService.save(p, attribute)
         }
         return p
     }

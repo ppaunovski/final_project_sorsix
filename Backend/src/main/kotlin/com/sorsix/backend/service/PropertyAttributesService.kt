@@ -3,6 +3,7 @@ package com.sorsix.backend.service
 import com.sorsix.backend.api.dtos.PropertyAttributeDTO
 import com.sorsix.backend.api.dtos.PropertyDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
+import com.sorsix.backend.domain.entities.Attribute
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.PropertyAttribute
 import com.sorsix.backend.repository.attribute_repository.AttributeRepository
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service
 class PropertyAttributesService(
     private val propertyAttributesRepository: PropertyAttributeRepository,
     private val propertyService: PropertyService,
-    private val attributeRepository: AttributeRepository
 ) {
 
     fun getAllPropertyAttributesForPropertyId(id: Long): List<PropertyAttributeDTO> {
@@ -31,10 +31,7 @@ class PropertyAttributesService(
 
         }.toList()
     }
-   fun save(propertyId:Long, attributeId: Long): PropertyAttribute {
-       val property = this.propertyService.findPropertyById(propertyId)
-       val attribute = this.attributeRepository.findById(attributeId)
-           ?: throw PropertyNotFoundException("Attribute with id $attributeId not found")
+   fun save(property: Property, attribute: Attribute): PropertyAttribute {
        val propertyAttribute = PropertyAttribute(paId=0,property = property, attribute = attribute)
        return this.propertyAttributesRepository.save(propertyAttribute)
    }
