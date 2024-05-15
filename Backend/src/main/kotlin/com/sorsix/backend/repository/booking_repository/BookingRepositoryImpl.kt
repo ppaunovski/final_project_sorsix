@@ -23,7 +23,7 @@ class BookingRepositoryImpl(private val bookingRepository: JpaBookingRepository)
     override fun deleteById(id: Long) =
         bookingRepository.deleteById(id)
 
-    override fun findAllByGuest(guest: UserAccount): List<Booking> =
+    override fun findAllByGuest(guest: Long): List<Booking> =
         this.bookingRepository.findAllByGuest(guest)
 
     override fun hasFinishedBooking(findPropertyById: Property, guest: UserAccount): Boolean =

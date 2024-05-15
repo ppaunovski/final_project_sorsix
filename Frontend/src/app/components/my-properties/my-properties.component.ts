@@ -7,11 +7,12 @@ import { UserAccountService } from '../../service/user-account.service';
 import { filter, mergeMap, tap } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-my-properties',
   standalone: true,
-  imports: [MatProgressSpinner, PropertyPreviewComponent],
+  imports: [MatProgressSpinner, PropertyPreviewComponent, MatButtonModule],
   templateUrl: './my-properties.component.html',
   styleUrl: './my-properties.component.css',
 })

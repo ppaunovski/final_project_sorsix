@@ -13,5 +13,5 @@ interface UserReviewRepository {
     fun findAllByProperty(property: Property): List<UserReview>
     fun hasUserLeftReviewForProperty(guest: UserAccount, property: Property): Boolean
     fun hasUserLeftReviewForPropertyAndBooking(guest: UserAccount, property: Property, booking: Booking): Boolean
-    fun hasReviewForBooking(booking: Booking, guest: UserAccount): Boolean
+    fun hasReviewForBooking(booking: Long, guest: Long): Boolean
 }

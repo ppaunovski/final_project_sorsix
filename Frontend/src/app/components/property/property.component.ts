@@ -87,7 +87,7 @@ export class PropertyComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.property = response;
-          this.loading = false;
+
           this.error = null;
           if (this.property && this.property.images) {
             this.imagesUrl = this.property.images.map((image) =>
@@ -96,6 +96,7 @@ export class PropertyComponent implements OnInit {
           }
           console.log(this.imagesUrl);
           console.log(this.property);
+          this.loading = false;
         },
         error: (error) => {
           this.error = error;

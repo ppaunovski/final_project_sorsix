@@ -51,7 +51,7 @@ class BookingService(
 
     fun getBookingsForUser(authorizationHeader: String, authentication: Authentication): List<BookingDTO> {
         val guest = this.userAccountRepository.findByEmail(authentication.name)
-        return guest?.let { account -> this.bookingRepository.findAllByGuest(account).map { dtoMapperService.mapBookingToDTO(it) } } ?: throw UserAccountNotFoundException("User not found")
+        return guest?.let { account -> this.bookingRepository.findAllByGuest(account.id).map { dtoMapperService.mapBookingToDTO(it) } } ?: throw UserAccountNotFoundException("User not found")
     }
 
     @Transactional
@@ -108,7 +108,7 @@ class BookingService(
 
         val booking = this.findBookingById(id)
 
-        if(this.reviewRepository.hasReviewForBooking(booking, guest) ) throw UnauthorizedAccessException("User has already reviewed this booking")
+        if(this.reviewRepository.hasReviewForBooking(booking.id, guest.id) ) throw UnauthorizedAccessException("User has already reviewed this booking")
 
         return BookingForReviewDTO(
             id = booking.id,
