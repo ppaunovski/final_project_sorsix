@@ -54,6 +54,7 @@ export class PropertyFormComponent implements OnInit {
     latitude: new FormControl<Number>(0,{nonNullable: true}),
     city: new FormControl<City>({} as City,{nonNullable: true}),
     propertyType: new FormControl<PropertyType>({} as PropertyType,{nonNullable: true}),
+    attributes: new FormControl<Number[]>([],{nonNullable: true}),
   });
   propertyForm: any;
   propertyTypes: PropertyType[] = [];
@@ -62,6 +63,7 @@ export class PropertyFormComponent implements OnInit {
   user: UserAccount | undefined;
   cities: City[] = [];
   attributes: Attribute[] = [];
+  selectedAttributes: Attribute[] = [];
   
 
   ngOnInit(): void {
@@ -109,8 +111,16 @@ export class PropertyFormComponent implements OnInit {
 
   }
   onCheckboxChange($event: MatCheckboxChange) {
-    
+    if($event.source.checked){
+      const att = this.attributes.find((a) => a.id == Number($event.source.value));
+      this.selectedAttributes.push(att as Attribute);
     }
+    else{
+      this.selectedAttributes = this.selectedAttributes.filter((a) => a.id != Number($event.source.value));
+    }
+    console.log(this.selectedAttributes);
+    
+  }
   
 private OnResposne ={
   next : (result: Property | undefined) => {
@@ -128,6 +138,6 @@ private OnResposne ={
     this.form.value.city = this.cities.find((c) => c.id == this.form.value.city);
     this.form.value.propertyType = this.propertyTypes.find((t) => t.id == this.form.value.propertyType);
     console.log("Final Form: ",this.form.value);
-   this.propertyService.createProperty(this.form.value, this.propertyImages).subscribe(this.OnResposne);
+   this.propertyService.createProperty(this.form.value, this.propertyImages, this.selectedAttributes).subscribe(this.OnResposne);
   }
 }

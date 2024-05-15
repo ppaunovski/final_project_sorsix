@@ -18,4 +18,5 @@ export interface PropertyRequest {
     latitude: FormControl<Number>;
     city: FormControl<City>;
     propertyType: FormControl<PropertyType>;
+    attributes: FormControl<Number[]>;
 }

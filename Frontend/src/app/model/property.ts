@@ -2,6 +2,7 @@ import { City } from './City';
 import { PropertyType } from './PropertyType';
 import { UserAccount } from './UserAccount';
 import { PropertyImage } from './PropertyImage';
+import { Attribute } from './Attribute';
 
 export interface Property {
   id: Number;
@@ -20,4 +21,5 @@ export interface Property {
   city: City;
   propertyType: PropertyType;
   images: PropertyImage[];
+  attributes: Attribute[];
 }

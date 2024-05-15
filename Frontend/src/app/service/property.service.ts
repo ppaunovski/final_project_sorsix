@@ -16,6 +16,7 @@ import { AverageRating } from '../model/AverageRating';
 import { PropertyImage } from '../model/PropertyImage';
 import { UserAccount } from '../model/UserAccount';
 import { CityService } from './city.service';
+import { Attribute } from '../model/Attribute';
 
 @Injectable({
   providedIn: 'root',
@@ -104,10 +105,12 @@ export class PropertyService {
   }
   createProperty(
     property: Property,
-    images: PropertyImage[]
+    images: PropertyImage[],
+    attributes: Attribute[]
   ): Observable<Property> {
     property.id = 0;
     property.images = images;
+    property.attributes = attributes;
     console.log('Final Property: ', property);
     return this.http.post<Property>(this.url, property);
   }

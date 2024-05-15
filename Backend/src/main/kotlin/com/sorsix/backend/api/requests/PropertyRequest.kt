@@ -1,7 +1,7 @@
 package com.sorsix.backend.api.requests
 
 import com.sorsix.backend.api.dtos.PropertyImageDTO
-import com.sorsix.backend.api.dtos.UserAccountDTO
+import com.sorsix.backend.domain.entities.Attribute
 import com.sorsix.backend.domain.entities.City
 import com.sorsix.backend.domain.entities.PropertyType
 
@@ -21,4 +21,5 @@ data class PropertyRequest(
     var city: City,
     var propertyType: PropertyType,
     var images: List<PropertyImageDTO>,
+    var attributes: List<Attribute>,
 )
