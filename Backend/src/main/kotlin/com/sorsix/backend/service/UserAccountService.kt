@@ -10,12 +10,8 @@ import com.sorsix.backend.repository.user_account_repository.UserAccountReposito
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
-import org.apache.tomcat.util.http.parser.Authorization
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException.Unauthorized
 
 @Service
 class UserAccountService(
@@ -23,34 +19,27 @@ class UserAccountService(
     private val propertyRepository: PropertyRepository,
     private val propertyImagesRepository: PropertyImagesRepository,
     private val reviewRepository: UserReviewRepository,
-    private val componentRatingService: ComponentRatingService
+    private val componentRatingService: ComponentRatingService,
+    private val dtoMapperService: ClassToDTOMapperService,
 ) {
     fun findAllUserAccounts() =
-        userAccountRepository.findAll().map { mapUserAccountToDTO(it) }
+        userAccountRepository.findAll().map { dtoMapperService.mapUserAccountToDTO(it) }
 
     fun findUserAccountById(id: Long) =
         userAccountRepository.findById(id) ?: throw UserAccountNotFoundException("User account with id $id not found")
 
     fun getUserAccountDTOById(id: Long) =
-        userAccountRepository.findById(id)?.let { mapUserAccountToDTO(it) }
+        userAccountRepository.findById(id)?.let { dtoMapperService.mapUserAccountToDTO(it) }
             ?: throw UserAccountNotFoundException("User account with id $id not found")
 
     fun saveUserAccount(userAccount: UserAccount) = userAccountRepository.save(userAccount)
     fun deleteUserAccountById(id: Long) = userAccountRepository.deleteById(id)
 
-    fun mapUserAccountToDTO(userAccount: UserAccount) =
-        UserAccountDTO(
-            id = userAccount.id,
-            firstName = userAccount.firstName,
-            lastName = userAccount.lastName,
-            email = userAccount.email,
-            joinedDate = userAccount.joinedDate,
-            dateHostStarted = userAccount.dateHostStarted
-        )
+
 
     fun findUserAccountByJWT(authorizationHeader: String, auth: Authentication): UserAccountDTO {
         val user = userAccountRepository.findByEmail(auth.name)
-        return user?.let { mapUserAccountToDTO(it) }
+        return user?.let { dtoMapperService.mapUserAccountToDTO(it) }
             ?: throw UserAccountNotFoundException("User account with email ${auth.name} not found")
     }
 
@@ -65,32 +54,8 @@ class UserAccountService(
             throw UnauthorizedAccessException("You are not authorized to view this user's properties")
         }
 
-        return this.propertyRepository.findAllByHost(host).map { property ->
-            PropertyCardDTO(
-                id = property.id,
-                cityName = property.city.name,
-                address = property.address,
-                averageRating = this.reviewRepository
-                    .findAllByProperty(property)
-                    .map {
-                        this.componentRatingService
-                            .findAverageComponentRatingForUserReview(it.id)
-                    }.average(),
-                description = property.description,
-                pricePerNight = property.nightlyPrice,
-                images = this.propertyImagesRepository.findAllByPropertyId(property.id).map {
-                    PropertyImageDTO(
-                        id = it.id,
-                        propertyId = it.property.id,
-                        order = it.order,
-                        imageByteArray = it.image,
-                        type = it.type
-                    )
-                },
-                type = property.propertyType.typeName,
-                name = property.name
-            )
-        }
+        return this.propertyRepository.findAllByHost(host).map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
+
 
 
     }

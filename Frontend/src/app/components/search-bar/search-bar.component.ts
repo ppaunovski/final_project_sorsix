@@ -7,6 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { GuestsDialogComponent } from '../guests-dialog/guests-dialog.component';
 import { PropertyService } from '../../service/property.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-search-bar',
@@ -17,6 +24,9 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     GuestsDialogComponent,
+    FormsModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
@@ -42,13 +52,33 @@ export class SearchBarComponent implements OnInit {
       adults: this.numberOfAdults.toString(),
       children: this.numberOfChildren.toString(),
       pets: this.numberOfPets.toString(),
+      page: 0,
+      size: 10,
     };
 
     this.router.navigate(['/properties'], { queryParams: queryParams });
   }
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        this.filterString = params['filterString'] ?? '';
+        this.startDate = params['checkIn']
+          ? new Date(Date.parse(params['checkIn']))
+          : undefined;
+        this.endDate = params['checkOut']
+          ? new Date(Date.parse(params['checkOut']))
+          : undefined;
+        this.numberOfAdults = params['adults'] ?? 1;
+        this.numberOfChildren = params['children'] ?? 0;
+        this.numberOfPets = params['pets'] ?? 0;
+
+        this.isCheckinOpen = false;
+        this.isCheckoutOpen = false;
+        console.log('filterString on init', this.filterString);
+      },
+    });
     this.changeStartDate$.subscribe((date) => {
       this.startDate = date;
     });
@@ -68,6 +98,19 @@ export class SearchBarComponent implements OnInit {
   numberOfChildren = 0;
   numberOfPets = 0;
   filterString = '';
+
+  form: FormGroup = new FormGroup<SearchRequest>({
+    filterString: new FormControl<string>('', { nonNullable: false }),
+    startDate: new FormControl<Date | undefined | null>(undefined, {
+      nonNullable: false,
+    }),
+    endDate: new FormControl<Date | undefined | null>(undefined, {
+      nonNullable: false,
+    }),
+    numberOfAdults: new FormControl<number>(1, { nonNullable: false }),
+    numberOfChildren: new FormControl<number>(0, { nonNullable: false }),
+    numberOfPets: new FormControl<number>(0, { nonNullable: false }),
+  });
 
   changeStartDate(date: Date | undefined | null) {
     if (date) {
@@ -166,3 +209,5 @@ export class SearchBarComponent implements OnInit {
     }
   }
 }
+
+interface SearchRequest {}

@@ -26,12 +26,13 @@ class ReviewService(
     private val componentRatingRepository: ComponentRatingRepository,
     private val userAccountRepository: UserAccountRepository,
     private val reviewComponentRepository: ReviewComponentRepository,
-    private val bookingRepository: BookingRepository
+    private val bookingRepository: BookingRepository,
+    private val dtoMapperService: ClassToDTOMapperService
 ) {
     fun getAllReviewsForProperty(id: Long): List<ReviewDTO> {
         val property = this.propertyService.findPropertyById(id)
 
-        return this.reviewRepository.findAllByProperty(property).map { this.mapUserReviewToReviewDTO(it) }
+        return this.reviewRepository.findAllByProperty(property).map { dtoMapperService.mapUserReviewToReviewDTO(it) }
     }
 
     fun findById(id: Long): UserReview =
@@ -39,26 +40,11 @@ class ReviewService(
 
     fun getReviewDTOById(id: Long): ReviewDTO {
         return this.findById(id).let {
-            this.mapUserReviewToReviewDTO(it)
+            dtoMapperService.mapUserReviewToReviewDTO(it)
         }
     }
 
-    fun mapUserReviewToReviewDTO(userReview: UserReview): ReviewDTO {
-        return ReviewDTO(
-            id = userReview.id,
-            comment = userReview.comment,
-            user = UserAccountDTO(
-                id = userReview.user.id,
-                email = userReview.user.email,
-                firstName = userReview.user.firstName,
-                lastName = userReview.user.lastName,
-                joinedDate = userReview.user.joinedDate,
-                dateHostStarted = userReview.user.dateHostStarted
-            ),
-            reviewDate = userReview.reviewDate,
-            averageRating = componentRatingRepository.averageRatingByUserReview(userReview)
-        )
-    }
+
 
     @Transactional
     fun saveReview(review: ReviewRequest, authentication: Authentication?): ReviewDTO {
@@ -99,6 +85,6 @@ class ReviewService(
             )
         }
 
-        return this.mapUserReviewToReviewDTO(userReview)
+        return dtoMapperService.mapUserReviewToReviewDTO(userReview)
     }
 }

@@ -9,29 +9,22 @@ import org.springframework.stereotype.Service
 @Service
 class PropertyImagesService(
     private val propertyImagesRepository: PropertyImagesRepository,
-    private val propertyService: PropertyService
+    private val propertyService: PropertyService,
+    private val dtoMapperService: ClassToDTOMapperService
 ) {
     fun getAllPropertyImagesForPropertyId(id: Long): List<PropertyImageDTO> {
         return this.propertyImagesRepository.findAllByPropertyId(id).map {
-            mapToPropertyImageDTO(it)
+            dtoMapperService.mapToPropertyImageDTO(it)
         }
     }
 
 
     fun getAll(): List<PropertyImageDTO> =
         this.propertyImagesRepository.findAll().map {
-            mapToPropertyImageDTO(it)
+            dtoMapperService.mapToPropertyImageDTO(it)
         }.toList()
 
-    private fun mapToPropertyImageDTO(propertyImages: PropertyImages): PropertyImageDTO {
-        return PropertyImageDTO(
-            id = propertyImages.id,
-            propertyId = propertyImages.property.id,
-            order = propertyImages.order,
-            imageByteArray = propertyImages.image,
-            type = propertyImages.type
-        )
-    }
+
 
     fun getNextOrder(id: Long): Int {
         val propertyImages = this.propertyImagesRepository.findAllByPropertyId(id)

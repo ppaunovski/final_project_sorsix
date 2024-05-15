@@ -1,4 +1,7 @@
 <div class="w-full flex justify-center flex-col items-center">
+  @if (loading) {
+  <mat-spinner></mat-spinner>
+  } @else {
   <div class="flex flex-wrap w-4/5">
     @for (property of this.propertyResponse?.content; track property.id) {
     <app-property-preview
@@ -8,6 +11,7 @@
     }
   </div>
   <mat-paginator
+    [pageIndex]="this.page"
     [length]="this.propertyResponse?.totalElements"
     [pageSize]="this.size"
     [pageSizeOptions]="[5, 10, 25, 100]"
@@ -15,4 +19,5 @@
     aria-label="Select page"
   >
   </mat-paginator>
+  }
 </div>

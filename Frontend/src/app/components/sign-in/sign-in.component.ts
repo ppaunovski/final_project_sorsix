@@ -1,19 +1,25 @@
 import { Component } from '@angular/core';
+import {
+  FormControl,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../../service/auth.service';
-import { UnaryFunction, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [],
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -21,11 +27,26 @@ import { UnaryFunction, tap } from 'rxjs';
     MatButtonModule,
     FormsModule,
     MatCardModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
+  email: string | undefined;
+  password: string | undefined;
+  loading = false;
+  error: any;
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+
+  constructor(private authService: AuthService) {}
+
   handleInput(type: string, value: string) {
     switch (type) {
       case 'email':
@@ -36,13 +57,6 @@ export class SignInComponent {
         break;
     }
   }
-  email: string | undefined;
-  password: string | undefined;
-  loading = false;
-  error: any;
-
-  constructor(private authService: AuthService) {}
-
   handleSubmit() {
     if (this.email && this.password)
       this.authService
@@ -67,5 +81,19 @@ export class SignInComponent {
             this.error = err;
           },
         });
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
   }
 }

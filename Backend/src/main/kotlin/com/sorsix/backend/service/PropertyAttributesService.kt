@@ -17,17 +17,14 @@ import org.springframework.stereotype.Service
 class PropertyAttributesService(
     private val propertyAttributesRepository: PropertyAttributeRepository,
     private val propertyService: PropertyService,
+    private val dtoMapperService: ClassToDTOMapperService
 ) {
 
     fun getAllPropertyAttributesForPropertyId(id: Long): List<PropertyAttributeDTO> {
         val property = this.propertyService.findPropertyById(id)
 
         return this.propertyAttributesRepository.findAllByProperty(property).map {
-            prop -> PropertyAttributeDTO(
-                id = prop.paId,
-                property = propertyService.mapPropertyToDTO(prop.property),
-                attribute = prop.attribute
-                )
+            dtoMapperService.mapPropertyAttributeToDTO(it)
 
         }.toList()
     }
@@ -35,4 +32,6 @@ class PropertyAttributesService(
        val propertyAttribute = PropertyAttribute(paId=0,property = property, attribute = attribute)
        return this.propertyAttributesRepository.save(propertyAttribute)
    }
+
+
 }

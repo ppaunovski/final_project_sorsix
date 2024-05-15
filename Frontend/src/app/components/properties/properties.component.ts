@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { PropertyResponse } from '../../model/PropertyResponse';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-properties',
@@ -20,6 +22,8 @@ import { PropertyResponse } from '../../model/PropertyResponse';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    MatProgressSpinner,
+    MatSelectModule,
   ],
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css',
@@ -36,6 +40,9 @@ export class PropertiesComponent implements OnInit {
   page = 0;
   size = 2;
 
+  loading = false;
+  error: any;
+
   constructor(
     private service: PropertyService,
     private route: ActivatedRoute,
@@ -44,11 +51,15 @@ export class PropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.page = 0;
-    this.size = 2;
+    this.size = 10;
     this.route.queryParams.subscribe((x) => console.log(x));
 
     this.route.queryParams
       .pipe(
+        tap(() => {
+          this.loading = true;
+          this.error = null;
+        }),
         // filter(
         //   (params) =>
         //     params['filterString'] &&
@@ -59,7 +70,8 @@ export class PropertiesComponent implements OnInit {
         //     params['pets']
         // ),
         mergeMap((params) => {
-          console.log('IN MERGEMAP');
+          this.page = params['page'] ?? 0;
+          this.size = params['size'] ?? 10;
 
           return this.service.getPaginationFilteredProperties(
             params['filterString'] ?? '',
@@ -82,6 +94,12 @@ export class PropertiesComponent implements OnInit {
           }
           this.propertyResponse = resp;
           console.log('resp', this.propertyResponse);
+          this.loading = false;
+          this.error = null;
+        },
+        error: (error) => {
+          this.loading = false;
+          this.error = error;
         },
       });
 

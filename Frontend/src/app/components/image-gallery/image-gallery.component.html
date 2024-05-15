@@ -1,19 +1,22 @@
 @if (!this.pageView) {
 <div class="lg:grid lg:grid-rows-2 lg:grid-cols-4 lg:gap-2 relative">
   @for (image of this.imageUrls; track $index) { @if ($index == 0) {
-
-  <img
-    class="lg:col-span-2 lg:row-span-2 rounded-md min-h-[500px]"
-    [src]="image"
-  />
+  <div
+    class="rounded-md min-h-[30rem] lg:col-span-2 lg:row-span-2 flex justify-center items-center overflow-hidden max-h-[30rem]"
+  >
+    <img
+      class="lg:col-span-2 lg:row-span-2 rounded-md min-h-[30rem]"
+      [src]="image"
+    />
+  </div>
 
   } @else if($index < 5){
 
   <div
     [style]="'background-image: url(' + image + ')'"
-    class="hidden lg:block lg:col-span-1 lg:row-span-1 rounded-md lg:bg-cover"
+    class="hidden lg:flex lg:col-span-1 lg:row-span-1 rounded-md lg:bg-cover justify-center items-center overflow-hidden min-h-[14.75rem] max-h-[14.75rem]"
   >
-    <!-- <img class="rounded-md w-full h-auto" [src]="image" /> -->
+    <img class="rounded-md" [src]="image" />
   </div>
 
   } } @if (this.imageUrls.length > 5) {

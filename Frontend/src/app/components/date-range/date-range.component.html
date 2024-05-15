@@ -1,5 +1,5 @@
 @if (this.filter) {
-<mat-form-field appearance="outline" class="bg-white">
+<mat-form-field appearance="outline" class="bg-white date-range">
   <mat-date-range-input
     [dateFilter]="this.filter"
     class="bg-white"
@@ -26,7 +26,7 @@
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker
     [startAt]="this.startDate"
-    [opened]="this.startDate"
+    [opened]="this.startDate && !this.endDate"
     #picker
   ></mat-date-range-picker>
 

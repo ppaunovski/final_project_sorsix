@@ -12,6 +12,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.centered-to-anchor-dialog .mat-dialog-container {
-  transform: translateX(-50%) !important;
+::ng-deep {
+  border-style: none;
 }

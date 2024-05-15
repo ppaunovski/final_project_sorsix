@@ -17,22 +17,16 @@ import org.springframework.stereotype.Service
 class ComponentRatingService(
     private val componentRatingRepository: ComponentRatingRepository,
     private val reviewRepository: UserReviewRepository,
-    private val reviewComponentRepository: ReviewComponentRepository
+    private val reviewComponentRepository: ReviewComponentRepository,
+    private val dtoMapperService: ClassToDTOMapperService
 ) {
 
     fun findAllComponentRatingsForUserReview(userReviewId: Long): List<ComponentRatingDTO> {
         val userReview = this.reviewRepository.findById(userReviewId) ?: throw UserReviewNotFoundException("Review with id $userReviewId not found")
-        return this.componentRatingRepository.findAllByUserReview(userReview).map { this.mapComponentRatingToDTO(it) }
+        return this.componentRatingRepository.findAllByUserReview(userReview).map { dtoMapperService.mapComponentRatingToDTO(it) }
     }
 
-    fun mapComponentRatingToDTO(componentRating: ComponentRating): ComponentRatingDTO {
-        return ComponentRatingDTO(
-            id = componentRating.id,
-            rating = componentRating.rating,
-            reviewComponent = componentRating.reviewComponent,
-            userReview = this.mapUserReviewToReviewDTO(componentRating.userReview)
-        )
-    }
+
 
     fun findAverageComponentRatingForUserReview(id: Long): Double {
         val userReview = this.reviewRepository.findById(id) ?: throw UserReviewNotFoundException("Review with id $id not found")
@@ -46,25 +40,9 @@ class ComponentRatingService(
             this.componentRatingRepository.averageRatingByPropertyAndComponentRating(propertyId, it.id) ?: AverageComponentRatingDTO(it.rcComponentName, 0.0)
 
         }
-//            .associate { it.name to it.averageRating }
     }
 
-    fun mapUserReviewToReviewDTO(userReview: UserReview): ReviewDTO {
-        return ReviewDTO(
-            id = userReview.id,
-            comment = userReview.comment,
-            user = UserAccountDTO(
-                id = userReview.user.id,
-                email = userReview.user.email,
-                firstName = userReview.user.firstName,
-                lastName = userReview.user.lastName,
-                joinedDate = userReview.user.joinedDate,
-                dateHostStarted = userReview.user.dateHostStarted
-            ),
-            reviewDate = userReview.reviewDate,
-            averageRating = this.componentRatingRepository.averageRatingByUserReview(userReview)
-        )
-    }
+
 
 
 }

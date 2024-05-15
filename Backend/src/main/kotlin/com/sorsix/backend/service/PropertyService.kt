@@ -42,7 +42,8 @@ class PropertyService(
     private val imageRepository: PropertyImagesRepository,
     private val bookingGuestsRepository: BookingGuestsRepository,
     private val guestTypeRepository: GuestTypeRepository,
-    private val bookingRepository: BookingRepository
+    private val bookingRepository: BookingRepository,
+    private val dtoMapperService: ClassToDTOMapperService
 ) {
     fun findAllProperties(
         filterString: String,
@@ -59,50 +60,26 @@ class PropertyService(
             adults,
             children,
             pet
-        ).map { this.mapPropertyToPropertyCardDTO(it) }
+        ).map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 
         if (checkIn == null || checkOut == null) return propertyRepository.findAllWithoutDates(
             filterString,
             adults,
             children,
             pet
-        ).map { this.mapPropertyToPropertyCardDTO(it) }
+        ).map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 
 
         return propertyRepository.findAllByFilterString(filterString, checkIn, checkOut, adults, children, pet)
-            .map { property ->
-                PropertyCardDTO(
-                    id = property.id,
-                    cityName = property.city.name,
-                    address = property.address,
-                    averageRating = this.reviewRepository
-                        .findAllByProperty(property)
-                        .map {
-                            this.componentRatingService
-                                .findAverageComponentRatingForUserReview(it.id)
-                        }.average(),
-                    description = property.description,
-                    pricePerNight = property.nightlyPrice,
-                    images = this.imageRepository.findAllByPropertyId(property.id).map {
-                        PropertyImageDTO(
-                            id = it.id,
-                            propertyId = it.property.id,
-                            order = it.order,
-                            imageByteArray = it.image,
-                            type = it.type
-                        )
-                    },
-                    type = property.propertyType.typeName,
-                    name = property.name
-                )
-            }
+            .map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
+
     }
 
     fun findPropertyById(id: Long): Property =
         propertyRepository.findById(id) ?: throw PropertyNotFoundException("Property with id $id not found")
 
     fun getPropertyDTOById(id: Long): PropertyDTO =
-        propertyRepository.findById(id)?.let { this.mapPropertyToDTO(it) }
+        propertyRepository.findById(id)?.let { dtoMapperService.mapPropertyToDTO(it) }
             ?: throw PropertyNotFoundException("Property with id $id not found")
 
     fun saveProperty(property: PropertyRequest, authentication: Authentication) =
@@ -128,41 +105,7 @@ class PropertyService(
 
     fun deletePropertyById(id: Long) = propertyRepository.deleteById(id)
 
-    fun mapPropertyToDTO(property: Property): PropertyDTO {
-        return PropertyDTO(
-            id = property.id,
-            name = property.name,
-            description = property.description,
-            nightlyPrice = property.nightlyPrice,
-            address = property.address,
-            guests = property.guests,
-            beds = property.beds,
-            bedrooms = property.bedrooms,
-            bathrooms = property.bathrooms,
-            isGuestFavorite = property.isGuestFavorite,
-            longitude = property.longitude,
-            latitude = property.latitude,
-            host = UserAccountDTO(
-                id = property.host.id,
-                email = property.host.email,
-                firstName = property.host.firstName,
-                lastName = property.host.lastName,
-                joinedDate = property.host.joinedDate,
-                dateHostStarted = property.host.dateHostStarted,
-            ),
-            city = property.city,
-            propertyType = property.propertyType,
-            images = this.imageRepository.findAllByPropertyId(property.id).map {
-                PropertyImageDTO(
-                    id = it.id,
-                    propertyId = it.property.id,
-                    order = it.order,
-                    imageByteArray = it.image,
-                    type = it.type
-                )
-            }
-        )
-    }
+
 
     fun getOfferForProperty(id: Long, offerRequest: OfferRequest): Any {
         val property = findPropertyById(id)
@@ -193,35 +136,10 @@ class PropertyService(
         }
     }
 
-    fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO {
-        return PropertyCardDTO(
-            id = property.id,
-            cityName = property.city.name,
-            address = property.address,
-            averageRating = this.reviewRepository
-                .findAllByProperty(property)
-                .map {
-                    this.componentRatingService
-                        .findAverageComponentRatingForUserReview(it.id)
-                }.average(),
-            description = property.description,
-            pricePerNight = property.nightlyPrice,
-            images = this.imageRepository.findAllByPropertyId(property.id).map {
-                PropertyImageDTO(
-                    id = it.id,
-                    propertyId = it.property.id,
-                    order = it.order,
-                    imageByteArray = it.image,
-                    type = it.type
-                )
-            },
-            type = property.propertyType.typeName,
-            name = property.name
-        )
-    }
+
 
     fun suggestProperties(): List<PropertyCardDTO> =
-        this.propertyRepository.findAll().map { this.mapPropertyToPropertyCardDTO(it) }
+        this.propertyRepository.findAll().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 //        this.propertyRepository.suggestProperties().map { this.mapPropertyToPropertyCardDTO(it) }
 
     @Transactional
@@ -305,7 +223,7 @@ class PropertyService(
             )
         )
 
-        return bookingService.mapBookingToDTO(booking)
+        return dtoMapperService.mapBookingToDTO(booking)
 
 
     }
@@ -317,7 +235,7 @@ class PropertyService(
                 authentication
             )
         ) throw UnauthorizedAccessException("You must have stayed at the property to leave a review.")
-        return this.mapPropertyToPropertyCardDTO(this.findPropertyById(id))
+        return dtoMapperService.mapPropertyToPropertyCardDTO(this.findPropertyById(id))
     }
 
     fun getAllProperties(page: Int, size: Int, filterString: String, checkIn: LocalDate?, checkOut: LocalDate?, adults: Int, children: Int, pets: Int): PropertyResponse {
@@ -327,7 +245,7 @@ class PropertyService(
             if(filterString.isNotBlank())
             return  this.propertyRepository.findAllPaginatedByFilterString(filterString, pageable).let { pages ->
                 PropertyResponse(
-                    content = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) },
+                    content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
                     totalPages = pages.totalPages,
                     totalElements = pages.totalElements,
                     page = pages.number,
@@ -337,7 +255,7 @@ class PropertyService(
             }
             else return this.propertyRepository.findAllPaginated(pageable).let { pages ->
                 PropertyResponse(
-                    content = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) },
+                    content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
                     totalPages = pages.totalPages,
                     totalElements = pages.totalElements,
                     page = pages.number,
@@ -347,7 +265,7 @@ class PropertyService(
             }
 
         val pages = this.propertyRepository.filterWithPagination(filterString, checkIn, checkOut, adults, children, pets, pageable)
-        val properties = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) }
+        val properties = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 
        return PropertyResponse(
             content = properties,
