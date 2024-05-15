@@ -92,19 +92,48 @@ VALUES (1, 1),
        (4, 13),
        (4, 14),
        (4, 15);
-insert into user_review ( ur_comment, ur_review_date, u_id, p_id)
+
+insert into favorite (p_id, u_id)
+VALUES (1, 3);
+insert into booking_status (bs_status_name)
+VALUES ( 'APPROVED'),
+       ( 'CANCELLED'),
+       ( 'WAITING_FOR_APPROVAL'),
+       ( 'REJECTED');
+insert into guest_type (gt_type_name, gt_description)
+VALUES ( 'ADULT', 'Age 13+'),
+       ( 'CHILD', 'Under 12'),
+       ( 'PET', '');
+insert into booking (b_booking_date, b_checkin_date, b_checkout_date, b_nightly_price, b_service_fee, b_cleaning_fee,
+                     p_id, u_id, bs_id)
+VALUES
+    ('2024-05-02', '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 1, 3, 1),
+    ('2024-05-02', '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 2, 3, 1),
+    ('2024-05-02', '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 3, 3, 1),
+    ('2024-05-02', '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 4, 3, 1);
+
+insert into booking_guests (bg_num_guests, b_id, gt_id)
+VALUES (2, 1, 1);
+
+insert into property_availabilities (pav_start_date, pav_end_date, p_id)
+values ('2024-01-01', '2024-12-31', 1),
+       ('2024-01-01', '2024-12-31', 2),
+       ('2024-01-01', '2024-12-31', 3),
+       ('2024-01-01', '2024-12-31', 4);
+
+insert into user_review ( ur_comment, ur_review_date, u_id, p_id, b_id)
 values (
-        'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
-        '2024-04-20', 3, 1),
+           'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
+           '2024-04-20', 3, 1, 1),
        (
-        'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
-        '2024-04-28', 3, 2),
+           'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
+           '2024-04-28', 3, 2, 2),
        (
-        'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
-        '2024-02-11', 3, 3),
+           'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
+           '2024-02-11', 3, 3, 3),
        (
-        'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
-        '2024-03-23', 3, 4);
+           'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
+           '2024-03-23', 3, 4, 4);
 
 insert into component_rating (cr_rating, ur_id, rc_id)
 VALUES (5, 1, 1),
@@ -134,26 +163,3 @@ VALUES (5, 1, 1),
        (5, 4, 4),
        (2, 4, 5),
        (5, 4, 6);
-insert into favorite (p_id, u_id)
-VALUES (1, 3);
-insert into booking_status (bs_status_name)
-VALUES ( 'APPROVED'),
-       ( 'CANCELLED'),
-       ( 'WAITING_FOR_APPROVAL'),
-       ( 'REJECTED');
-insert into guest_type (gt_type_name, gt_description)
-VALUES ( 'ADULT', 'Age 13+'),
-       ( 'CHILD', 'Under 12'),
-       ( 'PET', '');
-insert into booking (b_booking_date, b_checkin_date, b_checkout_date, b_nightly_price, b_service_fee, b_cleaning_fee,
-                     p_id, u_id, bs_id)
-VALUES ('2024-05-02', '2024-05-10', '2024-05-15', 3500.0, 500.0, 500.0, 1, 3, 1);
-
-insert into booking_guests (bg_num_guests, b_id, gt_id)
-VALUES (2, 1, 1);
-
-insert into property_availabilities (pav_start_date, pav_end_date, p_id)
-values ('2024-01-01', '2024-12-31', 1),
-       ('2024-01-01', '2024-12-31', 2),
-       ('2024-01-01', '2024-12-31', 3),
-       ('2024-01-01', '2024-12-31', 4);

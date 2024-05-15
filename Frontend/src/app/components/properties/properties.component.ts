@@ -5,9 +5,11 @@ import { JsonPipe } from '@angular/common';
 import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
 import { PropertyInfo } from '../../model/PropertyInfo';
 import { filter, flatMap, map, mergeMap, tap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { PropertyResponse } from '../../model/PropertyResponse';
 
 @Component({
   selector: 'app-properties',
@@ -17,11 +19,13 @@ import { MatInputModule } from '@angular/material/input';
     PropertyPreviewComponent,
     MatFormFieldModule,
     MatInputModule,
+    MatPaginatorModule,
   ],
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css',
 })
 export class PropertiesComponent implements OnInit {
+  propertyResponse: PropertyResponse | undefined;
   properties: PropertyInfo[] = [];
   adults = 1;
   children = 0;
@@ -29,13 +33,18 @@ export class PropertiesComponent implements OnInit {
   filterString = '';
   startDate: Date | undefined | null;
   endDate: Date | undefined | null;
+  page = 0;
+  size = 2;
 
   constructor(
     private service: PropertyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.page = 0;
+    this.size = 2;
     this.route.queryParams.subscribe((x) => console.log(x));
 
     this.route.queryParams
@@ -50,26 +59,64 @@ export class PropertiesComponent implements OnInit {
         //     params['pets']
         // ),
         mergeMap((params) => {
-          return this.service.getFilteredProperties(
-            params['filterString'],
-            params['checkIn'],
-            params['checkOut'],
-            params['adults'],
-            params['children'],
-            params['pets']
+          console.log('IN MERGEMAP');
+
+          return this.service.getPaginationFilteredProperties(
+            params['filterString'] ?? '',
+            params['checkIn'] ?? '',
+            params['checkOut'] ?? '',
+            params['adults'] ?? '',
+            params['children'] ?? '',
+            params['pets'] ?? '',
+            params['page'] ?? this.page,
+            params['size'] ?? this.size
           );
         })
       )
       .subscribe({
-        next: (properties) => {
-          this.properties = properties;
-          console.log(properties);
+        next: (resp) => {
+          console.log('IN SUCCESS', resp);
+
+          if (resp) {
+            this.properties = resp?.content;
+          }
+          this.propertyResponse = resp;
+          console.log('resp', this.propertyResponse);
         },
       });
 
-    // this.service.getAllProperties().subscribe((properties) => {
-    //   this.properties = properties;
-    //   console.log(properties);
+    // this.service.getPaginationProperties(0, 2).subscribe({
+    //   next: (propertyResponse) => {
+    //     this.properties = propertyResponse.content;
+    //     this.propertyResponse = propertyResponse;
+    //     console.log(this.propertyResponse);
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //   },
     // });
+  }
+  handlePageChange(event: PageEvent) {
+    console.log(event);
+    const page = event.pageIndex;
+    const size = event.pageSize;
+    if (page != null) this.page = page;
+    if (size != null) this.size = size;
+
+    this.route.queryParams.subscribe((params) => {
+      var queryParams = {
+        page: this.page,
+        size: this.size,
+        filterString: params['filterString'] ?? '',
+        checkIn: params['checkIn'] ?? '',
+        checkOut: params['checkOut'] ?? '',
+        adults: params['adults'] ?? '',
+        children: params['children'] ?? '',
+        pets: params['pets'] ?? '',
+      };
+      this.router.navigate(['/properties'], {
+        queryParams: queryParams,
+      });
+    });
   }
 }

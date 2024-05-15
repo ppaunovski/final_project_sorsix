@@ -16,13 +16,17 @@
   <div class="flex flex-wrap gap-5 items-center justify-evenly w-full">
     @for (rating of averageRatings; track $index) {
     <div>
-      <div class="font-semibold text-xl mb-[-0.1rem]">
-        {{ rating.name }}
+      <div class="font-semibold text-xl mb-[-0.1rem] flex items-center gap-2">
+        <span>
+          {{ rating.name }}
+        </span>
+        <mat-icon>
+          {{ this.icons[$index] }}
+        </mat-icon>
       </div>
-      <p class="text-xl font-semibold">
+      <p class="text-xl font-semibold text-center">
         {{ rating.averageRating.toPrecision(2) }}
       </p>
-      <img src="" />
     </div>
     }
   </div>

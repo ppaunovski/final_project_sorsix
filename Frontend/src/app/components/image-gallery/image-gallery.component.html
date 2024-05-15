@@ -2,7 +2,11 @@
 <div class="lg:grid lg:grid-rows-2 lg:grid-cols-4 lg:gap-2 relative">
   @for (image of this.imageUrls; track $index) { @if ($index == 0) {
 
-  <img class="lg:col-span-2 lg:row-span-2 rounded-md" [src]="image" />
+  <img
+    class="lg:col-span-2 lg:row-span-2 rounded-md min-h-[500px]"
+    [src]="image"
+  />
+
   } @else if($index < 5){
 
   <div

@@ -23,5 +23,6 @@ class BookingController(val bookingService: BookingService) {
     fun confirmBooking(@PathVariable id: Long, authentication: Authentication) = bookingService.confirmBooking(id, authentication)
     @PostMapping("/{id}/cancel")
     fun cancelBooking(@PathVariable id: Long, authentication: Authentication) = bookingService.cancelBooking(id, authentication)
-
+    @GetMapping("/{id}/for-review")
+    fun getBookingForReview(@PathVariable id: Long, authentication: Authentication) = bookingService.getBookingForReview(id, authentication)
 }

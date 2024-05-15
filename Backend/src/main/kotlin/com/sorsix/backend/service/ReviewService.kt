@@ -35,7 +35,7 @@ class ReviewService(
     }
 
     fun findById(id: Long): UserReview =
-        this.reviewRepository.findById(id) ?: throw UserReviewNotFoundException(id)
+        this.reviewRepository.findById(id) ?: throw UserReviewNotFoundException("Review with id $id not found")
 
     fun getReviewDTOById(id: Long): ReviewDTO {
         return this.findById(id).let {
@@ -71,8 +71,11 @@ class ReviewService(
         if (guest.id == property.host.id)
             throw UnauthorizedAccessException("Hosts cannot leave reviews for their own properties")
 
-        if (this.reviewRepository.hasUserLeftReviewForProperty(guest, property))
-            throw UnauthorizedAccessException("User has already left a review for this property")
+        val booking = this.bookingRepository
+                .findById(review.bookingId) ?: throw UserReviewNotFoundException("Booking with id ${review.bookingId} not found")
+
+        if (this.reviewRepository.hasUserLeftReviewForPropertyAndBooking(guest, property, booking))
+            throw UnauthorizedAccessException("User has already left a review for this booking")
 
         val userReview = this.reviewRepository.save(
             UserReview(
@@ -80,7 +83,8 @@ class ReviewService(
                 user = guest,
                 property = property,
                 id = 0,
-                reviewDate = LocalDate.now()
+                reviewDate = LocalDate.now(),
+                booking = booking
             )
         )
 

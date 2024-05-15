@@ -1,5 +1,6 @@
 package com.sorsix.backend.repository.user_review_repository
 
+import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.domain.entities.UserReview
@@ -28,4 +29,15 @@ class UserReviewRepositoryImpl(private val userReviewRepository: JpaUserReviewRe
 
     override fun hasUserLeftReviewForProperty(guest: UserAccount, property: Property): Boolean =
         this.userReviewRepository.existsByUserAndProperty(guest, property)
+
+    override fun hasUserLeftReviewForPropertyAndBooking(
+        guest: UserAccount,
+        property: Property,
+        booking: Booking
+    ): Boolean =
+        this.userReviewRepository.existsByUserAndPropertyAndBooking(guest, property, booking)
+
+    override fun hasReviewForBooking(booking: Booking, guest: UserAccount): Boolean =
+        this.userReviewRepository.existsByUserAndBooking(guest, booking)
+
 }

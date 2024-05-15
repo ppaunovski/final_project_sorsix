@@ -3,6 +3,7 @@ package com.sorsix.backend.service
 import com.sorsix.backend.api.dtos.*
 import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyRequest
+import com.sorsix.backend.api.responses.PropertyResponse
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.BookingGuest
 import com.sorsix.backend.domain.entities.Property
@@ -23,6 +24,8 @@ import com.sorsix.backend.service.exceptions.PropertyNotAvailableException
 import com.sorsix.backend.service.exceptions.PropertyNotFoundException
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -43,12 +46,29 @@ class PropertyService(
 ) {
     fun findAllProperties(
         filterString: String,
-        checkIn: LocalDate,
-        checkOut: LocalDate,
+        checkIn: LocalDate?,
+        checkOut: LocalDate?,
         adults: Int,
         children: Int,
         pet: Int
     ): List<PropertyCardDTO> {
+
+        if (checkOut == null && checkIn != null) return propertyRepository.findAllWithCheckIn(
+            filterString,
+            checkIn,
+            adults,
+            children,
+            pet
+        ).map { this.mapPropertyToPropertyCardDTO(it) }
+
+        if (checkIn == null || checkOut == null) return propertyRepository.findAllWithoutDates(
+            filterString,
+            adults,
+            children,
+            pet
+        ).map { this.mapPropertyToPropertyCardDTO(it) }
+
+
         return propertyRepository.findAllByFilterString(filterString, checkIn, checkOut, adults, children, pet)
             .map { property ->
                 PropertyCardDTO(
@@ -212,6 +232,8 @@ class PropertyService(
 
         val property = findPropertyById(id);
 
+        if (guest.id == property.host.id) throw UnauthorizedAccessException("Hosts cannot book their own properties.")
+
         val propertyAvailability = this.propertyAvailabilityRepository.findAllForProperty(property)
             .firstOrNull { it.startDate <= offerRequest.checkInDate && it.endDate >= offerRequest.checkOutDate }
             ?: throw PropertyNotAvailableException("Property is not available for the given period: ${offerRequest.checkInDate} - ${offerRequest.checkOutDate}")
@@ -296,6 +318,45 @@ class PropertyService(
             )
         ) throw UnauthorizedAccessException("You must have stayed at the property to leave a review.")
         return this.mapPropertyToPropertyCardDTO(this.findPropertyById(id))
+    }
+
+    fun getAllProperties(page: Int, size: Int, filterString: String, checkIn: LocalDate?, checkOut: LocalDate?, adults: Int, children: Int, pets: Int): PropertyResponse {
+        val pageable = PageRequest.of(page, size)
+
+        if(checkIn == null || checkOut == null)
+            if(filterString.isNotBlank())
+            return  this.propertyRepository.findAllPaginatedByFilterString(filterString, pageable).let { pages ->
+                PropertyResponse(
+                    content = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) },
+                    totalPages = pages.totalPages,
+                    totalElements = pages.totalElements,
+                    page = pages.number,
+                    size = pages.size,
+                    last = pages.isLast,
+                )
+            }
+            else return this.propertyRepository.findAllPaginated(pageable).let { pages ->
+                PropertyResponse(
+                    content = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) },
+                    totalPages = pages.totalPages,
+                    totalElements = pages.totalElements,
+                    page = pages.number,
+                    size = pages.size,
+                    last = pages.isLast,
+                )
+            }
+
+        val pages = this.propertyRepository.filterWithPagination(filterString, checkIn, checkOut, adults, children, pets, pageable)
+        val properties = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) }
+
+       return PropertyResponse(
+            content = properties,
+            totalPages = pages.totalPages,
+            totalElements = pages.totalElements,
+            page = pages.number,
+            size = pages.size,
+            last = pages.isLast,
+        )
     }
 
 }

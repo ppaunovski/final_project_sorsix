@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Booking } from '../model/Booking';
 import { Observable } from 'rxjs';
 import { BookingRequest } from '../model/BookingRequest';
+import { BookingForReview } from '../model/BookingForReview';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +26,8 @@ export class BookingService {
 
   cancelBooking(id: Number): Observable<Booking> {
     return this.http.post<Booking>(`${this.url}/${id}/cancel`, {});
+  }
+  getBookingForReview(id: number): Observable<BookingForReview> {
+    return this.http.get<BookingForReview>(`${this.url}/${id}/for-review`);
   }
 }

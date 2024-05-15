@@ -70,21 +70,6 @@ create table property_images (
     pi_type text not null
 );
 
-create table user_review (
-    ur_id bigserial primary key ,
-    ur_comment text,
-    ur_review_date date not null ,
-    u_id bigint references user_account(u_id),
-    p_id bigint references property(p_id)
-);
-
-create table component_rating (
-    cr_id bigserial primary key ,
-    cr_rating int not null ,
-    ur_id bigint references user_review(ur_id),
-    rc_id bigint references review_component(rc_id)
-);
-
 create table favorite (
     f_id bigserial primary key ,
     p_id bigint references property(p_id),
@@ -121,4 +106,20 @@ create table booking_guests (
     bg_num_guests int not null,
     b_id bigint references booking(b_id),
     gt_id bigint references guest_type(gt_id)
+);
+
+create table user_review (
+                             ur_id bigserial primary key ,
+                             ur_comment text,
+                             ur_review_date date not null ,
+                             u_id bigint references user_account(u_id),
+                             p_id bigint references property(p_id),
+                             b_id bigint references booking(b_id)
+);
+
+create table component_rating (
+                                  cr_id bigserial primary key ,
+                                  cr_rating int not null ,
+                                  ur_id bigint references user_review(ur_id),
+                                  rc_id bigint references review_component(rc_id)
 );

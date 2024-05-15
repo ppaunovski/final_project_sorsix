@@ -27,7 +27,8 @@ class BookingRepositoryImpl(private val bookingRepository: JpaBookingRepository)
         this.bookingRepository.findAllByGuest(guest)
 
     override fun hasFinishedBooking(findPropertyById: Property, guest: UserAccount): Boolean =
-        this.bookingRepository.existsByGuestAndPropertyAndCheckOutBefore(guest, findPropertyById, LocalDate.now())
+        this.bookingRepository.existsByGuestAndPropertyAndCheckInAfter(guest, findPropertyById, LocalDate.now())
+
 
 
 }

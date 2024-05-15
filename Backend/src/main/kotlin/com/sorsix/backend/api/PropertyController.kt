@@ -20,11 +20,24 @@ class PropertyController(
     private val componentRatingService: ComponentRatingService,
     private val propertyAttributesService: PropertyAttributesService,
     ){
+
+    @GetMapping("/pagination")
+    fun getAllProperties(
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "10") size: Int,
+        @RequestParam(required = false, defaultValue = "") filterString: String,
+        @RequestParam(required = false) checkIn: LocalDate?,
+        @RequestParam(required = false) checkOut: LocalDate?,
+        @RequestParam(required = false, defaultValue = "1") adults: Int,
+        @RequestParam(required = false, defaultValue = "0") children: Int,
+        @RequestParam(required = false, defaultValue = "0") pets: Int,
+    ) = propertyService.getAllProperties(page, size, filterString, checkIn, checkOut, adults, children, pets)
+
     @GetMapping("/search")
     fun findAllProperties(
         @RequestParam filterString: String,
-        @RequestParam checkIn: LocalDate,
-        @RequestParam checkOut: LocalDate,
+        @RequestParam(required = false) checkIn: LocalDate?,
+        @RequestParam(required = false) checkOut: LocalDate?,
         @RequestParam adults: Int,
         @RequestParam children: Int,
         @RequestParam pets: Int,

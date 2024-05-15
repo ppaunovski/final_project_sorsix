@@ -19,5 +19,8 @@ data class UserReview(
     @Column(name = "ur_comment", nullable = false)
     val comment: String,
     @Column(name = "ur_review_date", nullable = false)
-    val reviewDate: LocalDate
+    val reviewDate: LocalDate,
+    @OneToOne
+    @JoinColumn(name = "b_id", nullable = false)
+    val booking: Booking
 )

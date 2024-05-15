@@ -22,7 +22,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent implements OnInit {
-  private formatDate(date: Date) {
+  private formatDate(date: Date | undefined | null) {
+    if (date == undefined || date == null) return '';
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
     const day = String(date.getDate()).padStart(2, '0');
@@ -33,19 +34,17 @@ export class SearchBarComponent implements OnInit {
     this.filterString = value;
   }
   search() {
-    if (this.startDate && this.endDate) {
-      console.log('SEARCH');
-      const queryParams = {
-        filterString: this.filterString,
-        checkIn: this.formatDate(this.startDate),
-        checkOut: this.formatDate(this.endDate),
-        adults: this.numberOfAdults.toString(),
-        children: this.numberOfChildren.toString(),
-        pets: this.numberOfPets.toString(),
-      };
+    console.log('SEARCH');
+    const queryParams = {
+      filterString: this.filterString,
+      checkIn: this.formatDate(this.startDate),
+      checkOut: this.formatDate(this.endDate),
+      adults: this.numberOfAdults.toString(),
+      children: this.numberOfChildren.toString(),
+      pets: this.numberOfPets.toString(),
+    };
 
-      this.router.navigate(['/properties'], { queryParams: queryParams });
-    }
+    this.router.navigate(['/properties'], { queryParams: queryParams });
   }
   constructor(private router: Router) {}
 

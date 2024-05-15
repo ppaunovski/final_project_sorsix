@@ -17,6 +17,7 @@ import { PropertyImage } from '../model/PropertyImage';
 import { UserAccount } from '../model/UserAccount';
 import { CityService } from './city.service';
 import { Attribute } from '../model/Attribute';
+import { PropertyResponse } from '../model/PropertyResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +49,7 @@ export class PropertyService {
     children: string,
     pets: string
   ): Observable<PropertyInfo[]> {
-    if (filterString && checkIn && checkOut && adults && children && pets)
+    if (filterString && adults && children && pets)
       return this.http
         .get<PropertyInfo[]>(
           `${this.url}/search?filterString=${filterString}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&pets=${pets}`
@@ -124,4 +125,31 @@ export class PropertyService {
   // getPropertiesByCity(city: String): Observable<Property[]>{
   //   return this.http.get<Property[]>(this.url + ``)
   // }
+  getPaginationProperties(
+    page: number,
+    size: number
+  ): Observable<PropertyResponse> {
+    return this.http.get<PropertyResponse>(
+      `${this.url}/pagination?page=${page}&size=${size}`
+    );
+  }
+
+  getPaginationFilteredProperties(
+    filterString: string,
+    checkIn: string,
+    checkOut: string,
+    adults: string,
+    children: string,
+    pets: string,
+    page: number,
+    size: number
+  ): Observable<PropertyResponse | undefined> {
+    if (filterString && adults && children && pets && page && size)
+      return this.http
+        .get<PropertyResponse>(
+          `${this.url}/pagination?filterString=${filterString}&checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}&children=${children}&pets=${pets}&page=${page}&size=${size}`
+        )
+        .pipe(catchError(this.handleError(undefined)));
+    return this.getPaginationProperties(page, size);
+  }
 }

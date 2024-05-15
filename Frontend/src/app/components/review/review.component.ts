@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { Review } from '../../model/Review';
 import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
+import { MatIconModule } from '@angular/material/icon';
+import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [],
+  imports: [MatIconModule, SlicePipe],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css',
 })

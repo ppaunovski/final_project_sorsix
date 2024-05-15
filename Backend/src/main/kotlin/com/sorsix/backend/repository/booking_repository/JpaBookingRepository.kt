@@ -10,4 +10,10 @@ import java.time.LocalDate
 interface JpaBookingRepository: JpaRepository<Booking, Long>{
      fun findAllByGuest(guest: UserAccount): List<Booking>
      fun existsByGuestAndPropertyAndCheckOutBefore(guest: UserAccount, property: Property, checkOut: LocalDate): Boolean
+     fun existsByGuestAndPropertyAndCheckInAfter(
+          guest: UserAccount,
+          findPropertyById: Property,
+          now: LocalDate?
+     ): Boolean
+
 }

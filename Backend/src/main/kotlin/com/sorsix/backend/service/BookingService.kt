@@ -1,11 +1,7 @@
 package com.sorsix.backend.service
 
-import com.sorsix.backend.api.dtos.BookingDTO
-import com.sorsix.backend.api.dtos.PropertyDTO
-import com.sorsix.backend.api.dtos.PropertyImageDTO
-import com.sorsix.backend.api.dtos.UserAccountDTO
+import com.sorsix.backend.api.dtos.*
 import com.sorsix.backend.domain.entities.Booking
-import com.sorsix.backend.domain.entities.BookingStatus
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.PropertyAvailability
 import com.sorsix.backend.domain.enums.BookingStatusEnum
@@ -13,7 +9,10 @@ import com.sorsix.backend.repository.booking_repository.BookingRepository
 import com.sorsix.backend.repository.booking_status_repository.BookingStatusRepository
 import com.sorsix.backend.repository.property_availabilities_repository.PropertyAvailabilityRepository
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
+import com.sorsix.backend.repository.review_component_repository.ReviewComponentRepository
+import com.sorsix.backend.repository.review_component_repository.ReviewComponentRepositoryImpl
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.BookingNotFoundException
 import com.sorsix.backend.service.exceptions.BookingStatusNotFoundException
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
@@ -29,7 +28,10 @@ class BookingService(
     private val imagesRepository: PropertyImagesRepository,
     private val userAccountRepository: UserAccountRepository,
     private val bookingStatusRepository: BookingStatusRepository,
-    private val availabilityRepository: PropertyAvailabilityRepository
+    private val availabilityRepository: PropertyAvailabilityRepository,
+    private val reviewRepository: UserReviewRepository,
+    private val componentRatingService: ComponentRatingService,
+    private val imageRepository: PropertyImagesRepository
 ) {
     fun findAllBookings() =
         bookingRepository.findAll().map { this.mapBookingToDTO(it) }
@@ -143,6 +145,54 @@ class BookingService(
     fun hasFinishedBooking(findPropertyById: Property, authentication: Authentication): Boolean {
         val guest = userAccountService.findUserByEmail(authentication.name)
         return bookingRepository.hasFinishedBooking(findPropertyById, guest)
+    }
+
+    fun getBookingForReview(id: Long, authentication: Authentication?): BookingForReviewDTO {
+        if(authentication == null) throw UnauthorizedAccessException("User is not authenticated")
+        val guest = userAccountService.findUserByEmail(authentication.name)
+
+        val booking = this.findBookingById(id)
+
+        if(this.reviewRepository.hasReviewForBooking(booking, guest) ) throw UnauthorizedAccessException("User has already reviewed this booking")
+
+        return BookingForReviewDTO(
+            id = booking.id,
+            guest = this.userAccountService.mapUserAccountToDTO(booking.guest),
+            property = this.mapPropertyToPropertyCardDTO(booking.property),
+            checkIn = booking.checkIn,
+            checkOut = booking.checkOut,
+            nightlyPrice = booking.nightlyPrice,
+            serviceFee = booking.serviceFee,
+            cleaningFee = booking.cleaningFee,
+            status = booking.status.name
+        )
+    }
+
+    fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO {
+        return PropertyCardDTO(
+            id = property.id,
+            cityName = property.city.name,
+            address = property.address,
+            averageRating = this.reviewRepository
+                .findAllByProperty(property)
+                .map {
+                    this.componentRatingService
+                        .findAverageComponentRatingForUserReview(it.id)
+                }.average(),
+            description = property.description,
+            pricePerNight = property.nightlyPrice,
+            images = this.imageRepository.findAllByPropertyId(property.id).map {
+                PropertyImageDTO(
+                    id = it.id,
+                    propertyId = it.property.id,
+                    order = it.order,
+                    imageByteArray = it.image,
+                    type = it.type
+                )
+            },
+            type = property.propertyType.typeName,
+            name = property.name
+        )
     }
 
 }

@@ -56,11 +56,18 @@
         </div>
       </div>
 
-      <app-reserve-component
-        [property]="property"
-        class="w-full lg:w-1/2 xl:w-2/5 h-full"
-      ></app-reserve-component>
+      <div class="w-full lg:w-1/2 xl:w-2/5 h-full flex flex-col">
+        <app-reserve-component [property]="property"></app-reserve-component>
+      </div>
     </div>
+
+    <div class="pt-16 pl-10 pr-10">
+      <p class="text-2xl font-semibold">Additional Info</p>
+      <p>
+        {{ this.property?.description }}
+      </p>
+    </div>
+
     <hr class="mt-24 mb-24" />
 
     <div>
@@ -74,10 +81,9 @@
 
     <div class="w-full flex justify-center">
       <div class="w-3/4 flex flex-wrap">
-        @for (item of [1,2,3,4,5,6,7]; track $index) { @for (review of
-        this.reviews; track $index) {
+        @for (review of this.reviews; track $index) {
         <app-review class="xl:w-1/2 p-5 w-full" [review]="review"></app-review>
-        } }
+        }
       </div>
     </div>
   </div>

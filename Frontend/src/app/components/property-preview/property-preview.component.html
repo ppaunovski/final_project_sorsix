@@ -7,10 +7,11 @@
     />
     <div class="p-2">
       <div class="flex justify-between">
-        <div class="flex flex-col gap-0">
-          <span class="text-lg font-bold"
-            >{{ this.property?.type }} in {{ this.property?.cityName }}</span
-          >
+        <div class="flex flex-col gap-0 text-ellipsis w-2/3">
+          <span
+            class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
+            >{{ this.property?.type }} in {{ this.property?.cityName }}
+          </span>
           <span class="font-light text-gray-800">
             {{ this.property?.address }}
           </span>
@@ -31,7 +32,9 @@
         </div>
       </div>
 
-      <p>{{ this.property?.description | slice : 0 : 75 }}...</p>
+      <p class="text-nowrap overflow-clip text-ellipsis">
+        {{ this.property?.description | slice : 0 : 150 }}
+      </p>
 
       <p>
         <span class="font-bold text-lg">

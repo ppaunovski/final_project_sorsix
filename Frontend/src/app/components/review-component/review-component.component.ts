@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PropertyService } from '../../service/property.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, mergeMap, tap } from 'rxjs';
 import { PropertyInfo } from '../../model/PropertyInfo';
 import { Property } from '../../model/property';
@@ -21,6 +21,8 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material/progress-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BookingService } from '../../service/booking.service';
+import { BookingForReview } from '../../model/BookingForReview';
 
 @Component({
   selector: 'app-review-component',
@@ -40,6 +42,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ReviewComponentComponent implements OnInit {
   property: PropertyInfo | undefined;
+  booking: BookingForReview | undefined;
   reviewComponents: ReviewComponent[] = [];
   componentRatings: ComponentRatingRequest[] = [];
   icons = [
@@ -57,7 +60,9 @@ export class ReviewComponentComponent implements OnInit {
   constructor(
     private propertyService: PropertyService,
     private route: ActivatedRoute,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private bookingService: BookingService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -69,13 +74,14 @@ export class ReviewComponentComponent implements OnInit {
         }),
         filter((params) => params.has('id')),
         map((params) => params.get('id')!),
-        mergeMap((id) => this.propertyService.getPropertyForReview(+id))
+        mergeMap((id) => this.bookingService.getBookingForReview(+id))
       )
       .subscribe({
         next: (resp) => {
           this.loading = false;
           this.error = null;
-          this.property = resp;
+          this.booking = resp;
+          this.property = resp.property;
         },
         error: (error: HttpErrorResponse) => {
           this.error = error.error;
@@ -98,16 +104,18 @@ export class ReviewComponentComponent implements OnInit {
   }
 
   review() {
-    if (this.property && this.comment)
+    if (this.property && this.comment && this.booking)
       this.reviewService
         .review({
           propertyId: this.property?.id.valueOf(),
+          bookingId: this.booking?.id,
           comment: this.comment,
           componentRatings: this.componentRatings,
         })
         .subscribe({
           next: (resp) => {
             console.log(resp);
+            this.router.navigate(['/properties', this.property?.id]);
           },
         });
   }

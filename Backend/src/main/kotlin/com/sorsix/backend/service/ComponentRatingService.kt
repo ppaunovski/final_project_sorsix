@@ -21,7 +21,7 @@ class ComponentRatingService(
 ) {
 
     fun findAllComponentRatingsForUserReview(userReviewId: Long): List<ComponentRatingDTO> {
-        val userReview = this.reviewRepository.findById(userReviewId) ?: throw UserReviewNotFoundException(userReviewId)
+        val userReview = this.reviewRepository.findById(userReviewId) ?: throw UserReviewNotFoundException("Review with id $userReviewId not found")
         return this.componentRatingRepository.findAllByUserReview(userReview).map { this.mapComponentRatingToDTO(it) }
     }
 
@@ -35,7 +35,7 @@ class ComponentRatingService(
     }
 
     fun findAverageComponentRatingForUserReview(id: Long): Double {
-        val userReview = this.reviewRepository.findById(id) ?: throw UserReviewNotFoundException(id)
+        val userReview = this.reviewRepository.findById(id) ?: throw UserReviewNotFoundException("Review with id $id not found")
         return this.componentRatingRepository.averageRatingByUserReview(userReview)
     }
 

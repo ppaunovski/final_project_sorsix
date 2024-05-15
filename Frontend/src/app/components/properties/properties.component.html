@@ -1,10 +1,18 @@
-<div class="w-full flex justify-center">
-  <div class="flex justify-center flex-wrap w-4/5">
-    @for (property of this.properties; track property.id) {
+<div class="w-full flex justify-center flex-col items-center">
+  <div class="flex flex-wrap w-4/5">
+    @for (property of this.propertyResponse?.content; track property.id) {
     <app-property-preview
       class="max-w-[400px] min-w-[300px] w-full sm:w-full md:w-1/2 lg:w-1/6 p-2"
       [property]="property"
     ></app-property-preview>
     }
   </div>
+  <mat-paginator
+    [length]="this.propertyResponse?.totalElements"
+    [pageSize]="this.size"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="handlePageChange($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>
