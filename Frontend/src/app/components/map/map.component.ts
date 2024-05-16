@@ -30,34 +30,51 @@ export class MapComponent implements AfterViewInit {
   );
 
   ngAfterViewInit(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.userLocation = new L.LatLng(
-          position.coords.latitude,
-          position.coords.longitude
-        );
-        this.map = L.map('map', {
-          center: this.userLocation,
-          zoom: 10,
+    if (this.constCoordinantes === undefined || this.constCoordinantes.lat === 0 || this.constCoordinantes.lng === 0) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.userLocation = new L.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          this.map = L.map('map', {
+            center: this.userLocation,
+            zoom: 10,
+          });
+          this.tiles.addTo(this.map as L.Map);
+          this.marker = L.marker(this.userLocation, {
+            title: 'Smeshtaj Location',
+            draggable: true,
+            icon: L.icon({
+              iconUrl: 'assets/purple-icon.png',
+              iconSize: [40, 40],
+            }),
+          }).addTo(this.map as L.Map);
+          if (this.marker) this.marker.on('dragend', () => this.emitEvent());
         });
-        this.tiles.addTo(this.map as L.Map);
-        this.marker = L.marker(this.userLocation, {
-          title: 'Smeshtaj Location',
-          draggable: this.moveMap,
-          icon: L.icon({
-            iconUrl: 'assets/purple-icon.png',
-            iconSize: [40, 40],
-          }),
-        }).addTo(this.map as L.Map);
-        if (this.marker) this.marker.on('dragend', () => this.emitEvent());
+      }
+    }
+    else{
+      this.map = L.map('map', {
+        center: this.constCoordinantes,
+        zoom: 10,
       });
+      this.tiles.addTo(this.map as L.Map);
+      this.marker = L.marker(this.constCoordinantes, {
+        title: 'Smeshtaj Location',
+        draggable: false,
+        icon: L.icon({
+          iconUrl: 'assets/purple-icon.png',
+          iconSize: [40, 40],
+        }),
+      }).addTo(this.map as L.Map);
     }
   }
   emitEvent() {
     this.changeCoordinates$.emit(this.marker?.getLatLng() as L.LatLng);
   }
-  @Input()
-  moveMap: boolean = false;
   @Output()
   changeCoordinates$ = new EventEmitter<L.LatLng>();
+  @Input()
+  constCoordinantes: L.LatLng = new L.LatLng(0, 0);
 }

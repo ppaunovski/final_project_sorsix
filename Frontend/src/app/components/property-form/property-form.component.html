@@ -95,7 +95,7 @@
               placeholder="Address"
             />
           </div>
-          <app-map [moveMap]="true" (changeCoordinates$)="handleEvent($event)"></app-map>
+          <app-map (changeCoordinates$)="handleEvent($event)"></app-map>
         <div>
           <button mat-button matStepperPrevious  type="button" color="accent">Back</button>
           <button mat-button matStepperNext  type="button" color="primary">Next</button>

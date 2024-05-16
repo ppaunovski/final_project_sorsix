@@ -159,6 +159,5 @@ export class PropertyFormComponent implements OnInit {
   handleEvent($event: L.LatLng) {
    this.latitude= $event.lat;
     this.longitude = $event.lng;
-    
   }
 }

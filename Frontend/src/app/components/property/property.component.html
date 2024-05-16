@@ -24,7 +24,6 @@
           <app-host-property-preview
             [host]="this.property?.host"
           ></app-host-property-preview>
-
           <app-rating-review-preview
             [property]="property"
             [averageRating]="averageRating"
@@ -67,7 +66,9 @@
         {{ this.property?.description }}
       </p>
     </div>
-
+    <div class="map-container">
+      <app-map [constCoordinantes]="this.propertyCoordinates"></app-map>
+    </div>
     <hr class="mt-24 mb-24" />
 
     <div>

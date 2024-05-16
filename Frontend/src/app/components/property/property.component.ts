@@ -25,6 +25,8 @@ import { ReviewComponent } from '../review/review.component';
 import { AverageRating } from '../../model/AverageRating';
 import { Review } from '../../model/Review';
 import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
+import { MapComponent } from '../map/map.component';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-property',
@@ -45,6 +47,7 @@ import { ImageGalleryComponent } from '../image-gallery/image-gallery.component'
     ReviewAveragesComponent,
     ReviewComponent,
     ImageGalleryComponent,
+    MapComponent,
   ],
   templateUrl: './property.component.html',
   styleUrl: './property.component.css',
@@ -55,7 +58,7 @@ export class PropertyComponent implements OnInit {
   loading = false;
   error: any;
   propertyAttributes: PropertyAttribute[] = [];
-
+  propertyCoordinates: L.LatLng = new L.LatLng(0, 0);
   reviews: Review[] = [];
 
   averageRatings: AverageRating[] = [];
@@ -94,6 +97,16 @@ export class PropertyComponent implements OnInit {
               this.dataURItoBlob(image.imageByteArray, image.type)
             );
           }
+          if(this.property && this.property.latitude && this.property.longitude){
+          this.propertyCoordinates = new L.LatLng(
+            this.property.latitude as number,
+            this.property.longitude as number);
+            console.log('Coordinates', this.propertyCoordinates);
+            
+          }
+          else
+          console.log('No coordinates');
+          
           console.log(this.imagesUrl);
           console.log(this.property);
           this.loading = false;
@@ -170,6 +183,7 @@ export class PropertyComponent implements OnInit {
           ).toPrecision(2);
         },
       });
+    
   }
   dataURItoBlob(dataURI: string, type: string): string {
     const byteString = window.atob(dataURI);
