@@ -15,6 +15,5 @@ data class PropertyAttribute(
     @ManyToOne
     @JoinColumn(name = "a_id")
     val attribute: Attribute,
-    @Column(name = "a_icon")
-    val icon: String
+
 )

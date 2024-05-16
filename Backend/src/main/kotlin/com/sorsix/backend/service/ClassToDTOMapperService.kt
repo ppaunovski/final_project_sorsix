@@ -55,8 +55,7 @@ class ClassToDTOMapperService(
         return PropertyAttributeDTO(
             id = propertyAttribute.paId,
             property = this.mapPropertyToDTO(propertyAttribute.property),
-            attribute = propertyAttribute.attribute,
-            icon = propertyAttribute.icon
+            attribute = propertyAttribute.attribute
         )
     }
 

@@ -14,13 +14,13 @@ interface JpaComponentRatingRepository: JpaRepository<ComponentRating, Long> {
     fun averageRatingByUserReview(userReview: UserReview): Double
 
     @Query(
-            "SELECT new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, AVG(cr.rating)) " +
+            "SELECT new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, AVG(cr.rating), cr.reviewComponent.icon) " +
             "FROM ReviewComponent rc " +
             "JOIN  ComponentRating cr on cr.reviewComponent = rc " +
             "JOIN UserReview ur ON ur.id = cr.userReview.id " +
             "JOIN Property p ON p.id = ur.property.id " +
             "WHERE p.id = :propertyId and rc.id = :componentRating " +
-            "GROUP BY cr.reviewComponent.rcComponentName ")
+            "GROUP BY cr.reviewComponent.rcComponentName, cr.reviewComponent.icon ")
 //    @Query("select new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, cr.rating) " +
 //            "from ComponentRating cr ")
     fun averageRatingByPropertyAndComponentRating(@Param(value = "propertyId") propertyId: Long, @Param(value = "componentRating") componentRating: Long): AverageComponentRatingDTO?

@@ -37,7 +37,7 @@ class ComponentRatingService(
         return this.reviewComponentRepository.findAll().map {
             println(it)
             println(this.componentRatingRepository.averageRatingByPropertyAndComponentRating(propertyId, it.id))
-            this.componentRatingRepository.averageRatingByPropertyAndComponentRating(propertyId, it.id) ?: AverageComponentRatingDTO(it.rcComponentName, 0.0)
+            this.componentRatingRepository.averageRatingByPropertyAndComponentRating(propertyId, it.id) ?: AverageComponentRatingDTO(it.rcComponentName, 0.0, "")
 
         }
     }

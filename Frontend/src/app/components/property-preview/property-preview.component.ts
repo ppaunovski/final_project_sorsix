@@ -18,18 +18,21 @@ export class PropertyPreviewComponent implements OnInit {
   headerImage: string = '';
 
   ngOnInit(): void {
-    if (this.property && this.property.images) {
-      this.headerImage = this.dataURItoBlob(this.property.images.imageByteArray, this.property.images.type);
-    }
-   else {
+    if (this.property && this.property.image) {
+      this.headerImage = this.dataURItoBlob(
+        this.property.image.imageByteArray,
+        this.property.image.type
+      );
+    } else {
       this.headerImage = 'assets/placeholder.png';
     }
+
+    console.log('property info log', this.property, this.headerImage);
   }
   @Input()
   property: PropertyInfo | undefined;
 
-  
-  dataURItoBlob(dataURI: string, type:string): string {
+  dataURItoBlob(dataURI: string, type: string): string {
     const byteString = window.atob(dataURI);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
