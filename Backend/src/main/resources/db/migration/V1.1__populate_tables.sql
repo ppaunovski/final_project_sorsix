@@ -46,16 +46,16 @@ insert into property (p_nightly_price, p_property_name, p_num_guests, p_num_beds
                       p_is_guest_favorite, p_description, p_address, p_longitude, p_latitude, u_id, c_id, pt_id)
 VALUES (3500.0, 'Biljana Luxury Apartment', 2, 1, 1, 1, true,
         'Odlicen apartment za mladi lugje, se naogja vo stariot grad na Ohrid i ima pogled koj ezeroto i Samoilovata tvrdina. Na samo 5 minuti peshki od Sv. Kaneo i 10 minuti od Plaoshnik.',
-        'Samoilova 12', 40.0923, 42.1234, 1, 3, 3),
+        'Samoilova 12', 20.78353, 41.12107, 1, 3, 3),
        (1500.0, 'Klime Fisherman`s house', 5, 3, 2, 2, true,
         'Odlicen apartment za avanturisti, se naogja vo na 25 minuti od centarot na gradot Ohrid i ima pogled kon ezeroto. Na samo 5 minuti peshki od plazhata i 10 minuti od prviot market.',
-        'Plazhovska 5', 40.1234, 42.2234, 2, 3, 2),
+        'Plazhovska 5', 20.78353, 41.12107, 2, 3, 2),
        (2500.0, 'Alexander The Great Lux', 2, 1, 1, 1, false,
         'Apartman vo centarot na gradot Skopje. Na samo 5 minuti peshki od ploshtadot na gradot, 15 minuti od gradskiot park. Apartmanot raspolaga so zatvorena terasa na koja moze da se pushat cigari i ima  ogled kon Vodno.',
-        'Partizanska 32', 38.0923, 42.1234, 1, 1, 3),
+        'Partizanska 32', 21.4228, 41.9997, 1, 1, 3),
        (200.0, 'Helper Room', 1, 1, 1, 1, true,
         'Soba vo mojot stan, koja ja izdavam na mlad student koj studira na UKIM. Lokacijata e odlicna i opshtestveniot kampus e na samo 10 minuti peshki odalechenost. Vo blizina e i univerzitetskata biblioteka i centarot na gradot. Vo stanot prestojuvam samo jas.',
-        'Goce Delchev 3', 40.0923, 42.1234, 1, 1, 1);
+        'Goce Delchev 3', 21.4228, 41.9997, 1, 1, 1);
 
 insert into property_attribute (p_id, a_id)
 VALUES (1, 1),

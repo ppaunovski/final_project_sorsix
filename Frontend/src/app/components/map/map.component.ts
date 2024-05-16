@@ -48,10 +48,19 @@ export class MapComponent implements AfterViewInit {
             icon: L.icon({
               iconUrl: 'assets/purple-icon.png',
               iconSize: [40, 40],
+
             }),
+            
           }).addTo(this.map as L.Map);
           if (this.marker) 
             this.marker.on('dragend', () => this.emitEvent());
+          this.map.on('click', (event: L.LeafletMouseEvent) => {
+            const clickedLocation = event.latlng;
+            if(this.marker)
+            this.marker.setLatLng(clickedLocation);
+            this.emitEvent();
+        });
+           
         });
       }
       else{
@@ -66,6 +75,7 @@ export class MapComponent implements AfterViewInit {
           icon: L.icon({
             iconUrl: 'assets/purple-icon.png',
             iconSize: [40, 40],
+            iconAnchor:[45,42]
           }),
         }).addTo(this.map as L.Map);
         if (this.marker) 
@@ -75,7 +85,7 @@ export class MapComponent implements AfterViewInit {
     else{
       this.map = L.map('map', {
         center: this.constCoordinantes,
-        zoom: 13,
+        zoom: 15,
       });
       this.tiles.addTo(this.map as L.Map);
       this.marker = L.marker(this.constCoordinantes, {
@@ -97,3 +107,4 @@ export class MapComponent implements AfterViewInit {
   @Input()
   constCoordinantes: L.LatLng = new L.LatLng(0, 0);
 }
+//recenter button i onclick create marker
