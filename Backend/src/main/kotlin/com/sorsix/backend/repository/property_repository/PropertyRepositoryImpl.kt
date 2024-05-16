@@ -59,7 +59,7 @@ class PropertyRepositoryImpl(private val propertyRepository: JpaPropertyReposito
     ): Page<Property> =
         this.propertyRepository.filterWithPagination(filterString, checkIn, checkOut, adults, children, pets, pageable)
 
-    override fun findAllPaginatedByFilterString(filterString: String, pageable: Pageable): Page<Property> =
-        this.propertyRepository.findAllByFilterString(filterString, pageable)
+    override fun findAllPaginatedByFilterStringWithoutDates(filterString: String, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property> =
+        this.propertyRepository.findAllByFilterString(filterString, adults, children, pets, pageable)
 
 }

@@ -5,7 +5,7 @@
     class="w-full flex justify-between items-center pl-1 pr-1 md:pl-5 md:pr-5 lg:pl-20 lg:pr-20"
   >
     <div class="w-1/5">
-      <a [routerLink]="['/properties']">
+      <a [routerLink]="['/properties']" [queryParams]="{ page: 0, size: 10 }">
         <img src="../.././../assets/logo.png" alt="logo" class="w-24" />
       </a>
     </div>

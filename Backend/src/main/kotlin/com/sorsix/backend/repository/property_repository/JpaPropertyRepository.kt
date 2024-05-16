@@ -15,9 +15,10 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
             "join city c on c.c_id = p.c_id " +
             "join property_availabilities pav on pav.p_id = p.p_id " +
             "where " +
-            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) " +
+            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
             "and pav.pav_start_date <= :checkIn and pav.pav_end_date >= :checkOut " +
-            "and p.p_num_guests >= :adults + :children " +
+            "and p.p_num_guests >= :adults " +
+            "and p.p_num_guests >= :children " +
             "and p.p_num_guests >= :pets "
         , nativeQuery = true)
     fun search(filterString: String, checkIn: LocalDate, checkOut: LocalDate, adults: Int, children: Int, pets: Int): List<Property>
@@ -33,8 +34,9 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
             "from property p " +
             "join city c on c.c_id = p.c_id " +
             "where " +
-            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) " +
-            "and p.p_num_guests >= :adults + :children " +
+            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
+            "and p.p_num_guests >= :adults " +
+            "and p.p_num_guests >= :children " +
             "and p.p_num_guests >= :pets "
         , nativeQuery = true)
     fun findWithoutDates(filterString: String, adults: Int, children: Int, pets: Int): List<Property>
@@ -44,9 +46,10 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
             "join city c on c.c_id = p.c_id " +
             "join property_availabilities pav on pav.p_id = p.p_id " +
             "where " +
-            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) " +
+            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
             "and pav.pav_start_date <= :checkIn "+
-            "and p.p_num_guests >= :adults + :children " +
+            "and p.p_num_guests >= :adults " +
+            "and p.p_num_guests >= :children " +
             "and p.p_num_guests >= :pets "
         , nativeQuery = true)
     fun findWithCheckIn(filterString: String, checkIn: LocalDate, adults: Int, children: Int, pets: Int): List<Property>
@@ -56,18 +59,20 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
             "join city c on c.c_id = p.c_id " +
             "join property_availabilities pav on pav.p_id = p.p_id " +
             "where " +
-            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) " +
+            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
             "and pav.pav_start_date <= :checkIn and pav.pav_end_date >= :checkOut " +
-            "and p.p_num_guests >= :adults + :children " +
+            "and p.p_num_guests >= :adults " +
+            "and p.p_num_guests >= :children " +
             "and p.p_num_guests >= :pets ",
         countQuery = "select distinct count(*) " +
                 "from property p " +
                 "join city c on c.c_id = p.c_id " +
                 "join property_availabilities pav on pav.p_id = p.p_id " +
                 "where " +
-                "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) " +
+                "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
                 "and pav.pav_start_date <= :checkIn and pav.pav_end_date >= :checkOut " +
-                "and p.p_num_guests >= :adults + :children " +
+                "and p.p_num_guests >= :adults " +
+                "and p.p_num_guests >= :children " +
                 "and p.p_num_guests >= :pets "
         , nativeQuery = true)
     fun filterWithPagination(filterString: String, checkIn: LocalDate, checkOut: LocalDate, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property>
@@ -76,18 +81,20 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
             "from property p " +
             "join city c on c.c_id = p.c_id " +
             "where " +
-            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) " +
-            "or c.c_name ilike :filterString " +
-            "or p.p_property_name ilike :filterString " +
-            "or p.p_description ilike :filterString " +
-            "or p.p_address ilike :filterString ",
+            "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
+            "and p.p_num_guests >= :adults " +
+            "and p.p_num_guests >= :children " +
+            "and p.p_num_guests >= :pets ",
         countQuery = "select  count(p.p_id) " +
                 "from property p " +
                 "join city c on c.c_id = p.c_id " +
                 "where " +
-                "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ to_tsquery(:filterString) "
+                "to_tsvector(c.c_name || ' ' || p.p_property_name || ' ' || p.p_description) @@ plainto_tsquery(:filterString) " +
+                "and p.p_num_guests >= :adults " +
+                "and p.p_num_guests >= :children " +
+                "and p.p_num_guests >= :pets "
         , nativeQuery = true)
-    fun findAllByFilterString(filterString: String, pageable: Pageable): Page<Property>
+    fun findAllByFilterString(filterString: String, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property>
 
 
 }

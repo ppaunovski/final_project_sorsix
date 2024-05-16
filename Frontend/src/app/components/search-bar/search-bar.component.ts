@@ -44,9 +44,14 @@ export class SearchBarComponent implements OnInit {
     this.filterString = value;
   }
   search() {
-    console.log('SEARCH');
+    this.isCheckinOpen = false;
+    this.isCheckoutOpen = false;
+    this.isGuestDialongOpen = false;
+
+    console.log('SEARCH', this.numberOfAdults);
+
     const queryParams = {
-      filterString: this.filterString,
+      filterString: encodeURI(this.filterString),
       checkIn: this.formatDate(this.startDate),
       checkOut: this.formatDate(this.endDate),
       adults: this.numberOfAdults.toString(),
@@ -63,7 +68,9 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe({
       next: (params) => {
-        this.filterString = params['filterString'] ?? '';
+        this.filterString = params['filterString']
+          ? decodeURI(params['filterString'])
+          : '';
         this.startDate = params['checkIn']
           ? new Date(Date.parse(params['checkIn']))
           : undefined;

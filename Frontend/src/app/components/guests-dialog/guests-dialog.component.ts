@@ -43,6 +43,7 @@ export class GuestsDialogComponent implements OnInit {
   pets$ = new EventEmitter<number>();
   @Input()
   maxGuests: number | undefined;
+  counts: number[] = [];
 
   constructor(private guestTypeService: GuestTypeService) {}
 

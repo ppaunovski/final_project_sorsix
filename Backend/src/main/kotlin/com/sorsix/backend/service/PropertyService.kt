@@ -25,10 +25,13 @@ import com.sorsix.backend.service.exceptions.PropertyNotAvailableException
 import com.sorsix.backend.service.exceptions.PropertyNotFoundException
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import jakarta.transaction.Transactional
+import org.springframework.beans.propertyeditors.URIEditor
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
+import java.net.URI
+import java.net.URLDecoder
 import java.time.LocalDate
 
 @Service
@@ -266,11 +269,12 @@ class PropertyService(
     }
 
     fun getAllProperties(page: Int, size: Int, filterString: String, checkIn: LocalDate?, checkOut: LocalDate?, adults: Int, children: Int, pets: Int): PropertyResponse {
+        val decoded = URLDecoder.decode(filterString, "UTF-8")
         val pageable = PageRequest.of(page, size)
 
         if(checkIn == null || checkOut == null)
-            if(filterString.isNotBlank())
-                return  this.propertyRepository.findAllPaginatedByFilterString(filterString, pageable).let { pages ->
+            if(decoded.isNotBlank())
+                return  this.propertyRepository.findAllPaginatedByFilterStringWithoutDates(decoded, adults, children, pets, pageable).let { pages ->
                     PropertyResponse(
                         content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
                         totalPages = pages.totalPages,
@@ -291,7 +295,7 @@ class PropertyService(
                 )
             }
 
-        val pages = this.propertyRepository.filterWithPagination(filterString, checkIn, checkOut, adults, children, pets, pageable)
+        val pages = this.propertyRepository.filterWithPagination(decoded, checkIn, checkOut, adults, children, pets, pageable)
         val properties = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 
         return PropertyResponse(

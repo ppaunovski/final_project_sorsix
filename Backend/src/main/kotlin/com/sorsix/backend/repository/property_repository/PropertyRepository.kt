@@ -18,5 +18,5 @@ interface PropertyRepository {
     fun findAllWithoutDates(filterString: String, adults: Int, children: Int, pet: Int): List<Property>
     fun findAllWithCheckIn(filterString: String,checkIn: LocalDate, adults: Int, children: Int, pets: Int): List<Property>
     fun filterWithPagination(filterString: String, checkIn: LocalDate, checkOut: LocalDate, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property>
-    fun findAllPaginatedByFilterString(filterString: String, pageable: Pageable): Page<Property>
+    fun findAllPaginatedByFilterStringWithoutDates(filterString: String, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property>
 }

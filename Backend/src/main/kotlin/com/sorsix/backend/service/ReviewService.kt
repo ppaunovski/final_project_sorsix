@@ -52,6 +52,7 @@ class ReviewService(
 
         val guest = this.userAccountRepository.findByEmail(authentication.name)
             ?: throw UnauthorizedAccessException("User must be authenticated to leave a review")
+
         val property = this.propertyService.findPropertyById(review.propertyId)
 
         if (guest.id == property.host.id)

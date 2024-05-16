@@ -107,11 +107,20 @@ class BookingService(
 
     fun getBookingForReview(id: Long, authentication: Authentication?): BookingForReviewDTO {
         if(authentication == null) throw UnauthorizedAccessException("User is not authenticated")
+
         val guest = userAccountService.findUserByEmail(authentication.name)
 
         val booking = this.findBookingById(id)
 
+        if(booking.status != (this.bookingStatusRepository.findById(BookingStatusEnum.APPROVED.ordinal.toLong())
+                ?: { BookingStatusNotFoundException("Booking status not found") })
+        ) throw UnauthorizedAccessException("Booking has not been approved")
+
+        if(booking.checkIn > LocalDate.now()) throw UnauthorizedAccessException("Booking has not started yet")
+
+
         if(this.reviewRepository.hasReviewForBooking(booking.id, guest.id) ) throw UnauthorizedAccessException("User has already reviewed this booking")
+
 
         return BookingForReviewDTO(
             id = booking.id,
