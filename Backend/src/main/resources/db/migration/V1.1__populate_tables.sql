@@ -17,30 +17,31 @@ VALUES (1, 'Room'),
        (3, 'Apartment'),
        (4, 'Type 4');
 
-insert into attribute (a_name, a_description)
-VALUES ('Wi-Fi', 'Connection to internet in the property.'),
-       ('Parking', 'Connection to internet in the property.'),
-       ('Private Bathroom', 'Connection to internet in the property.'),
-       ('Kitchen', 'Connection to internet in the property.'),
-       ('Pet Friendly', 'Connection to internet in the property.'),
-       ('Breakfast', 'Connection to internet in the property.'),
-       ('AC', 'Connection to internet in the property.'),
-       ('Iron', 'Connection to internet in the property.'),
-       ('Bay View', 'Connection to internet in the property.'),
-       ('Balcony', 'Connection to internet in the property.'),
-       ('Washer', 'Connection to internet in the property.'),
-       ('Garden', 'Connection to internet in the property.'),
-       ('Smoke alarm', 'Connection to internet in the property.'),
-       ('TV', 'Connection to internet in the property.'),
-       ('Heater', 'Connection to internet in the property.');
+insert into attribute (a_name, a_description, a_icon)
+VALUES ('Wi-Fi', 'Connection to internet in the property.', 'wifi'),
+       ('Parking', 'Connection to internet in the property.', 'local_parking'),
+       ('Private Bathroom', 'Connection to internet in the property.', 'bathtub'),
+       ('Kitchen', 'Connection to internet in the property.', 'kitchen'),
+       ('Pet Friendly', 'Connection to internet in the property.', 'pets'),
+       ('Breakfast', 'Connection to internet in the property.', 'egg_alt'),
+       ('AC', 'Connection to internet in the property.', 'mode_fan'),
+       ('Iron', 'Connection to internet in the property.', 'iron'),
+       ('Bay View', 'Connection to internet in the property.', 'beach_access'),
+       ('Balcony', 'Connection to internet in the property.', 'balcony'),
+       ('Washer', 'Connection to internet in the property.', 'laundry'),
+       ('Garden', 'Connection to internet in the property.', 'outdoor_garden'),
+       ('Smoke alarm', 'Connection to internet in the property.', 'smoke-free'),
+       ('TV', 'Connection to internet in the property.', 'tv'),
+       ('Elevator', 'Connection to internet in the property.', 'elevator'),
+       ('Heater', 'Connection to internet in the property.', 'sunny');
 
-insert into review_component (rc_component_name)
-VALUES ('Cleanliness'),
-       ('Accuracy'),
-       ('Check-in'),
-       ('Communication'),
-       ('Location'),
-       ('Value');
+insert into review_component (rc_component_name, rc_icon)
+VALUES ('Cleanliness', 'cleaning_services'),
+       ('Accuracy', 'verified'),
+       ('Check-in', 'key'),
+       ('Communication', 'contact_support'),
+       ('Location', 'map'),
+       ('Value', 'paid');
 insert into property (p_nightly_price, p_property_name, p_num_guests, p_num_beds, p_num_bedrooms, p_num_bathrooms,
                       p_is_guest_favorite, p_description, p_address, p_longitude, p_latitude, u_id, c_id, pt_id)
 VALUES (3500.0, 'Biljana Luxury Apartment', 2, 1, 1, 1, true,

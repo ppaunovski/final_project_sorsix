@@ -17,6 +17,9 @@ class PropertyImagesRepositoryImpl(
     override fun save(propertyImages: PropertyImages): PropertyImages =
             this.jpaPropertyImagesRepository.save(propertyImages)
 
+    override fun findThumbnail(propertyId: Long): PropertyImages? =
+        this.jpaPropertyImagesRepository.findThumbnail(propertyId)
+
     override fun findAllByPropertyId(propertyId: Long): List<PropertyImages> =
             this.jpaPropertyImagesRepository.findAllByPropertyId(propertyId)
 

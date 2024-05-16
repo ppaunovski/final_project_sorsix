@@ -2,6 +2,7 @@ package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.*
 import com.sorsix.backend.api.requests.OfferRequest
+import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.api.requests.PropertyRequest
 import com.sorsix.backend.api.responses.PropertyResponse
 import com.sorsix.backend.domain.entities.Booking
@@ -33,17 +34,16 @@ import java.time.LocalDate
 @Service
 class PropertyService(
     private val propertyRepository: PropertyRepository,
-    private val reviewRepository: UserReviewRepository,
-    private val componentRatingService: ComponentRatingService,
     private val propertyAvailabilityRepository: PropertyAvailabilityRepository,
     private val bookingService: BookingService,
     private val userService: UserAccountService,
     private val bookingStatusRepository: BookingStatusRepository,
-    private val imageRepository: PropertyImagesRepository,
+    private val imagesService: PropertyImagesService,
     private val bookingGuestsRepository: BookingGuestsRepository,
     private val guestTypeRepository: GuestTypeRepository,
     private val bookingRepository: BookingRepository,
-    private val dtoMapperService: ClassToDTOMapperService
+    private val dtoMapperService: ClassToDTOMapperService,
+    private val propertyAttributesService: PropertyAttributesService
 ) {
     fun findAllProperties(
         filterString: String,
@@ -82,8 +82,14 @@ class PropertyService(
         propertyRepository.findById(id)?.let { dtoMapperService.mapPropertyToDTO(it) }
             ?: throw PropertyNotFoundException("Property with id $id not found")
 
-    fun saveProperty(property: PropertyRequest, authentication: Authentication) =
-        propertyRepository.save(
+    @Transactional
+    fun saveProperty(property: PropertyRequest, authentication: Authentication?): Property {
+
+        if(authentication == null) throw UnauthorizedAccessException("Please log in to save a property.")
+
+        val host = this.userService.findUserByEmail(authentication.name)
+
+        val p = propertyRepository.save(
             Property(
                 id = property.id,
                 nightlyPrice = property.nightlyPrice,
@@ -97,11 +103,31 @@ class PropertyService(
                 address = property.address,
                 longitude = property.longitude,
                 latitude = property.latitude,
-                host = userService.findUserByEmail(authentication.name),
+                host = host,
                 city = property.city,
                 propertyType = property.propertyType
             )
         )
+        for (image in property.images){
+            imagesService.savePropertyImage(
+                PropertyImageRequest(p.id, image.order, image.imageByteArray, image.type)
+            )
+        }
+        for(attribute in property.attributes){
+            propertyAttributesService.save(p, attribute)
+        }
+
+        this.propertyAvailabilityRepository.save(
+            PropertyAvailability(
+                id = 0,
+                property = p,
+                startDate = LocalDate.now(),
+                endDate = LocalDate.now().plusYears(1)
+            )
+        )
+
+        return p
+    }
 
     fun deletePropertyById(id: Long) = propertyRepository.deleteById(id)
 
@@ -243,16 +269,16 @@ class PropertyService(
 
         if(checkIn == null || checkOut == null)
             if(filterString.isNotBlank())
-            return  this.propertyRepository.findAllPaginatedByFilterString(filterString, pageable).let { pages ->
-                PropertyResponse(
-                    content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
-                    totalPages = pages.totalPages,
-                    totalElements = pages.totalElements,
-                    page = pages.number,
-                    size = pages.size,
-                    last = pages.isLast,
-                )
-            }
+                return  this.propertyRepository.findAllPaginatedByFilterString(filterString, pageable).let { pages ->
+                    PropertyResponse(
+                        content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
+                        totalPages = pages.totalPages,
+                        totalElements = pages.totalElements,
+                        page = pages.number,
+                        size = pages.size,
+                        last = pages.isLast,
+                    )
+                }
             else return this.propertyRepository.findAllPaginated(pageable).let { pages ->
                 PropertyResponse(
                     content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
@@ -267,7 +293,7 @@ class PropertyService(
         val pages = this.propertyRepository.filterWithPagination(filterString, checkIn, checkOut, adults, children, pets, pageable)
         val properties = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 
-       return PropertyResponse(
+        return PropertyResponse(
             content = properties,
             totalPages = pages.totalPages,
             totalElements = pages.totalElements,
@@ -278,3 +304,4 @@ class PropertyService(
     }
 
 }
+

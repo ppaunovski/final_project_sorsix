@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service
 @Service
 class PropertyAttributesService(
     private val propertyAttributesRepository: PropertyAttributeRepository,
-    private val propertyService: PropertyService,
+    private val propertyRepository: PropertyRepository,
     private val dtoMapperService: ClassToDTOMapperService
 ) {
 
     fun getAllPropertyAttributesForPropertyId(id: Long): List<PropertyAttributeDTO> {
-        val property = this.propertyService.findPropertyById(id)
+        val property = this.propertyRepository.findById(id) ?: throw PropertyNotFoundException("Property with id $id not found")
 
         return this.propertyAttributesRepository.findAllByProperty(property).map {
             dtoMapperService.mapPropertyAttributeToDTO(it)

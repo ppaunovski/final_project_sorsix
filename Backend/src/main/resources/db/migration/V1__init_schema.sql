@@ -22,13 +22,15 @@ create table property_type (
 create table attribute (
     a_id bigserial primary key ,
     a_name text not null ,
-    a_description text not null
+    a_description text not null,
+    a_icon text not null
 );
 
 
 create table review_component (
     rc_id bigserial primary key ,
-    rc_component_name text not null
+    rc_component_name text not null,
+    rc_icon text not null
 );
 
 create table property (

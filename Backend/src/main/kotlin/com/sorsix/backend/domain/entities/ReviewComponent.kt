@@ -11,4 +11,6 @@ data class ReviewComponent(
     val id: Long,
     @Column(nullable = false, name = "rc_component_name")
     val rcComponentName: String,
+    @Column(nullable = false, name = "rc_icon")
+    val icon: String
 )

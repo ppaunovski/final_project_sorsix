@@ -7,5 +7,6 @@ import jakarta.persistence.*
 data class PropertyAttributeDTO (
     val id: Long,
     val property: PropertyDTO,
-    val attribute: Attribute
+    val attribute: Attribute,
+    val icon: String
 )

@@ -50,18 +50,10 @@ class PropertyController(
     fun findPropertyById(@PathVariable id: Long) = propertyService.getPropertyDTOById(id)
 
     @PostMapping
-    fun saveProperty(@RequestBody property: PropertyRequest, authentication: Authentication): Property{
-        val p = propertyService.saveProperty(property, authentication)
-        for (image in property.images){
-            propertyImagesService.savePropertyImage(
-                PropertyImageRequest(p.id, image.order, image.imageByteArray, image.type)
-            )
-        }
-        for(attribute in property.attributes){
-            propertyAttributesService.save(p, attribute)
-        }
-        return p
-    }
+    fun saveProperty(@RequestBody property: PropertyRequest, authentication: Authentication?): Property =
+         propertyService.saveProperty(property, authentication)
+
+
 
 
     @DeleteMapping("/{id}")

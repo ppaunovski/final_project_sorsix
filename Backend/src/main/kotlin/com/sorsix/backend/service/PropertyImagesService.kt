@@ -4,12 +4,14 @@ import com.sorsix.backend.api.dtos.PropertyImageDTO
 import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.domain.entities.PropertyImages
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
+import com.sorsix.backend.repository.property_repository.PropertyRepository
+import com.sorsix.backend.service.exceptions.PropertyNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
 class PropertyImagesService(
     private val propertyImagesRepository: PropertyImagesRepository,
-    private val propertyService: PropertyService,
+    private val propertyRepository: PropertyRepository,
     private val dtoMapperService: ClassToDTOMapperService
 ) {
     fun getAllPropertyImagesForPropertyId(id: Long): List<PropertyImageDTO> {
@@ -33,7 +35,7 @@ class PropertyImagesService(
     }
 
     fun savePropertyImage(propertyImageRequest: PropertyImageRequest) {
-        val property = this.propertyService.findPropertyById(propertyImageRequest.propertyId)
+        val property = this.propertyRepository.findById(propertyImageRequest.propertyId) ?: throw PropertyNotFoundException("Property with id ${propertyImageRequest.propertyId} not found")
         val propertyImages = PropertyImages(
             id = 0,
             property = property,

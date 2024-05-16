@@ -55,7 +55,8 @@ class ClassToDTOMapperService(
         return PropertyAttributeDTO(
             id = propertyAttribute.paId,
             property = this.mapPropertyToDTO(propertyAttribute.property),
-            attribute = propertyAttribute.attribute
+            attribute = propertyAttribute.attribute,
+            icon = propertyAttribute.icon
         )
     }
 
@@ -117,15 +118,13 @@ class ClassToDTOMapperService(
                 }.average(),
             description = property.description,
             pricePerNight = property.nightlyPrice,
-            images = this.imagesRepository.findAllByPropertyId(property.id).map {
-                PropertyImageDTO(
-                    id = it.id,
-                    propertyId = it.property.id,
-                    order = it.order,
-                    imageByteArray = it.image,
-                    type = it.type
-                )
-            },
+            image = this.imagesRepository.findThumbnail(property.id)?.let { this.mapToPropertyImageDTO(it)} ?: PropertyImageDTO(
+                    id = 0,
+                    propertyId = 0,
+                    order = 0,
+                    imageByteArray = ByteArray(0),
+                    type = ""
+                ),
             type = property.propertyType.typeName,
             name = property.name
         )
