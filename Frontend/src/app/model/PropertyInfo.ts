@@ -8,6 +8,6 @@ export interface PropertyInfo {
   averageRating: number;
   description: string;
   pricePerNight: number;
-  images: PropertyImage[];
+  images: PropertyImage;
   type: string;
 }

@@ -18,8 +18,8 @@ export class PropertyPreviewComponent implements OnInit {
   headerImage: string = '';
 
   ngOnInit(): void {
-    if (this.property && this.property.images && this.property.images.length > 0) {
-      this.headerImage = this.dataURItoBlob(this.property.images[0].imageByteArray, this.property.images[0].type);
+    if (this.property && this.property.images) {
+      this.headerImage = this.dataURItoBlob(this.property.images.imageByteArray, this.property.images.type);
     }
    else {
       this.headerImage = 'assets/placeholder.png';
