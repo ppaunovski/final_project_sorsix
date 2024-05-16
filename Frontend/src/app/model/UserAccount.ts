@@ -4,5 +4,5 @@ export interface UserAccount {
   firstName: String;
   lastName: String;
   joinedDate: Date;
-  dateHostSince: Date;
+  dateHostStarted: Date;
 }

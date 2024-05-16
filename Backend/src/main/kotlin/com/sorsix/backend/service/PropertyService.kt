@@ -88,6 +88,7 @@ class PropertyService(
         if(authentication == null) throw UnauthorizedAccessException("Please log in to save a property.")
 
         val host = this.userService.findUserByEmail(authentication.name)
+        if(host.dateHostStarted == null) host.dateHostStarted = LocalDate.now()
 
         val p = propertyRepository.save(
             Property(

@@ -25,10 +25,11 @@ export class ConfirmBookingComponent implements OnInit {
     if (this.booking)
       this.bookingService.cancelBooking(this.booking.id).subscribe({
         next: (resp) => {
-          this.router.navigate(['/profiles/1', 'bookings']);
+          this.router.navigate(['/profiles', 'bookings']);
         },
         error: (error) => {
           console.log(error);
+          this.router.navigate(['/profiles', 'bookings']);
         },
       });
   }
@@ -36,7 +37,7 @@ export class ConfirmBookingComponent implements OnInit {
     if (this.booking)
       this.bookingService.confirmBooking(this.booking.id).subscribe({
         next: (resp) => {
-          this.router.navigate(['/profiles/1', 'bookings']);
+          this.router.navigate(['/profiles', 'bookings']);
         },
         error: (error) => {
           console.log(error);

@@ -51,15 +51,15 @@ export const routes: Routes = [
     component: UnitsComponent,
   },
   {
-    path: 'profiles/:id',
+    path: 'profiles',
     component: ProfileComponent,
   },
   {
-    path: 'profiles/:id/bookings',
+    path: 'profiles/bookings',
     component: BookingsComponent,
   },
   {
-    path: 'profiles/:id/properties',
+    path: 'profiles/properties',
     component: MyPropertiesComponent,
   },
   {

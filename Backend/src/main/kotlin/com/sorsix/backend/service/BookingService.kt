@@ -20,6 +20,7 @@ import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
 import jakarta.transaction.Transactional
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class BookingService(
@@ -73,6 +74,8 @@ class BookingService(
         val booking = bookingRepository.findById(id) ?: throw BookingNotFoundException(id)
 
         if(booking.guest.id != guest.id && booking.property.host.id != guest.id) throw UnauthorizedAccessException("User is not the owner of the booking")
+
+        if(booking.checkIn >= (LocalDate.now())) throw UnauthorizedAccessException("Booking has already started")
 
         booking.status = this.bookingStatusRepository.findById(BookingStatusEnum.CANCELLED.ordinal.toLong()) ?: throw BookingStatusNotFoundException("Booking status not found")
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserAccount } from '../../model/UserAccount';
+import { DateService } from '../../service/date.service';
 
 @Component({
   selector: 'app-host-property-preview',
@@ -12,7 +13,12 @@ export class HostPropertyPreviewComponent {
   @Input()
   host: UserAccount | undefined;
 
-  // getHostDate() {
-  //   log;
-  // }
+  constructor(private dateService: DateService) {}
+
+  getHostDate() {
+    if (this.host) {
+      return this.dateService.formatDateToMonthYear(this.host.dateHostStarted);
+    }
+    return '';
+  }
 }
