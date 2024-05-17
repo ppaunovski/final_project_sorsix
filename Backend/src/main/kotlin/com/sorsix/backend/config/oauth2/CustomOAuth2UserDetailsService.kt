@@ -45,8 +45,13 @@ class CustomOAuth2UserDetailsService(
             )
         }
 
-    private fun registerOAuth2User(oAuth2UserDetails: OAuth2UserDetails): UserAccount =
-        userAccountRepository.save(
+    private fun registerOAuth2User(oAuth2UserDetails: OAuth2UserDetails): UserAccount {
+        // TODO: Save profile image in db
+        //  Image URL is found here.
+        //  Here is a link how to download image from URL in Java: https://www.baeldung.com/java-download-file
+        // val imageUrl = oAuth2UserDetails.attributes["picture"]
+
+        return userAccountRepository.save(
             UserAccount(
                 id = 0,
                 email = oAuth2UserDetails.getEmail(),
@@ -57,4 +62,6 @@ class CustomOAuth2UserDetailsService(
                 userPassword = ""
             )
         )
+    }
+
 }
