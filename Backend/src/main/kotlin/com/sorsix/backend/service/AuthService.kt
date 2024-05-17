@@ -7,10 +7,13 @@ import com.sorsix.backend.config.JwtService
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
 import com.sorsix.backend.service.exceptions.InvalidCredentialsException
+import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
+import java.security.Principal
 import java.time.LocalDate
 
 @Service
@@ -52,6 +55,11 @@ class AuthService(
         ))
 
         return this.authenticate(AuthRequest(user.email, user.userPassword))
+    }
+
+    fun isAuthenticated(authentication: Authentication?): Boolean {
+        if(authentication == null) throw UnauthorizedAccessException("User is not authenticated")
+        return true
     }
 
 }

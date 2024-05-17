@@ -31,10 +31,6 @@ export const routes: Routes = [
     component: PropertyFormComponent,
   },
   {
-    path: 'properties/create',
-    component: CreatePropertyComponent,
-  },
-  {
     path: 'properties/:id',
     component: PropertyComponent,
   },

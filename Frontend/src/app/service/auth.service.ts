@@ -43,4 +43,7 @@ export class AuthService {
       }
     );
   }
+  isAuthenticated(): Observable<Boolean> {
+    return this.http.get<Boolean>(`${this.url}`);
+  }
 }

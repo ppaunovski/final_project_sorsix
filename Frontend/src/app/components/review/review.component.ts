@@ -16,11 +16,10 @@ import { ReviewService } from '../../service/review.service';
 import { ComponentRating } from '../../model/ComponentRating';
 import { MatSlider } from '@angular/material/slider';
 
-
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [MatIconModule, SlicePipe],
+  imports: [MatIconModule, SlicePipe, MatIconModule],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css',
 })
@@ -57,7 +56,15 @@ export class ReviewComponent implements OnInit {
   selector: 'review-dialog',
   templateUrl: 'dialog.review.html',
   standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatIconModule, MatDialogActions, MatDialogClose, SlicePipe, MatSlider],
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatIconModule,
+    MatDialogActions,
+    MatDialogClose,
+    SlicePipe,
+    MatSlider,
+  ],
 })
 export class ReviewDialog {
   constructor(

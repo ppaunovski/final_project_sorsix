@@ -1,5 +1,11 @@
-import {Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { PropertyService } from '../../service/property.service';
 import { Property } from '../../model/property';
 import { PropertyRequest } from '../../model/requests/PropertyRequest';
@@ -14,55 +20,60 @@ import { CityService } from '../../service/city.service';
 import { MatButtonModule } from '@angular/material/button';
 import { AttributeService } from '../../service/attribute.service';
 import { Attribute } from '../../model/Attribute';
-import {MatCheckboxChange, MatCheckboxModule} from '@angular/material/checkbox';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {
+  MatCheckboxChange,
+  MatCheckboxModule,
+} from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import * as L from 'leaflet';
 import { MapComponent } from '../map/map.component';
-
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-property-form',
   standalone: true,
-  imports: [ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatStepperModule,
     FormsModule,
     MatFormFieldModule,
-    MapComponent
+    MapComponent,
   ],
   templateUrl: './property-form.component.html',
   styleUrl: './property-form.component.css',
 })
 export class PropertyFormComponent implements OnInit {
-  
-  
-  
-  constructor(private typeService: PropertyTypeService, 
-    private propertyService: PropertyService, 
+  constructor(
+    private typeService: PropertyTypeService,
+    private propertyService: PropertyService,
     private router: Router,
     private userService: UserAccountService,
     private cityService: CityService,
     private propertyTypeService: PropertyTypeService,
     private attributeService: AttributeService,
-  ) { }
-  
+    private authService: AuthService
+  ) {}
+
   form: FormGroup = new FormGroup<PropertyRequest>({
-    nightlyPrice: new FormControl<Number>(0,{nonNullable: true}),
-    name: new FormControl<string>('',{nonNullable: true}),
-    guests: new FormControl<Number>(0,{nonNullable: true}),
-    beds: new FormControl<Number>(0,{nonNullable: true}),
-    bedrooms: new FormControl<Number>(0,{nonNullable: true}),
-    bathrooms: new FormControl<Number>(0,{nonNullable: true}),
-    isGuestFavorite: new FormControl<Boolean>(false,{nonNullable: true}),
-    description: new FormControl<string>('',{nonNullable: true}),
-    address: new FormControl<string>('',  {nonNullable: true}),
-    longitude: new FormControl<Number>(0,{nonNullable: true}),
-    latitude: new FormControl<Number>(0,{nonNullable: true}),
-    city: new FormControl<City>({} as City,{nonNullable: true}),
-    propertyType: new FormControl<PropertyType>({} as PropertyType,{nonNullable: true}),
-    attributes: new FormControl<Number[]>([],{nonNullable: true}),
+    nightlyPrice: new FormControl<Number>(0, { nonNullable: true }),
+    name: new FormControl<string>('', { nonNullable: true }),
+    guests: new FormControl<Number>(0, { nonNullable: true }),
+    beds: new FormControl<Number>(0, { nonNullable: true }),
+    bedrooms: new FormControl<Number>(0, { nonNullable: true }),
+    bathrooms: new FormControl<Number>(0, { nonNullable: true }),
+    isGuestFavorite: new FormControl<Boolean>(false, { nonNullable: true }),
+    description: new FormControl<string>('', { nonNullable: true }),
+    address: new FormControl<string>('', { nonNullable: true }),
+    longitude: new FormControl<Number>(0, { nonNullable: true }),
+    latitude: new FormControl<Number>(0, { nonNullable: true }),
+    city: new FormControl<City>({} as City, { nonNullable: true }),
+    propertyType: new FormControl<PropertyType>({} as PropertyType, {
+      nonNullable: true,
+    }),
+    attributes: new FormControl<Number[]>([], { nonNullable: true }),
   });
   propertyForm: any;
   propertyTypes: PropertyType[] = [];
@@ -75,9 +86,13 @@ export class PropertyFormComponent implements OnInit {
   isLinear = false;
   longitude: number = 0;
   latitude: number = 0;
-  
-  
+
   ngOnInit(): void {
+    this.authService.isAuthenticated().subscribe({
+      error: (err) => {
+        this.router.navigate(['/login']);
+      },
+    });
     this.typeService.getAllPropertyTypes().subscribe((types) => {
       this.propertyTypes = types;
     });
@@ -95,7 +110,6 @@ export class PropertyFormComponent implements OnInit {
       this.attributes = att;
       console.log(this.attributes);
     });
-    
   }
   onImagePicked(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -110,7 +124,7 @@ export class PropertyFormComponent implements OnInit {
         const bytes = base64?.toString().split(',')[1];
         const image: PropertyImage = {
           id: 0,
-          imageByteArray: bytes??'',
+          imageByteArray: bytes ?? '',
           type: this.images[i].type,
           order: i,
           propertyId: 0,
@@ -119,51 +133,61 @@ export class PropertyFormComponent implements OnInit {
       };
       reader.readAsDataURL(this.images[i]);
     }
-    
   }
-  
-  
+
   onCheckboxChange($event: MatCheckboxChange) {
-    if($event.source.checked){
-      const att = this.attributes.find((a) => a.id == Number($event.source.value));
+    if ($event.source.checked) {
+      const att = this.attributes.find(
+        (a) => a.id == Number($event.source.value)
+      );
       this.selectedAttributes.push(att as Attribute);
-    }
-    else{
-      this.selectedAttributes = this.selectedAttributes.filter((a) => a.id != Number($event.source.value));
+    } else {
+      this.selectedAttributes = this.selectedAttributes.filter(
+        (a) => a.id != Number($event.source.value)
+      );
     }
     console.log(this.selectedAttributes);
-    
   }
-  
-  private OnResposne ={
-    next : (result: Property | undefined) => {
+
+  private OnResposne = {
+    next: (result: Property | undefined) => {
       this.router.navigate(['/properties', result?.id]);
     },
-    error : (error: any) => {
+    error: (error: any) => {
       console.log(error);
-    }
-  }
+    },
+  };
   handleSubmit() {
     console.log('submitting form');
-    if(this.user === undefined){
+    if (this.user === undefined) {
       return;
     }
-    this.form.value.city = this.cities.find((c) => c.id == this.form.value.city);
-    this.form.value.propertyType = this.propertyTypes.find((t) => t.id == this.form.value.propertyType);
+    this.form.value.city = this.cities.find(
+      (c) => c.id == this.form.value.city
+    );
+    this.form.value.propertyType = this.propertyTypes.find(
+      (t) => t.id == this.form.value.propertyType
+    );
     this.form.value.longitude = this.longitude;
     this.form.value.latitude = this.latitude;
-    console.log("Final Form: ",this.form.value);
-    this.propertyService.createProperty(this.form.value, this.propertyImages, this.selectedAttributes).subscribe(this.OnResposne);
+    console.log('Final Form: ', this.form.value);
+    this.propertyService
+      .createProperty(
+        this.form.value,
+        this.propertyImages,
+        this.selectedAttributes
+      )
+      .subscribe(this.OnResposne);
   }
 
   handleEvent($event: L.LatLng) {
-   this.latitude= $event.lat;
+    this.latitude = $event.lat;
     this.longitude = $event.lng;
   }
-  foundType(type: Number):String | undefined{
+  foundType(type: Number): String | undefined {
     return this.propertyTypes.find((t) => t.id == type)?.typeName;
   }
-  foundCity(city: Number):String | undefined{
+  foundCity(city: Number): String | undefined {
     return this.cities.find((c) => c.id == city)?.name;
   }
 }

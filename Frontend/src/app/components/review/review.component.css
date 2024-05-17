@@ -1,0 +1,3 @@
+::ng-deep mat-slider.mat-mdc-slider.disabled-slider > * {
+  background-color: purple;
+}
