@@ -12,6 +12,7 @@
               type="text"
               matInput
               formControlName="name"
+              [required]="true"
               placeholder="Apartment Name"
             />
           </div>
@@ -22,6 +23,7 @@
               class="w-full border-solid border-black border rounded-md h-20 p-2"
               type="text"
               formControlName="description"
+              [required]="true"
               matInput
               placeholder="Description"
             ></textarea>
@@ -46,6 +48,7 @@
               class="w-full border-solid border-black border rounded-md h-10 p-2"
               formControlName="propertyType"
               matInput
+              [required]="true"
             >
               @for(type of propertyTypes; track type.id)
               {
@@ -62,6 +65,7 @@
               formControlName="nightlyPrice"
               matInput
               placeholder="150.00"
+              [required]="true"
             />
           </div>
        
@@ -77,6 +81,7 @@
               #City
               class="w-full border-solid border-black border rounded-md h-10 p-2"
               formControlName="city"
+              [required]="true"
             >
               @for(city of cities; track city.id)
               {
@@ -92,6 +97,7 @@
               type="text"
               formControlName="address"
               matInput
+              [required]="true"
               placeholder="Address"
             />
           </div>
@@ -111,6 +117,7 @@
               class="w-full border-solid border-black border rounded-md h-10 p-2"
               type="number"
               formControlName="guests"
+              [required]="true"
               matInput
               placeholder="Guests"
             />
@@ -122,6 +129,7 @@
               class="w-full border-solid border-black border rounded-md h-10 p-2"
               type="number"
               formControlName="beds"
+              [required]="true"
               matInput
               placeholder="Beds"
             />
@@ -133,6 +141,7 @@
               class="w-full border-solid border-black border rounded-md h-10 p-2"
               type="number"
               formControlName="bedrooms"
+              [required]="true"
               matInput
               placeholder="Bedrooms"
             />
@@ -145,6 +154,7 @@
               type="number"
               formControlName="bathrooms"
               matInput
+              [required]="true"
               placeholder="Bathrooms"
             />
           </div>

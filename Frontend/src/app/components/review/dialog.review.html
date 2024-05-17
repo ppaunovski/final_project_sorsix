@@ -35,6 +35,20 @@
         </div>
     </div>
     @for(component of fullReview.components; track component.id) {
-        <div>{{component.reviewComponent.rcComponentName}}:{{component.rating}}</div>
+        <div class="example-label-container">
+            <label id="example-name-label" class="example-name-label">{{component.reviewComponent.rcComponentName}}</label>
+            <label class="example-value-label">{{component.rating}}</label>
+          </div>
+          <mat-slider
+              class="example-margin"
+              [disabled]="true"
+              [max]="5"
+              [color]="'warn'"
+              
+              [min]="1"
+              [discrete]="true"
+              [showTickMarks]="true"
+              >
+          </mat-slider>
     }
 </mat-dialog-content>

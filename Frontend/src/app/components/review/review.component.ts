@@ -46,7 +46,7 @@ export class ReviewComponent implements OnInit {
         review: this.review,
         components: this.components,
       };
-      const dialogRef = this.dialog.open(DialogDataExampleDialog, {
+      const dialogRef = this.dialog.open(ReviewDialog, {
         data: fullReview,
       });
     }
@@ -54,12 +54,12 @@ export class ReviewComponent implements OnInit {
 }
 
 @Component({
-  selector: 'dialog-data-example-dialog',
-  templateUrl: 'dialog.data.html',
+  selector: 'review-dialog',
+  templateUrl: 'dialog.review.html',
   standalone: true,
   imports: [MatDialogTitle, MatDialogContent, MatIconModule, MatDialogActions, MatDialogClose, SlicePipe, MatSlider],
 })
-export class DialogDataExampleDialog {
+export class ReviewDialog {
   constructor(
     @Inject(MAT_DIALOG_DATA) public fullReview: ReviewWithComponents
   ) {}

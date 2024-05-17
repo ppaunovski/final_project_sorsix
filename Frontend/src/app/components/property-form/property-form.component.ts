@@ -1,5 +1,5 @@
 import {Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PropertyService } from '../../service/property.service';
 import { Property } from '../../model/property';
 import { PropertyRequest } from '../../model/requests/PropertyRequest';
