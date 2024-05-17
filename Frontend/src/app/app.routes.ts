@@ -12,8 +12,13 @@ import { ConfirmBookingComponent } from './components/confirm-booking/confirm-bo
 import { MyPropertiesComponent } from './components/my-properties/my-properties.component';
 import { ReviewComponentComponent } from './components/review-component/review-component.component';
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
+import { LoginCallbackComponent } from './callbacks/login-callback/login-callback.component';
 
 export const routes: Routes = [
+  {
+    path: 'login-callback',
+    component: LoginCallbackComponent,
+  },
   {
     path: 'login',
     component: SignInComponent,

@@ -34,7 +34,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 })
 export class NavigationComponent implements OnInit {
   signOut() {
-    localStorage.removeItem('jwt');
+    sessionStorage.removeItem('jwt');
     this.authService.refreshAuth$.next(true);
   }
   // @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
@@ -59,6 +59,8 @@ export class NavigationComponent implements OnInit {
         },
 
         error: (error) => {
+          console.log('navigation error', error);
+
           this.user = undefined;
         },
       });

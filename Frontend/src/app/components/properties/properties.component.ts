@@ -52,7 +52,6 @@ export class PropertiesComponent implements OnInit {
   ngOnInit(): void {
     this.page = 0;
     this.size = 10;
-    this.route.queryParams.subscribe((x) => console.log(x));
 
     this.route.queryParams
       .pipe(
@@ -87,13 +86,10 @@ export class PropertiesComponent implements OnInit {
       )
       .subscribe({
         next: (resp) => {
-          console.log('IN SUCCESS', resp);
-
           if (resp) {
             this.properties = resp?.content;
           }
           this.propertyResponse = resp;
-          console.log('resp', this.propertyResponse);
           this.loading = false;
           this.error = null;
         },
@@ -115,7 +111,6 @@ export class PropertiesComponent implements OnInit {
     // });
   }
   handlePageChange(event: PageEvent) {
-    console.log(event);
     const page = event.pageIndex;
     const size = event.pageSize;
     if (page != null) this.page = page;

@@ -10,11 +10,12 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterLink } from '@angular/router';
+import { RouterLink, withDebugTracing } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { AuthService } from '../../service/auth.service';
 import { tap } from 'rxjs';
+import { Oauth2Service } from '../../service/oauth2.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -45,7 +46,10 @@ export class SignInComponent {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private oauthService: Oauth2Service
+  ) {}
 
   handleInput(type: string, value: string) {
     switch (type) {
@@ -73,7 +77,7 @@ export class SignInComponent {
           next: (response) => {
             this.loading = false;
             this.error = null;
-            if (response) localStorage.setItem('jwt', response.token);
+            if (response) sessionStorage.setItem('jwt', response.token);
             this.authService.refreshAuth$.next(true);
           },
           error: (err) => {
@@ -81,6 +85,19 @@ export class SignInComponent {
             this.error = err;
           },
         });
+  }
+  googleAuth() {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    // window.location.href =
+    //   'https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&client_id=854006941325-m6rag83jr31o8h18adllhqusf7jao5ov.apps.googleusercontent.com&scope=profile%20email&state=pFWRLYuo5WAEnBOOvngIgxGp1narXK7LxRHSqFMFGPE%3D&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin%2Foauth2%2Fcode%2Fgoogle&service=lso&o2v=2&ddm=0&flowName=GeneralOAuthFlow';
+    // this.oauthService.googleSignIn().subscribe({
+    //   next: (resp) => {
+    //     console.log('google resp', resp);
+    //   },
+    //   error: (err) => {
+    //     console.log('google error', err);
+    //   },
+    // });
   }
 }
 
