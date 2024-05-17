@@ -1,5 +1,8 @@
 package com.sorsix.backend.config
 
+import com.sorsix.backend.config.oauth2.CustomOAUth2SuccessHandler
+import com.sorsix.backend.config.oauth2.CustomOAuth2FailureHandler
+import com.sorsix.backend.config.oauth2.CustomOAuth2UserDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -16,7 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 class SecurityConfig(
     private val jwtAuthFilter: JwtAuthFilter,
-    private val authenticationProvider: AuthenticationProvider
+    private val authenticationProvider: AuthenticationProvider,
+    private val customOAuth2UserDetailsService: CustomOAuth2UserDetailsService,
+    private val customOAUth2SuccessHandler: CustomOAUth2SuccessHandler,
+    private val customOAuth2FailureHandler: CustomOAuth2FailureHandler,
 ) {
     @Bean
     fun securityFilterChain(
@@ -30,12 +36,28 @@ class SecurityConfig(
             .authorizeHttpRequests{
                 it
 //                    .requestMatchers("/api/auth", "/api/auth/refresh", "/error")
-                    .requestMatchers("/**")
+                    .requestMatchers("/api/booking/**").authenticated()
+                    .requestMatchers(HttpMethod.GET,"/api/city/**").permitAll()
+                    .requestMatchers("/api/city/**").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/properties/**").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/properties/{id}/for-review").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/property-image/**").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
+                    .anyRequest()
                     .permitAll()
 //                    .requestMatchers(HttpMethod.POST, "/api/user")
 //                    .permitAll()
 //                    .anyRequest()
 //                    .fullyAuthenticated()
+            }
+            .oauth2Login { oAuth2LoginConfigurer ->
+                oAuth2LoginConfigurer
+                    .userInfoEndpoint {
+                        it
+                            .userService(customOAuth2UserDetailsService)
+                    }
+                    .successHandler(customOAUth2SuccessHandler)
+                    .failureHandler(customOAuth2FailureHandler)
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

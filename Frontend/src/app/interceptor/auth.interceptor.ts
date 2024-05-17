@@ -1,11 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const jwt = localStorage.getItem('jwt');
+  const jwt = sessionStorage.getItem('jwt');
   if (jwt && jwt.length > 0) {
     const newReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
       },
     });
     return next(newReq);
