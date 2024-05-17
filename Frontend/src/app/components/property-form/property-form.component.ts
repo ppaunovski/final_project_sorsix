@@ -160,4 +160,10 @@ export class PropertyFormComponent implements OnInit {
    this.latitude= $event.lat;
     this.longitude = $event.lng;
   }
+  foundType(type: Number):String | undefined{
+    return this.propertyTypes.find((t) => t.id == type)?.typeName;
+  }
+  foundCity(city: Number):String | undefined{
+    return this.cities.find((c) => c.id == city)?.name;
+  }
 }

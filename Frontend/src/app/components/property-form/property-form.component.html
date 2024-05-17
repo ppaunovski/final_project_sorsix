@@ -181,11 +181,65 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Final Review</ng-template>
+        <div class="receipt-container example-full-width p-2">
+          <h3 class="text-xl font-semibold mb-4">Review Your Information</h3>
+          <div class="grid grid-cols-3 gap-4">
+            <!-- Column 1 -->
+            <div>
+              <div class="mb-2">
+                <strong>Name:</strong> {{ form.value.name }}
+              </div>
+              <div class="mb-2">
+                <strong>Description:</strong> {{ form.value.description }}
+              </div>
+              <div class="mb-2">
+                <strong>Price per night:</strong> {{ form.value.nightlyPrice }}
+              </div>
+              <div class="mb-2">
+                <strong>Property Type:</strong> {{foundType(form.value.propertyType) }}
+              </div>
+              <div class="mb-2">
+                <strong>City:</strong> {{ foundCity(form.value.city) }}
+              </div>
+              <div class="mb-2">
+                <strong>Address:</strong> {{ form.value.address }}
+              </div>
+            </div>
+            <!-- Column 2 -->
+            <div>
+              <div class="mb-2">
+                <strong>Coordinates:</strong> {{ this.latitude.toFixed(2) }}, {{ this.longitude.toFixed(2) }}
+              </div>
+              <div class="mb-2">
+                <strong>Guests:</strong> {{ form.value.guests }}
+              </div>
+              <div class="mb-2">
+                <strong>Beds:</strong> {{ form.value.beds }}
+              </div>
+              <div class="mb-2">
+                <strong>Bedrooms:</strong> {{ form.value.bedrooms }}
+              </div>
+              <div class="mb-2">
+                <strong>Bathrooms:</strong> {{ form.value.bathrooms }}
+              </div>
+            </div>
+            <div>
+              <div class="mb-2">
+                <strong>Attributes:</strong>
+                <ul>
+                  @for(att of selectedAttributes; track att.id)
+                  {
+                    <li>{{att.name }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="example-full-width p-2">
           <div class="flex justify-center">
-            <button mat-flat-button type="submit" color="primary">
-              Submit
-            </button>
+            <button mat-flat-button matStepperPrevious type="button" color="accent">Back</button>
+            <button mat-flat-button type="submit" color="primary">Submit</button>
           </div>
         </div>
       </mat-step>
