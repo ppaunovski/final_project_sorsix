@@ -124,7 +124,7 @@ values ('2024-01-01', '2024-12-31', 1),
 
 insert into user_review ( ur_comment, ur_review_date, u_id, p_id, b_id)
 values (
-           'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
+           'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi git e. Topla preporaka za sekogo.',
            '2024-04-20', 3, 1, 1),
        (
            'Apartmanot e odlicen, hostot bese prijaten. Se sto bese navedeno vo opisot go imase, a mozebi i poveke. Topla preporaka za sekogo.',
