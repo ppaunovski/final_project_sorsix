@@ -15,6 +15,9 @@ import {
 import { ReviewService } from '../../service/review.service';
 import { ComponentRating } from '../../model/ComponentRating';
 import { MatSlider } from '@angular/material/slider';
+import { UserAccountService } from '../../service/user-account.service';
+import { ImageToUrlService } from '../../service/image-to-url.service';
+import { DialogData } from '../../model/DialogData';
 
 @Component({
   selector: 'app-review',
@@ -29,15 +32,22 @@ export class ReviewComponent implements OnInit {
 
   components: ComponentRating[] = [];
 
-  constructor(public dialog: MatDialog, private reviewService: ReviewService) {}
+  hostImageURL: string = '';
+
+  constructor(public dialog: MatDialog, private reviewService: ReviewService, 
+    private userService: UserAccountService,
+     private urlService: ImageToUrlService) {}
   ngOnInit(): void {
-    if (this.review)
+    if (this.review){
       this.reviewService
         .getComponentRatingsForReview(this.review?.id)
         .subscribe((c) => {
           this.components = c;
         });
-  }
+      this.userService.getProfileImage(this.review?.user.id).subscribe((image) => {
+        this.hostImageURL = this.urlService.bytesToURL(image.image, image.type);
+      });
+  }}
 
   openDialog() {
     if (this.review) {
@@ -45,8 +55,12 @@ export class ReviewComponent implements OnInit {
         review: this.review,
         components: this.components,
       };
+      const dialog = {
+        fullReview: fullReview,
+        hostImageURL: this.hostImageURL,
+      };
       const dialogRef = this.dialog.open(ReviewDialog, {
-        data: fullReview,
+        data: dialog,
       });
     }
   }
@@ -68,6 +82,6 @@ export class ReviewComponent implements OnInit {
 })
 export class ReviewDialog {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public fullReview: ReviewWithComponents
+    @Inject(MAT_DIALOG_DATA) public dialog: DialogData,
   ) {}
 }

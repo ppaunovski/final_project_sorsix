@@ -6,6 +6,8 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { tap } from 'rxjs';
+import { ImageService } from '../../service/property-image.service';
+import { UserImage } from '../../model/UserImage';
 
 @Component({
   selector: 'app-register',
@@ -45,13 +47,75 @@ export class RegisterComponent {
   email: string | undefined;
   password: string | undefined;
   confirmPassword: string | undefined;
-
+  profileImage: UserImage = {
+    id: 0,
+    image: '',
+    userAccountId: 0,
+    type: '',
+    };
   error: any;
   loading = false;
+ 
 
   constructor(private authService: AuthService) {}
 
-  handleSubmit() {
+  // onImagePicked(event: Event) {
+  //   const target = event.target as HTMLInputElement;
+  //   const files = target.files as FileList;
+  //   for (let i = 0; i < files.length; i++) {
+  //     this.images.push(files[i]);
+  //   }
+  //   for (let i = 0; i < this.images.length; i++) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       const base64 = e.target?.result;
+  //       const bytes = base64?.toString().split(',')[1];
+  //       const image: PropertyImage = {
+  //         id: 0,
+  //         imageByteArray: bytes??'',
+  //         type: this.images[i].type,
+  //         order: i,
+  //         propertyId: 0,
+  //       };
+  //       this.propertyImages.push(image);
+  //     };
+  //     reader.readAsDataURL(this.images[i]);
+  //   }
+    
+  // }
+
+
+
+  onImagePicked($event: Event) {
+    const fileInput = $event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        this.profileImage.image = (reader.result as string).split(',')[1];
+        console.log(this.profileImage.image); 
+      };
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+      };
+
+      reader.readAsDataURL(file);
+      
+      
+    }
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.profileImage = {
+        id: 0,
+        image: this.profileImage.image,
+        userAccountId: 0,
+        type: fileInput.files[0].type,
+      };
+    }
+  }
+    
+    
+    handleSubmit() {
     console.log(
       this.firstName,
       this.lastName,
@@ -59,7 +123,7 @@ export class RegisterComponent {
       this.password,
       this.confirmPassword
     );
-
+     
     if (
       this.firstName &&
       this.lastName &&
@@ -74,6 +138,7 @@ export class RegisterComponent {
           email: this.email,
           password: this.password,
           confirmPassword: this.confirmPassword,
+          image: this.profileImage,
         })
         .pipe(
           tap(() => {

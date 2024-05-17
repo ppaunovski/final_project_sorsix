@@ -28,6 +28,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import * as L from 'leaflet';
 import { MapComponent } from '../map/map.component';
+import { MatIcon } from '@angular/material/icon';
+
 import { AuthService } from '../../service/auth.service';
 
 @Component({
@@ -41,6 +43,7 @@ import { AuthService } from '../../service/auth.service';
     FormsModule,
     MatFormFieldModule,
     MapComponent,
+    MatIcon
   ],
   templateUrl: './property-form.component.html',
   styleUrl: './property-form.component.css',

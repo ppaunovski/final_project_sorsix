@@ -5,7 +5,9 @@ import com.sorsix.backend.api.requests.AuthResponse
 import com.sorsix.backend.api.requests.RegisterRequest
 import com.sorsix.backend.config.JwtService
 import com.sorsix.backend.domain.entities.UserAccount
+import com.sorsix.backend.domain.entities.UserImage
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.repository.user_image_repository.UserImageRepository
 import com.sorsix.backend.service.exceptions.InvalidCredentialsException
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import org.springframework.security.authentication.AuthenticationManager
@@ -21,7 +23,8 @@ class AuthService(
     private val authenticationManager: AuthenticationManager,
     private val userDetailsService: UserDetailsService,
     private val jwtService: JwtService,
-    private val userAccountRepository: UserAccountRepository
+    private val userAccountRepository: UserAccountRepository,
+    private val userImageRepository: UserImageRepository
 ) {
     fun authenticate(authRequest: AuthRequest): AuthResponse {
         authenticationManager.authenticate(
@@ -54,6 +57,12 @@ class AuthService(
             id = 4
         ))
 
+        this.userImageRepository.save(UserImage(
+                user = user,
+        image = registerRequest.image.image,
+        type = registerRequest.image.type,
+        id = 4
+        ))
         return this.authenticate(AuthRequest(user.email, user.userPassword))
     }
 

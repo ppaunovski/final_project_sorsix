@@ -1,9 +1,9 @@
 <div>
   <div class="flex w-full items-center gap-6">
-    <img
-      class="rounded-full w-16"
-      src="https://media.licdn.com/dms/image/D5603AQH4k97Y0TrKxQ/profile-displayphoto-shrink_200_200/0/1678138894982?e=2147483647&v=beta&t=nJi2pg0L8-qamlUIugXbGhhFa27_9ZIRMJjis03RtRY"
-    />
+     <img
+    class="rounded-full w-16 h-16 object-cover"
+    [src]="this.hostImageURL"
+  />
     <div class="text-lg font-semibold">
       <span>
         {{ review?.user?.firstName }}

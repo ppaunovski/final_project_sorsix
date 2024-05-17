@@ -21,4 +21,7 @@ class UserAccountController(val userAccountService: UserAccountService) {
     fun deleteUserAccountById(@PathVariable id: Long) = userAccountService.deleteUserAccountById(id)
     @GetMapping("/{id}/properties")
     fun findPropertiesForUser(@PathVariable id: Long, auth: Authentication) = userAccountService.findPropertiesForUser(id, auth)
+
+    @GetMapping("/{id}/images")
+    fun findImageForUser(@PathVariable id: Long) = userAccountService.findImageForUser(id)
 }

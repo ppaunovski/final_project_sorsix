@@ -1,12 +1,13 @@
 package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.PropertyCardDTO
-import com.sorsix.backend.api.dtos.PropertyImageDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
+import com.sorsix.backend.api.dtos.UserImageDTO
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
 import com.sorsix.backend.repository.property_repository.PropertyRepository
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.repository.user_image_repository.UserImageRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
@@ -21,6 +22,7 @@ class UserAccountService(
     private val reviewRepository: UserReviewRepository,
     private val componentRatingService: ComponentRatingService,
     private val dtoMapperService: ClassToDTOMapperService,
+    private val userImageRepository: UserImageRepository
 ) {
     fun findAllUserAccounts() =
         userAccountRepository.findAll().map { dtoMapperService.mapUserAccountToDTO(it) }
@@ -55,9 +57,11 @@ class UserAccountService(
         }
 
         return this.propertyRepository.findAllByHost(host).map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
-
-
-
     }
+    fun findImageForUser(id: Long):UserImageDTO {
+        val host = this.userAccountRepository.findById(id)
+            ?: throw UserAccountNotFoundException("User account with id $id not found")
 
+        return this.userImageRepository.findByUserId(host.id).let { dtoMapperService.mapUserImageToDTO(it) }
+    }
 }

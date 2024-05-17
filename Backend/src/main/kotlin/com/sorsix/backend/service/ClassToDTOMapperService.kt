@@ -104,7 +104,14 @@ class ClassToDTOMapperService(
             }
         )
     }
-
+    fun mapUserImageToDTO(userImage: UserImage): UserImageDTO {
+        return UserImageDTO(
+            id = userImage.id,
+            image = userImage.image,
+            type = userImage.type,
+            userId = userImage.user.id
+        )
+    }
     fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO {
         return PropertyCardDTO(
             id = property.id,

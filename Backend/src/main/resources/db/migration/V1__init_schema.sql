@@ -125,3 +125,10 @@ create table component_rating (
                                   ur_id bigint references user_review(ur_id),
                                   rc_id bigint references review_component(rc_id)
 );
+
+create table user_image (
+    ui_id bigserial primary key ,
+    u_id bigint references user_account(u_id),
+    ui_image bytea not null,
+    ui_type text not null
+);

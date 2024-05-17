@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { UserAccount } from '../model/UserAccount';
 import { PropertyInfo } from '../model/PropertyInfo';
+import { UserImage } from '../model/UserImage';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,9 @@ export class UserAccountService {
 
   getAllPropertiesByHost(id: Number): Observable<PropertyInfo[]> {
     return this.http.get<PropertyInfo[]>(`${this.url}/${id}/properties`);
+  }
+
+  getProfileImage(id: Number): Observable<UserImage> {
+    return this.http.get<UserImage>(`${this.url}/${id}/images`);
   }
 }

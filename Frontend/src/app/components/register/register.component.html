@@ -67,6 +67,32 @@
         placeholde="xxxxxxx"
       />
     </div>
+    <div class="example-full-width p-2">
+      <label class="pl-2">Profile Picture</label>
+      <input
+        #Images
+        required="true"
+        class="w-full border-solid border-black border rounded-md h-10 pl-2"
+        style="align-content: center;"
+        type="file"
+        MatIn
+        placeholde="Profile Picture"
+        (change)="onImagePicked($event)"
+      />
+    </div>
+
+    <!-- <div class="example-full-width p-2">
+      <label class="pl-2">Profile Picture</label>
+      <input
+        #Images
+        class="w-full border-solid border-black border rounded-md h-10 p-2"
+        type="file"
+        accept="image/*"
+        matInput
+        placeholder="Profile Picture"
+        (change)="onImagePicked($event)"
+      />
+    </div> -->
 
     <!-- <div class="flex justify-between">
       <mat-form-field class="w-[48%]">
