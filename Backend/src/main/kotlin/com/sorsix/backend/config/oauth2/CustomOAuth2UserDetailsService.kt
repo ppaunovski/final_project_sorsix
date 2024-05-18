@@ -1,17 +1,25 @@
 package com.sorsix.backend.config.oauth2
 
 import com.sorsix.backend.domain.entities.UserAccount
+import com.sorsix.backend.domain.entities.UserImage
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
+import com.sorsix.backend.service.UserImageService
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Service
+import java.io.BufferedInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.net.URL
 import java.time.LocalDate
+import javax.print.DocFlavor
 
 @Service
 class CustomOAuth2UserDetailsService(
-    private val userAccountRepository: UserAccountRepository
+    private val userAccountRepository: UserAccountRepository,
+    private val userImageService: UserImageService,
 ) : DefaultOAuth2UserService(){
 
         override fun loadUser(userRequest: OAuth2UserRequest): OAuth2User {
@@ -49,9 +57,8 @@ class CustomOAuth2UserDetailsService(
         // TODO: Save profile image in db
         //  Image URL is found here.
         //  Here is a link how to download image from URL in Java: https://www.baeldung.com/java-download-file
-        // val imageUrl = oAuth2UserDetails.attributes["picture"]
-
-        return userAccountRepository.save(
+         val imageUrl= oAuth2UserDetails.attributes["picture"] as String
+        val user = userAccountRepository.save(
             UserAccount(
                 id = 0,
                 email = oAuth2UserDetails.getEmail(),
@@ -62,6 +69,8 @@ class CustomOAuth2UserDetailsService(
                 userPassword = ""
             )
         )
+        userImageService.saveImageFromUrl(imageUrl, user)
+        return user
     }
 
 }

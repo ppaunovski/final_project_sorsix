@@ -31,6 +31,7 @@ import { MapComponent } from '../map/map.component';
 import { MatIcon } from '@angular/material/icon';
 
 import { AuthService } from '../../service/auth.service';
+import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-property-form',
@@ -43,7 +44,8 @@ import { AuthService } from '../../service/auth.service';
     FormsModule,
     MatFormFieldModule,
     MapComponent,
-    MatIcon
+    MatIcon,
+    SlicePipe,
   ],
   templateUrl: './property-form.component.html',
   styleUrl: './property-form.component.css',

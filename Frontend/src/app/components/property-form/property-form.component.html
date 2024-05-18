@@ -1,171 +1,174 @@
-
 <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-  <div class="grid justify-center items-center h-3/4 w-full">
-    <mat-stepper mat-raised-button  id="toggle-linear" [linear]="true">
+  <div class="flex justify-center items-center h-3/4 w-full">
+    <mat-stepper mat-raised-button id="toggle-linear" [linear]="true">
+      <!-- Step 1: Basic Information -->
       <mat-step>
         <ng-template matStepLabel>Basic Information</ng-template>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Name</label>
-            <input
-              #Name
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="text"
-              matInput
-              formControlName="name"
-              [required]="true"
-              placeholder="Apartment Name"
-            />
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Description</label>
-            <textarea
-              #Description
-              class="w-full border-solid border-black border rounded-md h-20 p-2"
-              type="text"
-              formControlName="description"
-              [required]="true"
-              matInput
-              placeholder="Description"
-            ></textarea>
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Images</label>
-            <input
-              #Images
-              type="file"
-              multiple
-              accept="image/*"
-              matInput
-              placeholder="Images"
-              (change)="onImagePicked($event)"
-            />
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Property Type</label>
-            <select
-              #PropertyType
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              formControlName="propertyType"
-              matInput
-              [required]="true"
-            >
-              @for(type of propertyTypes; track type.id)
-              {
-                <option value="{{type.id}}">{{type.typeName}}</option>
-              }
-            </select>
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Price per night</label>
-            <input
-              #Price
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="number"
-              formControlName="nightlyPrice"
-              matInput
-              placeholder="150.00"
-              [required]="true"
-            />
-          </div>
-       
+        <div class="example-full-width p-2">
+          <label class="pl-2">Name</label>
+          <input
+            #Name
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="text"
+            matInput
+            formControlName="name"
+            [required]="true"
+            placeholder="Apartment Name"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Description</label>
+          <textarea
+            #Description
+            class="w-full border-solid border-black border rounded-md h-20 p-2"
+            type="text"
+            formControlName="description"
+            [required]="true"
+            matInput
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Images</label>
+          <input
+            #Images
+            type="file"
+            multiple
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            accept="image/*"
+            matInput
+            placeholder="Images"
+            (change)="onImagePicked($event)"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Property Type</label>
+          <select
+            #PropertyType
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            formControlName="propertyType"
+            matInput
+            [required]="true"
+          >
+            @for(type of propertyTypes; track type.id)
+            {
+              <option value="{{type.id}}">{{type.typeName}}</option>
+            }
+          </select>
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Price per night</label>
+          <input
+            #Price
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="nightlyPrice"
+            matInput
+            placeholder="150.00"
+            [required]="true"
+          />
+        </div>
         <div>
           <button type="button" mat-button matStepperNext color="primary">Next</button>
         </div>  
       </mat-step>
+      
+      <!-- Step 2: Location -->
       <mat-step>
         <ng-template matStepLabel>Location</ng-template>
-          <div class="example-full-width p-2">
-            <label class="pl-2">City</label>
-            <select
-              #City
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              formControlName="city"
-              [required]="true"
-            >
-              @for(city of cities; track city.id)
-              {
-                <option value="{{city.id}}">{{city.name}}</option>
-              }
-            </select>
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Address</label>
-            <input
-              #Address
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="text"
-              formControlName="address"
-              matInput
-              [required]="true"
-              placeholder="Address"
-            />
-          </div>
-          <app-map (changeCoordinates$)="handleEvent($event)"></app-map>
+        <div class="example-full-width p-2">
+          <label class="pl-2">City</label>
+          <select
+            #City
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            formControlName="city"
+            [required]="true"
+          >
+            @for(city of cities; track city.id)
+            {
+              <option value="{{city.id}}">{{city.name}}</option>
+            }
+          </select>
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Address</label>
+          <input
+            #Address
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="text"
+            formControlName="address"
+            matInput
+            [required]="true"
+            placeholder="Address"
+          />
+        </div>
+        <app-map (changeCoordinates$)="handleEvent($event)"></app-map>
         <div>
-          <button mat-button matStepperPrevious  type="button" color="accent">Back</button>
-          <button mat-button matStepperNext  type="button" color="primary">Next</button>
+          <button mat-button matStepperPrevious type="button" color="accent">Back</button>
+          <button mat-button matStepperNext type="button" color="primary">Next</button>
         </div>
       </mat-step>
+      
+      <!-- Step 3: Capacity -->
       <mat-step>
         <ng-template matStepLabel>Capacity</ng-template>
-       
-          <div class="example-full-width p-2">
-            <label class="pl-2">Guests</label>
-            <input
-              #Guests
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="number"
-              formControlName="guests"
-              [required]="true"
-              matInput
-              placeholder="Guests"
-            />
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Beds</label>
-            <input
-              #Beds
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="number"
-              formControlName="beds"
-              [required]="true"
-              matInput
-              placeholder="Beds"
-            />
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Bedrooms</label>
-            <input
-              #Bedrooms
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="number"
-              formControlName="bedrooms"
-              [required]="true"
-              matInput
-              placeholder="Bedrooms"
-            />
-          </div>
-          <div class="example-full-width p-2">
-            <label class="pl-2">Bathrooms</label>
-            <input
-              #Bathrooms
-              class="w-full border-solid border-black border rounded-md h-10 p-2"
-              type="number"
-              formControlName="bathrooms"
-              matInput
-              [required]="true"
-              placeholder="Bathrooms"
-            />
-          </div>
-        
+        <div class="example-full-width p-2">
+          <label class="pl-2">Guests</label>
+          <input
+            #Guests
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="guests"
+            [required]="true"
+            matInput
+            placeholder="Guests"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Beds</label>
+          <input
+            #Beds
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="beds"
+            [required]="true"
+            matInput
+            placeholder="Beds"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Bedrooms</label>
+          <input
+            #Bedrooms
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="bedrooms"
+            [required]="true"
+            matInput
+            placeholder="Bedrooms"
+          />
+        </div>
+        <div class="example-full-width p-2">
+          <label class="pl-2">Bathrooms</label>
+          <input
+            #Bathrooms
+            class="w-full border-solid border-black border rounded-md h-10 p-2"
+            type="number"
+            formControlName="bathrooms"
+            matInput
+            [required]="true"
+            placeholder="Bathrooms"
+          />
+        </div>
         <div>
           <button mat-button matStepperPrevious color="accent">Back</button>
-          <button mat-button matStepperNext  type="button" color="primary">Next</button>
+          <button mat-button matStepperNext type="button" color="primary">Next</button>
         </div>
       </mat-step>
+      
+      <!-- Step 4: Amenities -->
       <mat-step>
         <ng-template matStepLabel>Amenities</ng-template>
-        
         <section class="example-full-width p-2">
           <label class="pl-2">Select Attributes:</label>
           <div class="grid grid-cols-2 gap-4">
@@ -182,30 +185,35 @@
             }
           </div>
         </section>
-        
         <div>
           <button mat-button matStepperPrevious type="button" color="accent">Back</button>
           <button mat-button matStepperNext type="button" color="primary">Next</button>
-        </div>
-      </mat-step>
+        </div>     
+
+</mat-step>
+      
+      <!-- Step 5: Final Review -->
       <mat-step>
         <ng-template matStepLabel>Final Review</ng-template>
         <div class="receipt-container example-full-width p-2">
           <h3 class="text-xl font-semibold mb-4">Review Your Information</h3>
-          <div class="grid grid-cols-3 gap-4">
+          <div class="flex flex-wrap gap-4 max-w-4xl mx-auto">
             <!-- Column 1 -->
-            <div>
+            <div class="flex-1 min-w-[200px] max-w-xs">
               <div class="mb-2">
                 <strong>Name:</strong> {{ form.value.name }}
               </div>
               <div class="mb-2">
-                <strong>Description:</strong> {{ form.value.description }}
+                <strong>Description:</strong> 
+                <div class="break-words max-w-xs">
+                  {{ form.value.description }}
+                </div>
               </div>
               <div class="mb-2">
-                <strong>Price per night:</strong> {{ form.value.nightlyPrice }}
+                <strong>Price per night:</strong> {{ form.value.nightlyPrice }} MKD
               </div>
               <div class="mb-2">
-                <strong>Property Type:</strong> {{foundType(form.value.propertyType) }}
+                <strong>Property Type:</strong> {{ foundType(form.value.propertyType) }}
               </div>
               <div class="mb-2">
                 <strong>City:</strong> {{ foundCity(form.value.city) }}
@@ -215,7 +223,7 @@
               </div>
             </div>
             <!-- Column 2 -->
-            <div>
+            <div class="flex-1 min-w-[200px] max-w-xs">
               <div class="mb-2">
                 <strong>Coordinates:</strong> {{ this.latitude.toFixed(2) }}, {{ this.longitude.toFixed(2) }}
               </div>
@@ -232,16 +240,17 @@
                 <strong>Bathrooms:</strong> {{ form.value.bathrooms }}
               </div>
             </div>
-            <div>
+            <!-- Column 3 -->
+            <div class="flex-1 min-w-[200px] max-w-xs">
               <div class="mb-2">
                 <strong>Attributes:</strong>
-                <ul class="">
+                <ul>
                   @for(att of selectedAttributes; track att.id)
                   {
-                   <li class="flex items-center"><mat-icon>
-                      {{this.att.icon}}
-                    </mat-icon>
-                    {{att.name }}</li>
+                    <li class="flex items-center">
+                      <mat-icon>{{ this.att.icon }}</mat-icon>
+                      {{ att.name }}
+                    </li>
                   }
                 </ul>
               </div>
@@ -256,7 +265,5 @@
         </div>
       </mat-step>
     </mat-stepper>
-   
   </div>
 </form>
-

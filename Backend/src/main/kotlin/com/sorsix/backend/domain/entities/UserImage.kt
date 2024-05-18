@@ -3,7 +3,7 @@ package com.sorsix.backend.domain.entities
 import jakarta.persistence.*
 
 @Entity
-data class UserImage(
+data class  UserImage(
     @Id
     @Column(name = "ui_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

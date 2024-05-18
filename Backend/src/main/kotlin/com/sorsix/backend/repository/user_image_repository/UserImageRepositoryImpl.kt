@@ -17,4 +17,5 @@ class UserImageRepositoryImpl(private val userImageRepository: JpaUserImageRepos
     override fun findAll(): List<UserImage> {
         return userImageRepository.findAll()
     }
+
 }
