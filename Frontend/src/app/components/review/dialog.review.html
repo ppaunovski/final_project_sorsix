@@ -1,39 +1,31 @@
 <h2 mat-dialog-title></h2>
 <mat-dialog-content>
-    <div class="flex w-full items-center gap-6">
-        <img
-    class="rounded-full w-16 h-16 object-cover"
-    [src]="dialog.hostImageURL"
-  />
-        <div class="text-lg font-semibold">
-        <span>
-            {{ dialog.fullReview.review.user.firstName }}
-        </span>
-        <span>
-            {{ dialog.fullReview.review.user.lastName }}
-        </span>
-        </div>
+  <div class="flex w-full items-center gap-6">
+    <img
+      class="rounded-full w-16 h-16 object-cover"
+      [src]="dialog.hostImageURL"
+    />
+    <div class="text-lg font-semibold">
+      <span> {{ dialog.fullReview.review.user.firstName }} </span>
+      <span> {{ dialog.fullReview.review.user.lastName }} </span>
     </div>
-    
-    <div class="p-3">
-        <div class="pb-2 flex items-center">
-        <span class="flex items-center">
-            <mat-icon>star</mat-icon>
-            <span>
-            {{ dialog.fullReview.review.averageRating.toPrecision(2) }}
-            </span>
+  </div>
+
+  <div class="p-3">
+    <div class="pb-2 flex items-center">
+      <span class="flex items-center gap-2">
+        <mat-icon>star</mat-icon>
+        <span class="text-lg">
+          {{ dialog.fullReview.review.averageRating.toPrecision(2) }}
         </span>
-        <span class="text-gray-400 p-2">|</span>
-        <span>
-            {{ dialog.fullReview.review.reviewDate }}
-        </span>
-        </div>
-        <div class="text-ellipsis overflow-clip">
-        <span class="text-nowrap">
-            {{ dialog.fullReview.review.comment}}
-        </span>
-        </div>
+      </span>
+      <span class="text-gray-400 p-2">|</span>
+      <span> {{ dialog.formatedDate }} </span>
     </div>
+    <div class="">
+      <span class="text-wrap"> {{ dialog.fullReview.review.comment}} </span>
+    </div>
+  </div>
 
   <div class="w-full flex flex-wrap justify-center">
     @for(component of dialog.fullReview.components; track component.id) {

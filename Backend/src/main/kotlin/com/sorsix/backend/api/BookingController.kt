@@ -1,5 +1,6 @@
 package com.sorsix.backend.api
 
+import com.sorsix.backend.api.dummy.DummyDataPopulator
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.service.BookingService
 import org.springframework.security.core.Authentication
@@ -7,7 +8,10 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/booking")
-class BookingController(val bookingService: BookingService) {
+class BookingController(
+    val bookingService: BookingService,
+    private val dummyDataPopulator: DummyDataPopulator
+) {
     @GetMapping
     fun findAllBookings() = bookingService.findAllBookings()
     @GetMapping("/{id}")
@@ -25,4 +29,7 @@ class BookingController(val bookingService: BookingService) {
     fun cancelBooking(@PathVariable id: Long, authentication: Authentication) = bookingService.cancelBooking(id, authentication)
     @GetMapping("/{id}/for-review")
     fun getBookingForReview(@PathVariable id: Long, authentication: Authentication) = bookingService.getBookingForReview(id, authentication)
+
+    @GetMapping("/populate")
+    fun populateBookings() = dummyDataPopulator.addDummyBookings()
 }

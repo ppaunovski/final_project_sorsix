@@ -9,10 +9,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { AuthService } from '../../service/auth.service';
 import { __importDefault } from 'tslib';
-import { map, mergeMap } from 'rxjs';
+import { filter, map, mergeMap, tap } from 'rxjs';
 import { UserAccountService } from '../../service/user-account.service';
 import { UserAccount } from '../../model/UserAccount';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { ImageToUrlService } from '../../service/image-to-url.service';
 
 @Component({
   selector: 'app-navigation',
@@ -43,35 +44,63 @@ export class NavigationComponent implements OnInit {
   //   this.trigger.openMenu();
   // }
   user: UserAccount | undefined;
+  imageURL: string | undefined;
 
   constructor(
     private authService: AuthService,
-    private userService: UserAccountService
+    private userService: UserAccountService,
+    private urlService: ImageToUrlService
   ) {}
 
   ngOnInit(): void {
     this.authService.refreshAuth$
       .pipe(mergeMap(() => this.userService.getUserInfo()))
-      .subscribe({
-        next: (user) => {
+      .pipe(
+        tap((user) => {
           this.user = user;
-          console.log('user', user);
+        }),
+        filter((user) => user != undefined),
+        map((user) => user?.id!),
+        mergeMap((id) => this.userService.getProfileImage(id))
+      )
+      .subscribe({
+        next: (profilePicture) => {
+          this.imageURL = this.urlService.bytesToURL(
+            profilePicture.image,
+            profilePicture.type
+          );
         },
 
         error: (error) => {
           console.log('navigation error', error);
 
-          this.user = undefined;
+          this.imageURL = undefined;
         },
       });
 
-    this.userService.getUserInfo().subscribe({
-      next: (user) => {
-        this.user = user;
-      },
-      // error: (error) => {
-      //   console.log(error);
-      // },
-    });
+    this.userService
+      .getUserInfo()
+      .pipe(
+        tap((user) => {
+          this.user = user;
+        }),
+        filter((user) => user != undefined),
+        map((user) => user?.id!),
+        mergeMap((id) => this.userService.getProfileImage(id))
+      )
+      .subscribe({
+        next: (profilePicture) => {
+          this.imageURL = this.urlService.bytesToURL(
+            profilePicture.image,
+            profilePicture.type
+          );
+        },
+
+        error: (error) => {
+          console.log('navigation error', error);
+
+          this.imageURL = undefined;
+        },
+      });
   }
 }

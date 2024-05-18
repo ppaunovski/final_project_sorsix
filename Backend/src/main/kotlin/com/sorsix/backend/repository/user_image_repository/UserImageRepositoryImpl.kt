@@ -1,6 +1,7 @@
 package com.sorsix.backend.repository.user_image_repository
 
 import com.sorsix.backend.domain.entities.UserImage
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -10,8 +11,8 @@ class UserImageRepositoryImpl(private val userImageRepository: JpaUserImageRepos
         return userImageRepository.save(userImage)
     }
 
-    override fun findById(id: Long): UserImage {
-        return userImageRepository.findById(id).orElse(null)
+    override fun findById(id: Long): UserImage? {
+        return userImageRepository.findByIdOrNull(id)
     }
 
     override fun findAll(): List<UserImage> {

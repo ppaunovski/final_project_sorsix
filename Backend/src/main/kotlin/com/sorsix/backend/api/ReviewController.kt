@@ -1,6 +1,7 @@
 package com.sorsix.backend.api
 
 import com.sorsix.backend.api.dtos.ComponentRatingDTO
+import com.sorsix.backend.api.dummy.DummyDataPopulator
 import com.sorsix.backend.api.requests.ReviewRequest
 import com.sorsix.backend.domain.entities.ComponentRating
 import com.sorsix.backend.domain.entities.ReviewComponent
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 class ReviewController(
     private val reviewService: ReviewService,
     private val componentRatingService: ComponentRatingService,
-    private val reviewComponentService: ReviewComponentService
+    private val reviewComponentService: ReviewComponentService,
+    private val dummyDataPopulator: DummyDataPopulator
 ) {
     @GetMapping("/{id}/components")
     fun getAllComponentRatingsForReview(@PathVariable id: Long): List<ComponentRatingDTO> =
@@ -35,4 +37,7 @@ class ReviewController(
     @PostMapping()
     fun saveReview(@RequestBody review: ReviewRequest, authentication: Authentication?) =
         this.reviewService.saveReview(review, authentication)
+
+    @GetMapping("/populate")
+    fun populateReviews() = this.dummyDataPopulator.addDummyReviews()
 }

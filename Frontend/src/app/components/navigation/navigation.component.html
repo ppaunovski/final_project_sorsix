@@ -32,14 +32,22 @@
 
       <button
         [matMenuTriggerFor]="menu"
-        mat-flat-button
-        color="primary"
         aria-label="Example icon button with a vertical three dot icon"
       >
-        <span>
-          {{ this.user.firstName }}
-        </span>
-        <mat-icon>person</mat-icon>
+        <div class="flex items-center gap-4">
+          @if (this.imageURL) {
+
+          <img class="w-12 rounded-full" [src]="this.imageURL" />
+          <span class="text-lg">
+            {{ this.user.firstName }}
+          </span>
+          } @else {
+          <mat-icon>person</mat-icon>
+          <span>
+            {{ this.user.firstName }}
+          </span>
+          }
+        </div>
       </button>
       <mat-menu #menu="matMenu">
         <button (click)="signOut()" mat-menu-item>

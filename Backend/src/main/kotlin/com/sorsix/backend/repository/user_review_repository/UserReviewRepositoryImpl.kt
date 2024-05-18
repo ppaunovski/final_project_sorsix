@@ -37,7 +37,7 @@ class UserReviewRepositoryImpl(private val userReviewRepository: JpaUserReviewRe
     ): Boolean =
         this.userReviewRepository.existsByUserAndPropertyAndBooking(guest, property, booking)
 
-    override fun hasReviewForBooking(booking: Long, guest: Long): Boolean =
+    override fun hasReviewForBooking(booking: Booking, guest: UserAccount): Boolean =
         this.userReviewRepository.existsByUserAndBooking(guest, booking)
 
 }

@@ -119,7 +119,7 @@ class BookingService(
         if(booking.checkIn > LocalDate.now()) throw UnauthorizedAccessException("Booking has not started yet")
 
 
-        if(this.reviewRepository.hasReviewForBooking(booking.id, guest.id) ) throw UnauthorizedAccessException("User has already reviewed this booking")
+        if(this.reviewRepository.hasReviewForBooking(booking, guest) ) throw UnauthorizedAccessException("User has already reviewed this booking")
 
 
         return BookingForReviewDTO(

@@ -13,7 +13,7 @@ class PropertyRepositoryImpl(private val propertyRepository: JpaPropertyReposito
          propertyRepository.findAll()
 
     override fun findAllPaginated(pageable: Pageable): Page<Property> =
-        this.propertyRepository.findAll(pageable)
+        this.propertyRepository.findAllPaginated(pageable)
 
 
 

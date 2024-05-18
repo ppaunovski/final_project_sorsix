@@ -40,7 +40,7 @@ export const routes: Routes = [
     component: PropertyComponent,
   },
   {
-    path: 'properties/:id/review',
+    path: 'bookings/:id/review',
     component: ReviewComponentComponent,
   },
   {

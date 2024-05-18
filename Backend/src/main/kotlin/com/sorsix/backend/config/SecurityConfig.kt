@@ -41,6 +41,7 @@ class SecurityConfig(
                     .requestMatchers("/api/city/**").authenticated()
                     .requestMatchers(HttpMethod.POST, "/api/properties/**").authenticated()
                     .requestMatchers(HttpMethod.GET, "/api/properties/{id}/for-review").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/property-image/{id}/save-file").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/property-image/**").authenticated()
                     .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
                     .anyRequest()

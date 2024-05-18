@@ -7,6 +7,8 @@ import com.sorsix.backend.repository.property_images_repository.PropertyImagesRe
 import com.sorsix.backend.repository.review_component_repository.ReviewComponentRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import org.springframework.stereotype.Service
+import java.io.File
+import java.nio.file.Files
 
 @Service
 class ClassToDTOMapperService(

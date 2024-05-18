@@ -11,6 +11,7 @@ import com.sorsix.backend.repository.user_image_repository.UserImageRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
+import com.sorsix.backend.service.exceptions.UserImageNotFoundException
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 
@@ -62,6 +63,6 @@ class UserAccountService(
         val host = this.userAccountRepository.findById(id)
             ?: throw UserAccountNotFoundException("User account with id $id not found")
 
-        return this.userImageRepository.findByUserId(host.id).let { dtoMapperService.mapUserImageToDTO(it) }
+        return this.userImageRepository.findByUserId(host.id)?.let { dtoMapperService.mapUserImageToDTO(it) } ?: throw UserImageNotFoundException("User image for user with id $id not found")
     }
 }

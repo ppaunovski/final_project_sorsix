@@ -4,6 +4,7 @@ import com.sorsix.backend.api.dtos.ErrorDTO
 import com.sorsix.backend.service.exceptions.InvalidCredentialsException
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
+import com.sorsix.backend.service.exceptions.UserImageNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
@@ -54,6 +55,20 @@ class UserAccountExceptionHandler {
                     e.message,
                     HttpStatus.UNAUTHORIZED.value(),
                     HttpStatus.UNAUTHORIZED.name,
+                    LocalDateTime.now()
+                )
+            )
+    }
+    @ExceptionHandler(UserImageNotFoundException::class)
+    fun handleUserImageNotFoundException(e: UserImageNotFoundException): ResponseEntity<ErrorDTO> {
+
+        return ResponseEntity
+            .status(HttpStatus.NOT_FOUND.value())
+            .body(
+                ErrorDTO(
+                    e.message,
+                    HttpStatus.NOT_FOUND.value(),
+                    HttpStatus.NOT_FOUND.name,
                     LocalDateTime.now()
                 )
             )

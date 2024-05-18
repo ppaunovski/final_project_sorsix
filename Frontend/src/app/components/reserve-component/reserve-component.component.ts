@@ -103,7 +103,7 @@ export class ReserveComponentComponent implements OnInit {
 
     if (this.property)
       this.propertyService
-        .getPropertyAvailability(this.property?.id)
+        .getPropertyAvailability(this.property.id)
         .subscribe((resp) => {
           this.availablePeriods = resp;
           console.log('available periods', this.availablePeriods);

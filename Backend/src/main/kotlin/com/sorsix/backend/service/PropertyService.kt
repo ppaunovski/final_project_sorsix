@@ -5,10 +5,7 @@ import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.api.requests.PropertyRequest
 import com.sorsix.backend.api.responses.PropertyResponse
-import com.sorsix.backend.domain.entities.Booking
-import com.sorsix.backend.domain.entities.BookingGuest
-import com.sorsix.backend.domain.entities.Property
-import com.sorsix.backend.domain.entities.PropertyAvailability
+import com.sorsix.backend.domain.entities.*
 import com.sorsix.backend.domain.enums.BookingStatusEnum
 import com.sorsix.backend.domain.enums.GuestTypeEnum
 import com.sorsix.backend.repository.booking_guests_repository.BookingGuestsRepository
@@ -30,6 +27,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 import java.net.URI
 import java.net.URLDecoder
 import java.time.LocalDate
@@ -176,39 +174,30 @@ class PropertyService(
     fun reserveProperty(id: Long, offerRequest: OfferRequest, authentication: Authentication?): BookingDTO {
         if (authentication == null) throw UnauthorizedAccessException("Please log in to reserve a property.")
 
+        //TODO: validate checkInDate and checkOutDate
+
         val guest = this.userService.findUserByEmail(authentication.name)
 
         val property = findPropertyById(id);
 
         if (guest.id == property.host.id) throw UnauthorizedAccessException("Hosts cannot book their own properties.")
 
-        val propertyAvailability = this.propertyAvailabilityRepository.findAllForProperty(property)
-            .firstOrNull { it.startDate <= offerRequest.checkInDate && it.endDate >= offerRequest.checkOutDate }
-            ?: throw PropertyNotAvailableException("Property is not available for the given period: ${offerRequest.checkInDate} - ${offerRequest.checkOutDate}")
+        if (offerRequest.numberOfAdults > property.guests) throw PropertyCapacityException("Number of adults exceeds the maximum number of guests allowed.")
+        if (offerRequest.numberOfChildren > property.guests) throw PropertyCapacityException("Number of children exceeds the maximum number of guests allowed.")
+        if (offerRequest.numberOfPets > property.guests) throw PropertyCapacityException("Number of pets exceeds the maximum number of guests allowed.")
 
-        if (propertyAvailability.startDate < offerRequest.checkInDate) {
-            this.propertyAvailabilityRepository.save(
-                PropertyAvailability(
-                    id = 0,
-                    property = property,
-                    startDate = propertyAvailability.startDate,
-                    endDate = offerRequest.checkInDate.minusDays(1)
-                )
-            )
-        }
+        val bookingStatus = bookingStatusRepository.findById(BookingStatusEnum.WAITING_FOR_APPROVAL.ordinal.toLong())
+            ?: throw RuntimeException("Booking status not found")
 
-        if (propertyAvailability.endDate > offerRequest.checkOutDate) {
-            this.propertyAvailabilityRepository.save(
-                PropertyAvailability(
-                    id = 0,
-                    property = property,
-                    startDate = offerRequest.checkOutDate.plusDays(1),
-                    endDate = propertyAvailability.endDate
-                )
-            )
-        }
+        return bookProperty(offerRequest, property, guest, bookingStatus);
 
-        this.propertyAvailabilityRepository.deleteById(propertyAvailability.id)
+
+    }
+
+    fun bookProperty (offerRequest: OfferRequest, property: Property, guest: UserAccount, bookingStatus: BookingStatus): BookingDTO {
+        val propertyAvailability = getPropertyAvailability(checkInDate = offerRequest.checkInDate, checkOutDate = offerRequest.checkOutDate, property = property)
+
+        dividePropertyAvailability(propertyAvailability, offerRequest.checkInDate, offerRequest.checkOutDate, property)
 
         val booking = bookingRepository.save(
             Booking(
@@ -220,13 +209,10 @@ class PropertyService(
                 nightlyPrice = property.nightlyPrice,
                 serviceFee = 500.0,
                 cleaningFee = 1000.0,
-                status = bookingStatusRepository.findById(BookingStatusEnum.WAITING_FOR_APPROVAL.ordinal.toLong())!!,
+                status = bookingStatus,
                 bookingDate = LocalDate.now()
             )
         )
-        if (offerRequest.numberOfAdults > property.guests) throw PropertyCapacityException("Number of adults exceeds the maximum number of guests allowed.")
-        if (offerRequest.numberOfChildren > property.guests) throw PropertyCapacityException("Number of children exceeds the maximum number of guests allowed.")
-        if (offerRequest.numberOfPets > property.guests) throw PropertyCapacityException("Number of pets exceeds the maximum number of guests allowed.")
 
         bookingGuestsRepository.save(
             BookingGuest(
@@ -254,8 +240,38 @@ class PropertyService(
         )
 
         return dtoMapperService.mapBookingToDTO(booking)
+    }
 
+    private fun dividePropertyAvailability(propertyAvailability: PropertyAvailability, checkInDate: LocalDate, checkOutDate: LocalDate, property: Property) {
+        if (propertyAvailability.startDate < checkInDate) {
+            this.propertyAvailabilityRepository.save(
+                PropertyAvailability(
+                    id = 0,
+                    property = property,
+                    startDate = propertyAvailability.startDate,
+                    endDate = checkInDate.minusDays(1)
+                )
+            )
+        }
 
+        if (propertyAvailability.endDate > checkOutDate) {
+            this.propertyAvailabilityRepository.save(
+                PropertyAvailability(
+                    id = 0,
+                    property = property,
+                    startDate = checkOutDate.plusDays(1),
+                    endDate = propertyAvailability.endDate
+                )
+            )
+        }
+
+        this.propertyAvailabilityRepository.deleteById(propertyAvailability.id)
+    }
+
+    private fun getPropertyAvailability(checkInDate: LocalDate, checkOutDate: LocalDate, property: Property): PropertyAvailability {
+        return this.propertyAvailabilityRepository.findAllForProperty(property)
+            .firstOrNull { it.startDate <= checkInDate && it.endDate >= checkOutDate }
+            ?: throw PropertyNotAvailableException("Property is not available for the given period: $checkInDate - $checkOutDate")
     }
 
     fun getPropertyForReview(id: Long, authentication: Authentication?): PropertyCardDTO {

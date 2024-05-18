@@ -26,8 +26,6 @@ export class PropertyPreviewComponent implements OnInit {
     } else {
       this.headerImage = 'assets/placeholder.png';
     }
-
-    console.log('property info log', this.property, this.headerImage);
   }
   @Input()
   property: PropertyInfo | undefined;

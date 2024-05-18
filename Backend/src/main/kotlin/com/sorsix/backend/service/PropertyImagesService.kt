@@ -7,6 +7,7 @@ import com.sorsix.backend.repository.property_images_repository.PropertyImagesRe
 import com.sorsix.backend.repository.property_repository.PropertyRepository
 import com.sorsix.backend.service.exceptions.PropertyNotFoundException
 import org.springframework.stereotype.Service
+import java.io.File
 
 @Service
 class PropertyImagesService(
@@ -15,6 +16,7 @@ class PropertyImagesService(
     private val dtoMapperService: ClassToDTOMapperService
 ) {
     fun getAllPropertyImagesForPropertyId(id: Long): List<PropertyImageDTO> {
+
         return this.propertyImagesRepository.findAllByPropertyId(id).map {
             dtoMapperService.mapToPropertyImageDTO(it)
         }
@@ -27,7 +29,6 @@ class PropertyImagesService(
         }.toList()
 
 
-
     fun getNextOrder(id: Long): Int {
         val propertyImages = this.propertyImagesRepository.findAllByPropertyId(id)
         return if (propertyImages.isEmpty()) 0 else propertyImages.maxBy { it.order }.order + 1
@@ -35,7 +36,8 @@ class PropertyImagesService(
     }
 
     fun savePropertyImage(propertyImageRequest: PropertyImageRequest) {
-        val property = this.propertyRepository.findById(propertyImageRequest.propertyId) ?: throw PropertyNotFoundException("Property with id ${propertyImageRequest.propertyId} not found")
+        val property = this.propertyRepository.findById(propertyImageRequest.propertyId)
+            ?: throw PropertyNotFoundException("Property with id ${propertyImageRequest.propertyId} not found")
         val propertyImages = PropertyImages(
             id = 0,
             property = property,
@@ -46,5 +48,27 @@ class PropertyImagesService(
         this.propertyImagesRepository.save(propertyImages)
 
     }
+
+
+
+//    fun savePropertyImageFileSystem(propertyId: Long, file: MultipartFile) {
+//
+//        val property = this.propertyRepository.findById(propertyId) ?: throw PropertyNotFoundException("Property with id $propertyId not found")
+//        val classLoader = javaClass.classLoader
+//        val folder = classLoader.getResource("assets/propertyImages")?.file
+//        if(folder != null) {
+//            val path = "${folder}/${property.name}-${file.originalFilename}"
+//            file.transferTo(File(path))
+//            val propertyImages = PropertyImages(
+//                id = 0,
+//                property = property,
+//                order = getNextOrder(property.id),
+//                image = file.bytes,
+//                type = file.contentType!!,
+//                path = ""
+//            )
+//            this.propertyImagesRepository.save(propertyImages)
+//        }
+//    }
 }
 

@@ -1,9 +1,9 @@
 <div>
   <div class="flex w-full items-center gap-6">
-     <img
-    class="rounded-full w-16 h-16 object-cover"
-    [src]="this.hostImageURL"
-  />
+    <img
+      class="rounded-full w-16 h-16 object-cover"
+      [src]="this.hostImageURL"
+    />
     <div class="text-lg font-semibold">
       <span>
         {{ review?.user?.firstName }}
@@ -16,15 +16,15 @@
 
   <div class="p-3">
     <div class="pb-2 flex items-center">
-      <span class="flex items-center">
+      <span class="flex items-center gap-2">
         <mat-icon>star</mat-icon>
-        <span>
+        <span class="text-lg">
           {{ this.review?.averageRating?.toPrecision(2) }}
         </span>
       </span>
       <span class="text-gray-400 p-2">|</span>
       <span>
-        {{ this.review?.reviewDate }}
+        {{ getFormatedDate() }}
       </span>
     </div>
     <div class="text-ellipsis overflow-clip">

@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class BookingPreviewComponent implements OnInit {
   review() {
-    this.router.navigate(['/properties', this.booking?.property.id, 'review']);
+    this.router.navigate(['/bookings', this.booking?.id, 'review']);
   }
 
   cancel() {

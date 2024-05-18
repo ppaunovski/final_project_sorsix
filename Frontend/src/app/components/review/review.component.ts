@@ -18,6 +18,7 @@ import { MatSlider } from '@angular/material/slider';
 import { UserAccountService } from '../../service/user-account.service';
 import { ImageToUrlService } from '../../service/image-to-url.service';
 import { DialogData } from '../../model/DialogData';
+import { DateService } from '../../service/date.service';
 
 @Component({
   selector: 'app-review',
@@ -34,20 +35,30 @@ export class ReviewComponent implements OnInit {
 
   hostImageURL: string = '';
 
-  constructor(public dialog: MatDialog, private reviewService: ReviewService, 
+  constructor(
+    public dialog: MatDialog,
+    private reviewService: ReviewService,
     private userService: UserAccountService,
-     private urlService: ImageToUrlService) {}
+    private urlService: ImageToUrlService,
+    private dateService: DateService
+  ) {}
   ngOnInit(): void {
-    if (this.review){
+    if (this.review) {
       this.reviewService
         .getComponentRatingsForReview(this.review?.id)
         .subscribe((c) => {
           this.components = c;
         });
-      this.userService.getProfileImage(this.review?.user.id).subscribe((image) => {
-        this.hostImageURL = this.urlService.bytesToURL(image.image, image.type);
-      });
-  }}
+      this.userService
+        .getProfileImage(this.review?.user.id)
+        .subscribe((image) => {
+          this.hostImageURL = this.urlService.bytesToURL(
+            image.image,
+            image.type
+          );
+        });
+    }
+  }
 
   openDialog() {
     if (this.review) {
@@ -58,11 +69,19 @@ export class ReviewComponent implements OnInit {
       const dialog = {
         fullReview: fullReview,
         hostImageURL: this.hostImageURL,
+        formatedDate: this.dateService.formatDateToMonthYear(
+          this.review.reviewDate
+        ),
       };
       const dialogRef = this.dialog.open(ReviewDialog, {
         data: dialog,
       });
     }
+  }
+  getFormatedDate() {
+    if (this.review)
+      return this.dateService.formatDateToMonthYear(this.review.reviewDate);
+    return '';
   }
 }
 
@@ -81,7 +100,5 @@ export class ReviewComponent implements OnInit {
   ],
 })
 export class ReviewDialog {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public dialog: DialogData,
-  ) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public dialog: DialogData) {}
 }
