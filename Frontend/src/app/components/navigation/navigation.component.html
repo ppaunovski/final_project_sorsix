@@ -2,9 +2,9 @@
   class="w-full flex flex-col justify-center items-center border-b-2 border-gray-300 border-solid mb-5"
 >
   <div
-    class="w-full flex justify-between items-center pl-1 pr-1 md:pl-5 md:pr-5 lg:pl-20 lg:pr-20"
+  class="w-full flex justify-between items-center pl-1 pr-1 md:pl-5 md:pr-5 lg:pl-20 lg:pr-20 gap-x-1 md:gap-x-2 lg:gap-x-4"
   >
-    <div class="w-1/5">
+    <div class="w-1/10">
       <a [routerLink]="['/properties']" [queryParams]="{ page: 0, size: 10 }">
         <img src="../.././../assets/logo.png" alt="logo" class="w-24" />
       </a>
@@ -33,27 +33,35 @@
       <button
         [matMenuTriggerFor]="menu"
         aria-label="Example icon button with a vertical three dot icon"
+        class="border border-gray-300 hover:border-gray-500 rounded-full p-2 transition-colors duration-200"
       >
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
           @if (this.imageURL) {
 
           <img class="w-12 rounded-full" [src]="this.imageURL" />
-          <span class="text-lg">
+          <span>
             {{ this.user.firstName }}
           </span>
           } @else {
           <mat-icon>person</mat-icon>
-          <span>
+          <span class="text-lg font-medium">
             {{ this.user.firstName }}
           </span>
           }
-        </div>
+        </div>  
       </button>
       <mat-menu #menu="matMenu">
         <button (click)="signOut()" mat-menu-item>
           <mat-icon>person</mat-icon>
           <span>Sign out</span>
         </button>
+
+        <a [routerLink]="['/properties/create']">
+          <button mat-menu-item>
+            <mat-icon>real_estate_agent</mat-icon>
+            <span>Add your property</span>
+          </button>
+        </a>
 
         <a [routerLink]="['/profiles']">
           <button mat-menu-item>
@@ -75,7 +83,6 @@
         </a>
       </mat-menu>
       }
-      <a [routerLink]="['/properties/create']"> Add your home </a>
     </div>
   </div>
   <app-search-bar
