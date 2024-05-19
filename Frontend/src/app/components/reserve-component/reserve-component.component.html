@@ -29,10 +29,7 @@
         <div
           class="col-span-1 hover:bg-gray-100 cursor-pointer border border-solid border-black rounded-tl-2xl relative"
         >
-          <div
-            (click)="this.changeStateOfReservation('checkin')"
-            class="w-full p-2"
-          >
+          <div (click)="changeStateOfReservation('checkin')" class="w-full p-2">
             <mat-label class="font-semibold">CHECK-IN</mat-label>
             <div class="flex text-lg items-center pt-2">
               {{ this.startDate?.toLocaleDateString() }}
@@ -40,16 +37,17 @@
           </div>
           <app-calendar
             [className]="
-              isCheckinOpen ? 'absolute top-full w-full z-10' : 'hidden'
+              isCheckinOpen ? 'absolute top-0 w-full z-10' : 'hidden'
             "
             [filter]="filterAvailableDates"
             [date]="startDate"
+            [isOpen]="this.isCheckinOpen"
             (changeDate$)="changeStartDate($event)"
           ></app-calendar>
         </div>
 
         <div
-          (click)="this.changeStateOfReservation('checkout')"
+          (click)="changeStateOfReservation('checkout')"
           class="col-span-1 border-r border-t border-b border-solid border-black rounded-tr-2xl hover:bg-gray-100 cursor-pointer relative flex flex-col"
         >
           <div class="p-2">
@@ -114,12 +112,16 @@
     </div>
 
     <div class="w-full flex justify-center">
-      <app-reservation-info
-        class="w-4/5 pt-3 pb-3"
-        [property]="property"
-        [startDate]="startDate"
-        [endDate]="endDate"
-      ></app-reservation-info>
+      <div
+        [classList]="
+          this.total != 0 ? 'w-4/5 pt-3 pb-3 block' : 'w-4/5 pt-3 pb-3 hidden'
+        "
+      >
+        <div>
+          <span class="text-xl font-bold">Total price: </span>
+          <span class="text-xl">{{ this.total }} MKD</span>
+        </div>
+      </div>
     </div>
 
     <div class="flex w-full justify-center p-5">

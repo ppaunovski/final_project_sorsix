@@ -200,14 +200,14 @@ export class SearchBarComponent implements OnInit {
         this.changeEndDate$.next(undefined);
         break;
       case 'checkout':
-        if (this.startDate == undefined) {
-          this.isCheckinOpen = !this.isCheckinOpen;
+        if (this.startDate == undefined || this.startDate == null) {
+          this.isCheckinOpen = true;
           this.isCheckoutOpen = false;
+          return;
         }
         this.isGuestDialongOpen = false;
-        this.isCheckoutOpen = !this.isCheckoutOpen;
         this.changeEndDate$.next(undefined);
-        this.changeStartDate(this.startDate);
+        this.changeStartDate$.next(this.startDate);
         break;
       case 'who':
         this.isCheckinOpen = false;

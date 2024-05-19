@@ -25,6 +25,7 @@
   </mat-date-range-input>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-date-range-picker
+    (closed)="closed($event)"
     [startAt]="this.startDate"
     [opened]="this.startDate && !this.endDate"
     #picker

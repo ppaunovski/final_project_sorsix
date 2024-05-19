@@ -1,8 +1,11 @@
 package com.sorsix.backend.repository.booking_repository
 
+import com.sorsix.backend.api.dtos.BookingDTO
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.UserAccount
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
@@ -24,11 +27,13 @@ class BookingRepositoryImpl(private val bookingRepository: JpaBookingRepository)
         bookingRepository.deleteById(id)
 
     override fun findAllByGuest(guest: Long): List<Booking> =
-        this.bookingRepository.findAllByGuest(guest)
+        this.bookingRepository.findAllByGuestId(guest)
 
     override fun hasFinishedBooking(findPropertyById: Property, guest: UserAccount): Boolean =
         this.bookingRepository.existsByGuestAndPropertyAndCheckInAfter(guest, findPropertyById, LocalDate.now())
 
+    override fun findAllByGuestPagination(guest: UserAccount, pageable: Pageable): Page<Booking> =
+        this.bookingRepository.findAllByGuest(guest, pageable)
 
 
 }

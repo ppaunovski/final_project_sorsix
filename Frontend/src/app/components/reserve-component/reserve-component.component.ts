@@ -84,6 +84,7 @@ export class ReserveComponentComponent implements OnInit {
 
   error: ErrorResponse | null = null;
   loading = false;
+  total = 0;
 
   constructor(
     private propertyService: PropertyService,
@@ -99,6 +100,13 @@ export class ReserveComponentComponent implements OnInit {
 
     this.changeEndDate$.subscribe((end) => {
       this.endDate = end;
+
+      if (this.startDate && this.endDate && this.property) {
+        this.total =
+          (this.property?.nightlyPrice.valueOf() *
+            (this.endDate?.getTime() - this.startDate?.getTime())) /
+          86400000;
+      }
     });
 
     if (this.property)
@@ -114,17 +122,17 @@ export class ReserveComponentComponent implements OnInit {
             let yesterday = new Date();
             yesterday.setDate(yesterday.getDate() - 1);
 
-            console.log(
-              'filter available dates: ',
-              date,
-              this.availablePeriods,
-              this.availablePeriods.map((period) => {
-                let start = new Date(period.startDate);
-                let end = new Date(period.endDate);
+            // console.log(
+            //   'filter available dates: ',
+            //   date,
+            //   this.availablePeriods,
+            //   this.availablePeriods.map((period) => {
+            //     let start = new Date(period.startDate);
+            //     let end = new Date(period.endDate);
 
-                return start <= date && end >= date;
-              })
-            );
+            //     return start <= date && end >= date;
+            //   })
+            // );
 
             return (
               this.availablePeriods
@@ -194,9 +202,6 @@ export class ReserveComponentComponent implements OnInit {
 
   changeStartDate(date: Date | undefined | null) {
     console.log(date);
-    this.openStartCalendar = false;
-    this.openEndCalendar = true;
-
     if (date) {
       const offset = date?.getTimezoneOffset();
 
@@ -254,21 +259,25 @@ export class ReserveComponentComponent implements OnInit {
   changeStateOfReservation(part: 'where' | 'checkin' | 'checkout' | 'who') {
     switch (part) {
       case 'where':
-        this.isCheckinOpen = false;
+        // this.isCheckinOpen = false;
         this.isGuestDialongOpen = false;
         break;
       case 'checkin':
-        this.isCheckinOpen = !this.isCheckinOpen;
+        this.isCheckinOpen = false;
+        this.isCheckinOpen = true;
         this.isGuestDialongOpen = false;
         this.changeStartDate$.next(undefined);
         this.changeEndDate$.next(undefined);
         break;
       case 'checkout':
-        if (this.startDate == undefined)
-          this.isCheckinOpen = !this.isCheckinOpen;
+        if (this.startDate == undefined || this.startDate == null) {
+          this.isCheckinOpen = true;
+          this.isCheckoutOpen = false;
+          return;
+        }
         this.isGuestDialongOpen = false;
         this.changeEndDate$.next(undefined);
-        this.changeStartDate(this.startDate);
+        this.changeStartDate$.next(this.startDate);
         break;
       case 'who':
         this.isCheckinOpen = false;

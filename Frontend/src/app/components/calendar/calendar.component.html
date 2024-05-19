@@ -1,9 +1,26 @@
 <div class="z-10">
-  <mat-card class="demo-inline-calendar-card w-[300px]">
+  <!-- <mat-card class="demo-inline-calendar-card w-[300px]">
     <mat-calendar
       (selectedChange)="changeDate($event)"
       [dateFilter]="filter"
       [(selected)]="date"
     ></mat-calendar>
-  </mat-card>
+  </mat-card> -->
+  <mat-form-field class="date-range">
+    <mat-label>Choose a date</mat-label>
+    <input
+      matInput
+      (dateChange)="handle($event)"
+      [matDatepickerFilter]="filter"
+      [matDatepicker]="picker"
+      (select)="(this.date)"
+    />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker
+      (closed)="closed($event)"
+      [opened]="isOpen"
+      #picker
+    ></mat-datepicker>
+  </mat-form-field>
 </div>

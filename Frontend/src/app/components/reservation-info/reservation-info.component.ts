@@ -9,26 +9,17 @@ import { PropertyService } from '../../service/property.service';
   templateUrl: './reservation-info.component.html',
   styleUrl: './reservation-info.component.css',
 })
-export class ReservationInfoComponent {
+export class ReservationInfoComponent implements OnInit {
   @Input()
   property: Property | undefined;
   @Input()
   startDate: Date | undefined | null;
   @Input()
   endDate: Date | undefined | null;
+  total = 0;
 
-  totalPrice() {
+  ngOnInit(): void {
     if (this.property && this.endDate && this.startDate) {
-      console.log(
-        this.property?.nightlyPrice.valueOf() *
-          (this.endDate?.getDate() - this.startDate?.getDate())
-      );
-
-      return (
-        this.property?.nightlyPrice.valueOf() *
-        (this.endDate?.getDate() - this.startDate?.getDate())
-      );
     }
-    return 0;
   }
 }

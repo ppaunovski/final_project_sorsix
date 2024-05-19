@@ -4,6 +4,7 @@ import { Booking } from '../model/Booking';
 import { Observable } from 'rxjs';
 import { BookingRequest } from '../model/BookingRequest';
 import { BookingForReview } from '../model/BookingForReview';
+import { BookingResponse } from '../model/BookingResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,10 @@ export class BookingService {
   private url = '/api/booking';
   constructor(private http: HttpClient) {}
 
-  getBookingsByUserId(): Observable<Booking[]> {
-    return this.http.get<Booking[]>(`${this.url}/user`);
+  getBookingsByUserId(page: number, size: number): Observable<BookingResponse> {
+    return this.http.get<BookingResponse>(
+      `${this.url}/user?page=${page}&size=${size}`
+    );
   }
 
   getBookingById(id: number): Observable<Booking | undefined> {

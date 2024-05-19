@@ -1,4 +1,4 @@
-<div>
+<div class="w-full">
   <form
     class="flex flex-wrap md:flex-nowrap md:cursor-pointer md:items-center w-full md:border md:border-gray-400 md:border-solid md:rounded-full md:shadow-md"
   >
@@ -36,8 +36,9 @@
       </div>
 
       <app-calendar
-        [className]="isCheckinOpen ? 'absolute top-full w-full z-10' : 'hidden'"
+        [className]="isCheckinOpen ? 'absolute top-0 w-full z-10' : 'hidden'"
         [date]="startDate"
+        [isOpen]="this.isCheckinOpen"
         (changeDate$)="changeStartDate($event)"
       ></app-calendar>
     </div>

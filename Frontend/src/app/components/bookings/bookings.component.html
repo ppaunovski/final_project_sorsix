@@ -3,7 +3,7 @@
   <mat-spinner></mat-spinner>
   } @else if (this.error != null) {
   <app-error-page [error]="error"></app-error-page>
-  } @else { @for (booking of bookings; track booking.id) {
+  } @else { @for (booking of bookingResponse?.content; track booking.id) {
   <app-booking-preview
     [booking]="booking"
     [showButtons]="true"
@@ -11,5 +11,16 @@
   >
   </app-booking-preview>
 
-  } }
+  }
+  <mat-paginator
+    [pageIndex]="this.page"
+    [length]="this.bookingResponse?.totalElements"
+    [pageSize]="this.size"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="handlePageChange($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+
+  }
 </div>

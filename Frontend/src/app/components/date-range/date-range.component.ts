@@ -57,4 +57,8 @@ export class DateRangeComponent {
   changeStartDate(date: Date | null | undefined) {
     this.changeStartDate$.emit(date);
   }
+
+  closed($event: void) {
+    if (this.endDate == undefined) this.changeEndDate$.next(undefined);
+  }
 }

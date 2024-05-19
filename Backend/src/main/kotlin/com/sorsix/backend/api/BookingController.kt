@@ -21,8 +21,11 @@ class BookingController(
     @DeleteMapping("/{id}")
     fun deleteBookingById(@PathVariable id: Long) = bookingService.deleteBookingById(id)
     @GetMapping("/user")
-    fun getBookingsForUser(@RequestHeader(name = "Authorization") authorizationHeader: String, authentication: Authentication) =
-        bookingService.getBookingsForUser(authorizationHeader, authentication)
+    fun getBookingsForUser(
+        @RequestParam(name = "page", required = false, defaultValue = "0") page: Int,
+        @RequestParam(name = "size", required = false, defaultValue = "10") size: Int,
+        authentication: Authentication) =
+        bookingService.getBookingsForUser(page, size, authentication)
     @PostMapping("/{id}/confirm")
     fun confirmBooking(@PathVariable id: Long, authentication: Authentication) = bookingService.confirmBooking(id, authentication)
     @PostMapping("/{id}/cancel")
