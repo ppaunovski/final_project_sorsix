@@ -24,4 +24,8 @@ class UserAccountController(val userAccountService: UserAccountService) {
 
     @GetMapping("/{id}/images")
     fun findImageForUser(@PathVariable id: Long) = userAccountService.findImageForUser(id)
+
+    @GetMapping("/profits")
+    fun getProfitsPerProperty(auth: Authentication?) =
+        userAccountService.getProfitsPerProperty(auth)
 }

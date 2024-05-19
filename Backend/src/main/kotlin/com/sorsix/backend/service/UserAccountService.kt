@@ -1,5 +1,6 @@
 package com.sorsix.backend.service
 
+import com.sorsix.backend.api.dtos.ProfitsPerPropertyDTO
 import com.sorsix.backend.api.dtos.PropertyCardDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.api.dtos.UserImageDTO
@@ -39,7 +40,6 @@ class UserAccountService(
     fun deleteUserAccountById(id: Long) = userAccountRepository.deleteById(id)
 
 
-
     fun findUserAccountByJWT(authorizationHeader: String, auth: Authentication): UserAccountDTO {
         val user = userAccountRepository.findByEmail(auth.name)
         return user?.let { dtoMapperService.mapUserAccountToDTO(it) }
@@ -59,10 +59,21 @@ class UserAccountService(
 
         return this.propertyRepository.findAllByHost(host).map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
     }
-    fun findImageForUser(id: Long):UserImageDTO {
+
+    fun findImageForUser(id: Long): UserImageDTO {
         val host = this.userAccountRepository.findById(id)
             ?: throw UserAccountNotFoundException("User account with id $id not found")
 
-        return this.userImageRepository.findByUserId(host.id)?.let { dtoMapperService.mapUserImageToDTO(it) } ?: throw UserImageNotFoundException("User image for user with id $id not found")
+        return this.userImageRepository.findByUserId(host.id)?.let { dtoMapperService.mapUserImageToDTO(it) }
+            ?: throw UserImageNotFoundException("User image for user with id $id not found")
+    }
+
+    fun getProfitsPerProperty(auth: Authentication?): List<ProfitsPerPropertyDTO> {
+        if (auth == null)
+            throw UnauthorizedAccessException("You are not authorized to view this user's profits")
+
+        val user = userAccountRepository.findByEmail(auth.name)
+            ?: throw UserAccountNotFoundException("User account with email ${auth.name} not found")
+        return userAccountRepository.getProfitsPerProperty(user)
     }
 }

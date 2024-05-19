@@ -3,17 +3,5 @@
     {{ this.user?.email }}
   </div>
 
-  <div>
-    <canvas
-      baseChart
-      [datasets]="barChartData"
-      [labels]="barChartLabels"
-      [options]="barChartOptions"
-      [legend]="barChartLegend"
-      [type]="'bar'"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)"
-    >
-    </canvas>
-  </div>
+  <div class="w-[500px] h-[500px]" id="canvas" #canvas></div>
 </div>

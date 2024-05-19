@@ -9,6 +9,9 @@ import { UserAccountService } from '../../service/user-account.service';
 import { UserAccount } from '../../model/UserAccount';
 import { BaseChartDirective } from 'ng2-charts';
 import { CustomChartData } from '../../model/CustomChartData';
+import { ProfitsPerProperty } from '../../model/ProfitsPerProperty';
+import * as echarts from 'echarts';
+import { canvas } from 'leaflet';
 
 @Component({
   selector: 'app-profile',
@@ -17,68 +20,66 @@ import { CustomChartData } from '../../model/CustomChartData';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
-export class ProfileComponent implements OnInit {
-  @ViewChild('chart') canvas!: ElementRef<any>;
+export class ProfileComponent implements OnInit, AfterViewInit {
+  @ViewChild('canvas')
+  canvas!: ElementRef<any>;
+
   user: UserAccount | undefined;
-  chart: any = [];
+  profits: ProfitsPerProperty[] = [];
+  data: any[] = [];
 
   constructor(private userService: UserAccountService) {}
+
+  ngAfterViewInit(): void {
+    var myChart = echarts.init(this.canvas.nativeElement);
+    var option: echarts.EChartsOption;
+
+    this.userService.getProfitsPerProperty().subscribe({
+      next: (profits) => {
+        console.log(profits);
+
+        this.profits = profits;
+        this.profits.forEach((profit) => {
+          this.data.push({
+            value: profit.totalProfit / 86400 / 1000000000,
+            name: profit.propertyName,
+          });
+        });
+
+        option = {
+          title: {
+            text: 'Profits per Property',
+            subtext: '',
+            left: 'center',
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          series: [
+            {
+              name: 'Access From',
+              type: 'pie',
+              radius: '50%',
+              data: this.data,
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              },
+            },
+          ],
+        };
+
+        option && myChart.setOption(option);
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.userService.getUserInfo().subscribe((user) => {
       this.user = user;
     });
-  }
-
-  public barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true,
-  };
-  public barChartLabels: string[] = [
-    '2006',
-    '2007',
-    '2008',
-    '2009',
-    '2010',
-    '2011',
-    '2012',
-  ];
-  public barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-
-  public barChartData: CustomChartData[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-  ];
-
-  // events
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
-
-  public randomize(): void {
-    // Only Change 3 values
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      Math.random() * 100,
-      56,
-      Math.random() * 100,
-      40,
-    ];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
   }
 }

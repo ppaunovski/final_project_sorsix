@@ -1,5 +1,6 @@
 package com.sorsix.backend.repository.user_account_repository
 
+import com.sorsix.backend.api.dtos.ProfitsPerPropertyDTO
 import com.sorsix.backend.domain.entities.UserAccount
 import org.springframework.stereotype.Repository
 
@@ -22,6 +23,9 @@ class UserAccountRepositoryImpl(private val userAccountRepository: JpaUserAccoun
 
     override fun findByEmail(email: String): UserAccount? =
         this.userAccountRepository.findByEmail(email)
+
+    override fun getProfitsPerProperty(userAccount: UserAccount): List<ProfitsPerPropertyDTO> =
+        this.userAccountRepository.getProfitsPerProperty(userAccount)
 
 
 }
