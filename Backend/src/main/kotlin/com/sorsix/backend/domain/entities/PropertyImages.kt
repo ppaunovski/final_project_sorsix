@@ -20,7 +20,8 @@ data class PropertyImages(
     val order: Int,
     @Column(name = "pi_image",columnDefinition = "bytea", nullable = false)
     val image: ByteArray
-) {
+)
+{
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is PropertyImages) return false

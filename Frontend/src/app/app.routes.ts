@@ -13,6 +13,7 @@ import { MyPropertiesComponent } from './components/my-properties/my-properties.
 import { ReviewComponentComponent } from './components/review-component/review-component.component';
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
 import { LoginCallbackComponent } from './callbacks/login-callback/login-callback.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,10 @@ export const routes: Routes = [
   {
     path: 'profiles/properties',
     component: MyPropertiesComponent,
+  },
+  {
+    path: 'profiles/favorites',
+    component: FavoritesComponent,
   },
   {
     path: 'bookings/:id/confirm',

@@ -78,6 +78,12 @@
             <span>My bookings</span>
           </button>
         </a>
+        <a [routerLink]="['/profiles', 'favorites']">
+          <button mat-menu-item>
+            <mat-icon>favorite</mat-icon>
+            <span>My favorites</span>
+          </button>
+        </a>
         <a [routerLink]="['/profiles', 'properties']">
           <button mat-menu-item>
             <mat-icon>home</mat-icon>
