@@ -18,6 +18,7 @@ import { UserAccount } from '../model/UserAccount';
 import { CityService } from './city.service';
 import { Attribute } from '../model/Attribute';
 import { PropertyResponse } from '../model/PropertyResponse';
+import { ReviewsResponse } from '../model/ReviewResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -63,8 +64,14 @@ export class PropertyService {
     return this.http.get<Property | undefined>(this.url + `/${id}`);
   }
 
-  getPropertyReviewsByPropertyId(id: Number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.url}/${id}/reviews`);
+  getPropertyReviewsByPropertyId(
+    id: Number,
+    page: number,
+    size: number
+  ): Observable<ReviewsResponse> {
+    return this.http.get<ReviewsResponse>(
+      `${this.url}/${id}/reviews?page=${page}&size=${size}`
+    );
   }
 
   getPropertyPricesForPeriod(id: Number, start: Date, end: Date) {

@@ -1,6 +1,7 @@
 package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.*
+import com.sorsix.backend.api.responses.BookingsResponse
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.PropertyAvailability
@@ -52,11 +53,11 @@ class BookingService(
     fun deleteBookingById(id: Long) = bookingRepository.deleteById(id)
 
 
-    fun getBookingsForUser(page: Int, size: Int, authentication: Authentication): Page<BookingDTO> {
+    fun getBookingsForUser(page: Int, size: Int, authentication: Authentication): BookingsResponse {
         val pageable = PageRequest.of(page, size)
         val guest = this.userAccountRepository.findByEmail(authentication.name)
         return guest?.let { account ->
-            this.bookingRepository.findAllByGuestPagination(account, pageable).map { dtoMapperService.mapBookingToDTO(it) }
+            this.bookingRepository.findAllByGuestPagination(account, pageable).let { dtoMapperService.mapBookingPagesToBookingResponse(it) }
         } ?: throw UserAccountNotFoundException("User not found")
     }
 

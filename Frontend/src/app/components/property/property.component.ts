@@ -27,6 +27,8 @@ import { Review } from '../../model/Review';
 import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
 import { MapComponent } from '../map/map.component';
 import * as L from 'leaflet';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ReviewsResponse } from '../../model/ReviewResponse';
 
 @Component({
   selector: 'app-property',
@@ -48,6 +50,7 @@ import * as L from 'leaflet';
     ReviewComponent,
     ImageGalleryComponent,
     MapComponent,
+    MatPaginatorModule,
   ],
   templateUrl: './property.component.html',
   styleUrl: './property.component.css',
@@ -66,6 +69,10 @@ export class PropertyComponent implements OnInit {
 
   loadingAttribs: boolean = false;
   errorAttribs: any;
+
+  reviewPage = 0;
+  reviewSize = 10;
+  reviewResponse: ReviewsResponse | undefined;
 
   constructor(
     private propertyService: PropertyService,
@@ -97,16 +104,18 @@ export class PropertyComponent implements OnInit {
               this.dataURItoBlob(image.imageByteArray, image.type)
             );
           }
-          if(this.property && this.property.latitude && this.property.longitude){
-          this.propertyCoordinates = new L.LatLng(
-            this.property.latitude as number,
-            this.property.longitude as number);
+          if (
+            this.property &&
+            this.property.latitude &&
+            this.property.longitude
+          ) {
+            this.propertyCoordinates = new L.LatLng(
+              this.property.latitude as number,
+              this.property.longitude as number
+            );
             console.log('Coordinates', this.propertyCoordinates);
-            
-          }
-          else
-          console.log('No coordinates');
-          
+          } else console.log('No coordinates');
+
           console.log(this.imagesUrl);
           console.log(this.property);
           this.loading = false;
@@ -169,21 +178,26 @@ export class PropertyComponent implements OnInit {
           this.error = null;
         }),
         mergeMap((id) => {
-          return this.propertyService.getPropertyReviewsByPropertyId(+id);
+          return this.propertyService.getPropertyReviewsByPropertyId(
+            +id,
+            this.reviewPage,
+            this.reviewSize
+          );
         })
       )
       .subscribe({
         next: (resp) => {
-          this.reviews = resp;
+          this.reviewResponse = resp;
+          this.reviews = resp.content;
+          this.reviewPage = resp.page;
           this.averageRating = (
-            resp.reduce(
+            this.reviews.reduce(
               (sum, review) => sum.valueOf() + review.averageRating.valueOf(),
               0
-            ) / resp.length
+            ) / this.reviews.length
           ).toPrecision(2);
         },
       });
-    
   }
   dataURItoBlob(dataURI: string, type: string): string {
     const byteString = window.atob(dataURI);
@@ -194,5 +208,28 @@ export class PropertyComponent implements OnInit {
     }
     var blob = new Blob([ab], { type: type });
     return URL.createObjectURL(blob);
+  }
+  handlePageChange(event: PageEvent) {
+    const page = event.pageIndex;
+    const size = event.pageSize;
+    if (page != null) this.reviewPage = page;
+    if (size != null) this.reviewSize = size;
+
+    if (this.property)
+      this.propertyService
+        .getPropertyReviewsByPropertyId(
+          this.property?.id,
+          this.reviewPage,
+          this.reviewSize
+        )
+        .subscribe({
+          next: (resp) => {
+            console.log('reviews in property', resp);
+
+            this.reviewResponse = resp;
+            this.reviews = resp.content;
+            this.reviewPage = resp.page;
+          },
+        });
   }
 }

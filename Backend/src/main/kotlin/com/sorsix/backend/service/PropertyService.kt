@@ -86,10 +86,10 @@ class PropertyService(
     @Transactional
     fun saveProperty(property: PropertyRequest, authentication: Authentication?): Property {
 
-        if(authentication == null) throw UnauthorizedAccessException("Please log in to save a property.")
+        if (authentication == null) throw UnauthorizedAccessException("Please log in to save a property.")
 
         val host = this.userService.findUserByEmail(authentication.name)
-        if(host.dateHostStarted == null) host.dateHostStarted = LocalDate.now()
+        if (host.dateHostStarted == null) host.dateHostStarted = LocalDate.now()
 
         val p = propertyRepository.save(
             Property(
@@ -110,12 +110,12 @@ class PropertyService(
                 propertyType = property.propertyType
             )
         )
-        for (image in property.images){
+        for (image in property.images) {
             imagesService.savePropertyImage(
                 PropertyImageRequest(p.id, image.order, image.imageByteArray, image.type)
             )
         }
-        for(attribute in property.attributes){
+        for (attribute in property.attributes) {
             propertyAttributesService.save(p, attribute)
         }
 
@@ -132,7 +132,6 @@ class PropertyService(
     }
 
     fun deletePropertyById(id: Long) = propertyRepository.deleteById(id)
-
 
 
     fun getOfferForProperty(id: Long, offerRequest: OfferRequest): Any {
@@ -165,7 +164,6 @@ class PropertyService(
     }
 
 
-
     fun suggestProperties(): List<PropertyCardDTO> =
         this.propertyRepository.findAll().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
 //        this.propertyRepository.suggestProperties().map { this.mapPropertyToPropertyCardDTO(it) }
@@ -194,8 +192,17 @@ class PropertyService(
 
     }
 
-    fun bookProperty (offerRequest: OfferRequest, property: Property, guest: UserAccount, bookingStatus: BookingStatus): BookingDTO {
-        val propertyAvailability = getPropertyAvailability(checkInDate = offerRequest.checkInDate, checkOutDate = offerRequest.checkOutDate, property = property)
+    fun bookProperty(
+        offerRequest: OfferRequest,
+        property: Property,
+        guest: UserAccount,
+        bookingStatus: BookingStatus
+    ): BookingDTO {
+        val propertyAvailability = getPropertyAvailability(
+            checkInDate = offerRequest.checkInDate,
+            checkOutDate = offerRequest.checkOutDate,
+            property = property
+        )
 
         dividePropertyAvailability(propertyAvailability, offerRequest.checkInDate, offerRequest.checkOutDate, property)
 
@@ -242,7 +249,12 @@ class PropertyService(
         return dtoMapperService.mapBookingToDTO(booking)
     }
 
-    private fun dividePropertyAvailability(propertyAvailability: PropertyAvailability, checkInDate: LocalDate, checkOutDate: LocalDate, property: Property) {
+    private fun dividePropertyAvailability(
+        propertyAvailability: PropertyAvailability,
+        checkInDate: LocalDate,
+        checkOutDate: LocalDate,
+        property: Property
+    ) {
         if (propertyAvailability.startDate < checkInDate) {
             this.propertyAvailabilityRepository.save(
                 PropertyAvailability(
@@ -268,7 +280,11 @@ class PropertyService(
         this.propertyAvailabilityRepository.deleteById(propertyAvailability.id)
     }
 
-    private fun getPropertyAvailability(checkInDate: LocalDate, checkOutDate: LocalDate, property: Property): PropertyAvailability {
+    private fun getPropertyAvailability(
+        checkInDate: LocalDate,
+        checkOutDate: LocalDate,
+        property: Property
+    ): PropertyAvailability {
         return this.propertyAvailabilityRepository.findAllForProperty(property)
             .firstOrNull { it.startDate <= checkInDate && it.endDate >= checkOutDate }
             ?: throw PropertyNotAvailableException("Property is not available for the given period: $checkInDate - $checkOutDate")
@@ -284,44 +300,46 @@ class PropertyService(
         return dtoMapperService.mapPropertyToPropertyCardDTO(this.findPropertyById(id))
     }
 
-    fun getAllProperties(page: Int, size: Int, filterString: String, checkIn: LocalDate?, checkOut: LocalDate?, adults: Int, children: Int, pets: Int): PropertyResponse {
+    fun getAllProperties(
+        page: Int,
+        size: Int,
+        filterString: String,
+        checkIn: LocalDate?,
+        checkOut: LocalDate?,
+        adults: Int,
+        children: Int,
+        pets: Int
+    ): PropertyResponse {
         val decoded = URLDecoder.decode(filterString, "UTF-8")
         val pageable = PageRequest.of(page, size)
 
-        if(checkIn == null || checkOut == null)
-            if(decoded.isNotBlank())
-                return  this.propertyRepository.findAllPaginatedByFilterStringWithoutDates(decoded, adults, children, pets, pageable).let { pages ->
-                    PropertyResponse(
-                        content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
-                        totalPages = pages.totalPages,
-                        totalElements = pages.totalElements,
-                        page = pages.number,
-                        size = pages.size,
-                        last = pages.isLast,
-                    )
+        if (checkIn == null || checkOut == null)
+            if (decoded.isNotBlank())
+                return this.propertyRepository.findAllPaginatedByFilterStringWithoutDates(
+                    decoded,
+                    adults,
+                    children,
+                    pets,
+                    pageable
+                ).let {
+                    dtoMapperService.mapPropertyPagesToPropertyResponse(it)
                 }
-            else return this.propertyRepository.findAllPaginated(pageable).let { pages ->
-                PropertyResponse(
-                    content = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) },
-                    totalPages = pages.totalPages,
-                    totalElements = pages.totalElements,
-                    page = pages.number,
-                    size = pages.size,
-                    last = pages.isLast,
-                )
+            else return this.propertyRepository.findAllPaginated(pageable).let {
+                dtoMapperService.mapPropertyPagesToPropertyResponse(it)
             }
 
-        val pages = this.propertyRepository.filterWithPagination(decoded, checkIn, checkOut, adults, children, pets, pageable)
-        val properties = pages.toList().map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
+        return this.propertyRepository.filterWithPagination(
+            decoded,
+            checkIn,
+            checkOut,
+            adults,
+            children,
+            pets,
+            pageable
+        ).let {
+            dtoMapperService.mapPropertyPagesToPropertyResponse(it)
+        }
 
-        return PropertyResponse(
-            content = properties,
-            totalPages = pages.totalPages,
-            totalElements = pages.totalElements,
-            page = pages.number,
-            size = pages.size,
-            last = pages.isLast,
-        )
     }
 
 }

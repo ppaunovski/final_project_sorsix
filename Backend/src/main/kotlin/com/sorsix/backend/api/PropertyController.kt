@@ -19,7 +19,7 @@ class PropertyController(
     private val propertyImagesService: PropertyImagesService,
     private val componentRatingService: ComponentRatingService,
     private val propertyAttributesService: PropertyAttributesService,
-    ){
+) {
 
     @GetMapping("/pagination")
     fun getAllProperties(
@@ -51,16 +51,18 @@ class PropertyController(
 
     @PostMapping
     fun saveProperty(@RequestBody property: PropertyRequest, authentication: Authentication?): Property =
-         propertyService.saveProperty(property, authentication)
-
-
+        propertyService.saveProperty(property, authentication)
 
 
     @DeleteMapping("/{id}")
     fun deletePropertyById(@PathVariable id: Long) = propertyService.deletePropertyById(id)
 
     @GetMapping("/{id}/reviews")
-    fun findAllReviewsForProperty(@PathVariable id: Long) = reviewService.getAllReviewsForProperty(id)
+    fun findAllReviewsForProperty(
+        @PathVariable id: Long,
+        @RequestParam(required = false, defaultValue = "0") page: Int,
+        @RequestParam(required = false, defaultValue = "10") size: Int
+    ) = reviewService.getAllReviewsForProperty(id, page, size)
 
     @PostMapping("/{id}/images")
     fun savePropertyImage(@PathVariable id: Long, @RequestBody image: MultipartFile) =
@@ -69,26 +71,31 @@ class PropertyController(
         )
 
     @GetMapping("/{id}/get-offer")
-    fun getOfferForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) = propertyService.getOfferForProperty(id, offerRequest)
+    fun getOfferForProperty(@PathVariable id: Long, @RequestBody offerRequest: OfferRequest) =
+        propertyService.getOfferForProperty(id, offerRequest)
 
-//    @PostMapping("/{id}/book")
+    //    @PostMapping("/{id}/book")
 //    fun createBookingForProperty(@PathVariable id: Long,
 //                                 @RequestBody offerRequest: OfferRequest,
 //                                 authentication: Authentication) =
 //        propertyService.createBookingForProperty(id, offerRequest, authentication)
     @PostMapping("/{id}/reserve")
-    fun reserveProperty(@PathVariable id: Long,
-                        @RequestBody offerRequest: OfferRequest,
-                        authentication: Authentication?) =
+    fun reserveProperty(
+        @PathVariable id: Long,
+        @RequestBody offerRequest: OfferRequest,
+        authentication: Authentication?
+    ) =
         propertyService.reserveProperty(id, offerRequest, authentication)
 
     @GetMapping("/{id}/availability")
     fun getPropertyAvailability(@PathVariable id: Long) = propertyService.getPropertyAvailability(id)
 
     @GetMapping("/{id}/average-component-ratings")
-    fun getAverageComponentRatingsForProperty(@PathVariable id: Long) = componentRatingService.findAverageComponentRatingAverageForProperty(id)
+    fun getAverageComponentRatingsForProperty(@PathVariable id: Long) =
+        componentRatingService.findAverageComponentRatingAverageForProperty(id)
 
     @GetMapping("{id}/for-review")
-    fun getPropertyForReview(@PathVariable id: Long, authentication: Authentication?) = propertyService.getPropertyForReview(id, authentication)
+    fun getPropertyForReview(@PathVariable id: Long, authentication: Authentication?) =
+        propertyService.getPropertyForReview(id, authentication)
 
 }

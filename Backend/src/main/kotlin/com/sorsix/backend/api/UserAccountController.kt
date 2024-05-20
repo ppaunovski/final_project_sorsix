@@ -28,4 +28,7 @@ class UserAccountController(val userAccountService: UserAccountService) {
     @GetMapping("/profits")
     fun getProfitsPerProperty(auth: Authentication?) =
         userAccountService.getProfitsPerProperty(auth)
+
+    @GetMapping("/encode")
+    fun encodeDummyUsersPasswords() = userAccountService.encodeDummyUsersPasswords()
 }

@@ -1,11 +1,15 @@
 package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.*
+import com.sorsix.backend.api.responses.BookingsResponse
+import com.sorsix.backend.api.responses.PropertyResponse
+import com.sorsix.backend.api.responses.ReviewsResponse
 import com.sorsix.backend.domain.entities.*
 import com.sorsix.backend.repository.component_rating_repository.ComponentRatingRepository
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
 import com.sorsix.backend.repository.review_component_repository.ReviewComponentRepository
 import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import java.io.File
 import java.nio.file.Files
@@ -17,6 +21,18 @@ class ClassToDTOMapperService(
     private val reviewComponentRepository: UserReviewRepository,
     private val imagesRepository: PropertyImagesRepository
 ) {
+
+    fun mapPropertyPagesToPropertyResponse(pages: Page<Property>): PropertyResponse {
+        return PropertyResponse(
+            content = pages.toList().map { this.mapPropertyToPropertyCardDTO(it) },
+            totalPages = pages.totalPages,
+            totalElements = pages.totalElements,
+            page = pages.number,
+            size = pages.size,
+            last = pages.isLast,
+        )
+    }
+
     fun mapUserAccountToDTO(userAccount: UserAccount) =
         UserAccountDTO(
             id = userAccount.id,
@@ -106,6 +122,7 @@ class ClassToDTOMapperService(
             }
         )
     }
+
     fun mapUserImageToDTO(userImage: UserImage): UserImageDTO {
         return UserImageDTO(
             id = userImage.id,
@@ -114,6 +131,7 @@ class ClassToDTOMapperService(
             userId = userImage.user.id
         )
     }
+
     fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO {
         return PropertyCardDTO(
             id = property.id,
@@ -126,7 +144,8 @@ class ClassToDTOMapperService(
                 }.average(),
             description = property.description,
             pricePerNight = property.nightlyPrice,
-            image = this.imagesRepository.findThumbnail(property.id)?.let { this.mapToPropertyImageDTO(it)} ?: PropertyImageDTO(
+            image = this.imagesRepository.findThumbnail(property.id)?.let { this.mapToPropertyImageDTO(it) }
+                ?: PropertyImageDTO(
                     id = 0,
                     propertyId = 0,
                     order = 0,
@@ -145,13 +164,37 @@ class ClassToDTOMapperService(
             id = booking.id,
             guest = this.mapUserAccountToDTO(booking.guest),
             property = this.mapPropertyToDTO(booking.property),
-            checkIn= booking.checkIn,
+            checkIn = booking.checkIn,
             checkOut = booking.checkOut,
             nightlyPrice = booking.nightlyPrice,
             serviceFee = booking.serviceFee,
             cleaningFee = booking.cleaningFee,
             status = booking.status.name
         )
+    }
+
+    fun mapBookingPagesToBookingResponse(pages: Page<Booking>): BookingsResponse {
+        return BookingsResponse(
+            content = pages.toList().map { this.mapBookingToDTO(it) },
+            totalPages = pages.totalPages,
+            totalElements = pages.totalElements,
+            page = pages.number,
+            size = pages.size,
+            last = pages.isLast
+        )
+
+    }
+
+    fun mapReviewPagesToReviewResponse(pages: Page<UserReview>): ReviewsResponse {
+        return ReviewsResponse(
+            content = pages.toList().map { this.mapUserReviewToReviewDTO(it) },
+            totalPages = pages.totalPages,
+            totalElements = pages.totalElements,
+            page = pages.number,
+            size = pages.size,
+            last = pages.isLast
+        )
+
     }
 
 

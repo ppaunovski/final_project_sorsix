@@ -83,10 +83,19 @@
     <hr class="mt-24 mb-24" />
 
     <div class="w-full flex justify-center">
-      <div class="w-3/4 flex flex-wrap">
+      <div class="w-3/4 flex flex-wrap justify-center">
         @for (review of this.reviews; track $index) {
         <app-review class="xl:w-1/2 p-5 w-full" [review]="review"></app-review>
         }
+        <mat-paginator
+          [pageIndex]="this.reviewPage"
+          [length]="this.reviewResponse?.totalElements"
+          [pageSize]="this.reviewSize"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          (page)="handlePageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
       </div>
     </div>
   </div>

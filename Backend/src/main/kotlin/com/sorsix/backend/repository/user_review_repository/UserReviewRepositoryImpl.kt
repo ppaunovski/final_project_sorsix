@@ -4,6 +4,8 @@ import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.domain.entities.UserReview
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -39,5 +41,8 @@ class UserReviewRepositoryImpl(private val userReviewRepository: JpaUserReviewRe
 
     override fun hasReviewForBooking(booking: Booking, guest: UserAccount): Boolean =
         this.userReviewRepository.existsByUserAndBooking(guest, booking)
+
+    override fun findAllByPropertyPagination(property: Property, pageable: Pageable): Page<UserReview> =
+        this.userReviewRepository.findAllByProperty(property, pageable)
 
 }

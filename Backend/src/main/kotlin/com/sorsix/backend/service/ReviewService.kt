@@ -4,6 +4,7 @@ import com.sorsix.backend.api.dtos.ComponentRatingDTO
 import com.sorsix.backend.api.dtos.ReviewDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.api.requests.ReviewRequest
+import com.sorsix.backend.api.responses.ReviewsResponse
 import com.sorsix.backend.domain.entities.*
 import com.sorsix.backend.repository.booking_repository.BookingRepository
 import com.sorsix.backend.repository.component_rating_repository.ComponentRatingRepository
@@ -14,6 +15,8 @@ import com.sorsix.backend.service.exceptions.ReviewComponentNotFound
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserReviewNotFoundException
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -28,10 +31,13 @@ class ReviewService(
     private val bookingRepository: BookingRepository,
     private val dtoMapperService: ClassToDTOMapperService
 ) {
-    fun getAllReviewsForProperty(id: Long): List<ReviewDTO> {
+    fun getAllReviewsForProperty(id: Long, page: Int, size: Int): ReviewsResponse {
         val property = this.propertyService.findPropertyById(id)
 
-        return this.reviewRepository.findAllByProperty(property).map { dtoMapperService.mapUserReviewToReviewDTO(it) }
+        val pageable = PageRequest.of(page, size)
+        return this.reviewRepository.findAllByPropertyPagination(property, pageable).let { dtoMapperService.mapReviewPagesToReviewResponse(it) }
+
+//        return this.reviewRepository.findAllByProperty(property).map { dtoMapperService.mapUserReviewToReviewDTO(it) }
     }
 
     fun findById(id: Long): UserReview =

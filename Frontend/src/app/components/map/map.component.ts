@@ -152,7 +152,7 @@ export class MapComponent implements AfterViewInit, OnInit {
       this.suggestions = this.properties.map((property) => {
         const coord = new L.LatLng(property.latitude, property.longitude);
         const marker = L.marker(coord, {
-          title: '',
+          title: property.name,
           draggable: false,
           icon: L.divIcon({
             html:

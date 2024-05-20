@@ -5,6 +5,7 @@ import com.sorsix.backend.api.dtos.PropertyCardDTO
 import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.api.dtos.UserImageDTO
 import com.sorsix.backend.domain.entities.UserAccount
+import com.sorsix.backend.passwordEncoder
 import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
 import com.sorsix.backend.repository.property_repository.PropertyRepository
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
@@ -14,6 +15,7 @@ import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserAccountNotFoundException
 import com.sorsix.backend.service.exceptions.UserImageNotFoundException
 import org.springframework.security.core.Authentication
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,7 +26,7 @@ class UserAccountService(
     private val reviewRepository: UserReviewRepository,
     private val componentRatingService: ComponentRatingService,
     private val dtoMapperService: ClassToDTOMapperService,
-    private val userImageRepository: UserImageRepository
+    private val userImageRepository: UserImageRepository,
 ) {
     fun findAllUserAccounts() =
         userAccountRepository.findAll().map { dtoMapperService.mapUserAccountToDTO(it) }
@@ -75,5 +77,12 @@ class UserAccountService(
         val user = userAccountRepository.findByEmail(auth.name)
             ?: throw UserAccountNotFoundException("User account with email ${auth.name} not found")
         return userAccountRepository.getProfitsPerProperty(user)
+    }
+
+    fun encodeDummyUsersPasswords() {
+        userAccountRepository.findAll().forEach {
+            it.userPassword = passwordEncoder().encode(it.userPassword)
+            userAccountRepository.save(it)
+        }
     }
 }
