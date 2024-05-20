@@ -50,9 +50,8 @@
             matInput
             [required]="true"
           >
-            @for(type of propertyTypes; track type.id)
-            {
-              <option value="{{type.id}}">{{type.typeName}}</option>
+            @for(type of propertyTypes; track type.id) {
+            <option value="{{ type.id }}">{{ type.typeName }}</option>
             }
           </select>
         </div>
@@ -69,10 +68,12 @@
           />
         </div>
         <div>
-          <button type="button" mat-button matStepperNext color="primary">Next</button>
-        </div>  
+          <button type="button" mat-button matStepperNext color="primary">
+            Next
+          </button>
+        </div>
       </mat-step>
-      
+
       <!-- Step 2: Location -->
       <mat-step>
         <ng-template matStepLabel>Location</ng-template>
@@ -84,9 +85,8 @@
             formControlName="city"
             [required]="true"
           >
-            @for(city of cities; track city.id)
-            {
-              <option value="{{city.id}}">{{city.name}}</option>
+            @for(city of cities; track city.id) {
+            <option value="{{ city.id }}">{{ city.name }}</option>
             }
           </select>
         </div>
@@ -102,13 +102,24 @@
             placeholder="Address"
           />
         </div>
-        <app-map (changeCoordinates$)="handleEvent($event)"></app-map>
+        <div class="flex justify-center">
+          <div
+            class="map-container h-[400px] w-[40rem] xl:max-w-[60rem] overflow-hidden flex justify-center items-center"
+          >
+            <app-map (changeCoordinates$)="handleEvent($event)"></app-map>
+          </div>
+        </div>
+
         <div>
-          <button mat-button matStepperPrevious type="button" color="accent">Back</button>
-          <button mat-button matStepperNext type="button" color="primary">Next</button>
+          <button mat-button matStepperPrevious type="button" color="accent">
+            Back
+          </button>
+          <button mat-button matStepperNext type="button" color="primary">
+            Next
+          </button>
         </div>
       </mat-step>
-      
+
       <!-- Step 3: Capacity -->
       <mat-step>
         <ng-template matStepLabel>Capacity</ng-template>
@@ -162,36 +173,40 @@
         </div>
         <div>
           <button mat-button matStepperPrevious color="accent">Back</button>
-          <button mat-button matStepperNext type="button" color="primary">Next</button>
+          <button mat-button matStepperNext type="button" color="primary">
+            Next
+          </button>
         </div>
       </mat-step>
-      
+
       <!-- Step 4: Amenities -->
       <mat-step>
         <ng-template matStepLabel>Amenities</ng-template>
         <section class="example-full-width p-2">
           <label class="pl-2">Select Attributes:</label>
           <div class="grid grid-cols-2 gap-4">
-            @for(att of attributes; track att.id)
-            {
-              <div class="flex items-center">
-                <mat-checkbox
-                  class="pl-2"
-                  [value]="att.id.toString()"
-                  (change)="onCheckboxChange($event)"
-                  >{{ att.name }}</mat-checkbox
-                >
-              </div>
+            @for(att of attributes; track att.id) {
+            <div class="flex items-center">
+              <mat-checkbox
+                class="pl-2"
+                [value]="att.id.toString()"
+                (change)="onCheckboxChange($event)"
+                >{{ att.name }}</mat-checkbox
+              >
+            </div>
             }
           </div>
         </section>
         <div>
-          <button mat-button matStepperPrevious type="button" color="accent">Back</button>
-          <button mat-button matStepperNext type="button" color="primary">Next</button>
-        </div>     
+          <button mat-button matStepperPrevious type="button" color="accent">
+            Back
+          </button>
+          <button mat-button matStepperNext type="button" color="primary">
+            Next
+          </button>
+        </div>
+      </mat-step>
 
-</mat-step>
-      
       <!-- Step 5: Final Review -->
       <mat-step>
         <ng-template matStepLabel>Final Review</ng-template>
@@ -204,16 +219,18 @@
                 <strong>Name:</strong> {{ form.value.name }}
               </div>
               <div class="mb-2">
-                <strong>Description:</strong> 
+                <strong>Description:</strong>
                 <div class="break-words max-w-xs">
                   {{ form.value.description }}
                 </div>
               </div>
               <div class="mb-2">
-                <strong>Price per night:</strong> {{ form.value.nightlyPrice }} MKD
+                <strong>Price per night:</strong>
+                {{ form.value.nightlyPrice }} MKD
               </div>
               <div class="mb-2">
-                <strong>Property Type:</strong> {{ foundType(form.value.propertyType) }}
+                <strong>Property Type:</strong>
+                {{ foundType(form.value.propertyType) }}
               </div>
               <div class="mb-2">
                 <strong>City:</strong> {{ foundCity(form.value.city) }}
@@ -225,7 +242,8 @@
             <!-- Column 2 -->
             <div class="flex-1 min-w-[200px] max-w-xs">
               <div class="mb-2">
-                <strong>Coordinates:</strong> {{ this.latitude.toFixed(2) }}, {{ this.longitude.toFixed(2) }}
+                <strong>Coordinates:</strong> {{ this.latitude.toFixed(2) }},
+                {{ this.longitude.toFixed(2) }}
               </div>
               <div class="mb-2">
                 <strong>Guests:</strong> {{ form.value.guests }}
@@ -245,12 +263,11 @@
               <div class="mb-2">
                 <strong>Attributes:</strong>
                 <ul>
-                  @for(att of selectedAttributes; track att.id)
-                  {
-                    <li class="flex items-center">
-                      <mat-icon>{{ this.att.icon }}</mat-icon>
-                      {{ att.name }}
-                    </li>
+                  @for(att of selectedAttributes; track att.id) {
+                  <li class="flex items-center">
+                    <mat-icon>{{ this.att.icon }}</mat-icon>
+                    {{ att.name }}
+                  </li>
                   }
                 </ul>
               </div>
@@ -259,8 +276,17 @@
         </div>
         <div class="example-full-width p-2">
           <div class="flex justify-center">
-            <button mat-flat-button matStepperPrevious type="button" color="accent">Back</button>
-            <button mat-flat-button type="submit" color="primary">Submit</button>
+            <button
+              mat-flat-button
+              matStepperPrevious
+              type="button"
+              color="accent"
+            >
+              Back
+            </button>
+            <button mat-flat-button type="submit" color="primary">
+              Submit
+            </button>
           </div>
         </div>
       </mat-step>

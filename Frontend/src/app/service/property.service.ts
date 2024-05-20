@@ -24,6 +24,7 @@ import { PropertyResponse } from '../model/PropertyResponse';
 })
 export class PropertyService {
   search$ = new Subject<any>();
+  showMap$ = new Subject<any>();
 
   private url = '/api/properties';
 

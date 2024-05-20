@@ -22,6 +22,7 @@ import com.sorsix.backend.service.exceptions.BookingStatusNotFoundException
 import org.springframework.stereotype.Service
 import java.io.File
 import java.time.LocalDate
+import kotlin.random.Random
 
 @Service
 class DummyDataPopulator(
@@ -175,6 +176,22 @@ class DummyDataPopulator(
         }
     }
 
+    fun skewedRandom(): Int {
+        // Define the probabilities for each outcome (skewed right)
+        val probabilities = listOf(0.05, 0.1, 0.15, 0.4, 0.3)
+        // Define the cumulative probabilities
+        val cumulativeProbabilities = probabilities.scan(0.0) { acc, p -> acc + p }.drop(1)
+        // Generate a random number between 0 and 1
+        val randomValue = Random.nextDouble()
+        // Find the first cumulative probability that is greater than the random value
+        for ((index, cumulativeProbability) in cumulativeProbabilities.withIndex()) {
+            if (randomValue <= cumulativeProbability) {
+                return index + 1
+            }
+        }
+        return 5 // Fallback, should never reach here due to probability design
+    }
+
     fun addDummyReviews() {
         val bookings = this.bookingRepository.findAll()
         val random = java.util.Random()
@@ -182,7 +199,7 @@ class DummyDataPopulator(
         bookings.forEach { booking ->
             val ratings = this.reviewComponentRepository.findAll().map {
                 ComponentRatingRequest(
-                    rating = random.nextInt(5) + 1,
+                    rating = skewedRandom(),
                     reviewComponentId = it.id,
                     reviewComponentName = it.rcComponentName
 

@@ -14,6 +14,7 @@ import { UserAccountService } from '../../service/user-account.service';
 import { UserAccount } from '../../model/UserAccount';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { ImageToUrlService } from '../../service/image-to-url.service';
+import { PropertyService } from '../../service/property.service';
 
 @Component({
   selector: 'app-navigation',
@@ -49,7 +50,8 @@ export class NavigationComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserAccountService,
-    private urlService: ImageToUrlService
+    private urlService: ImageToUrlService,
+    private propertyService: PropertyService
   ) {}
 
   ngOnInit(): void {
@@ -102,5 +104,8 @@ export class NavigationComponent implements OnInit {
           this.imageURL = undefined;
         },
       });
+  }
+  showMap() {
+    this.propertyService.showMap$.next(true);
   }
 }

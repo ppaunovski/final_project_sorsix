@@ -16,5 +16,7 @@ data class PropertyCardDTO(
 
     val pricePerNight: Double,
 
-    val image: PropertyImageDTO
+    val image: PropertyImageDTO,
+    val longitude: Double,
+    val latitude: Double
 )

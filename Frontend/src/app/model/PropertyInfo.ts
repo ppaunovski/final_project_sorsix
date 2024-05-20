@@ -10,4 +10,6 @@ export interface PropertyInfo {
   pricePerNight: number;
   image: PropertyImage;
   type: string;
+  longitude: number;
+  latitude: number;
 }

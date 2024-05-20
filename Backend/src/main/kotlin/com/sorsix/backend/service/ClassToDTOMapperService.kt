@@ -134,7 +134,9 @@ class ClassToDTOMapperService(
                     type = ""
                 ),
             type = property.propertyType.typeName,
-            name = property.name
+            name = property.name,
+            latitude = property.latitude,
+            longitude = property.longitude
         )
     }
 

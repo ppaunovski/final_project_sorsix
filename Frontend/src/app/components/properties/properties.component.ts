@@ -12,6 +12,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { PropertyResponse } from '../../model/PropertyResponse';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MapComponent } from '../map/map.component';
 
 @Component({
   selector: 'app-properties',
@@ -24,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatProgressSpinner,
     MatSelectModule,
+    MapComponent,
   ],
   templateUrl: './properties.component.html',
   styleUrl: './properties.component.css',
@@ -39,6 +41,7 @@ export class PropertiesComponent implements OnInit {
   endDate: Date | undefined | null;
   page = 0;
   size = 2;
+  showMap = false;
 
   loading = false;
   error: any;
@@ -52,6 +55,10 @@ export class PropertiesComponent implements OnInit {
   ngOnInit(): void {
     this.page = 0;
     this.size = 10;
+
+    this.service.showMap$.subscribe((x) => {
+      this.showMap = !this.showMap;
+    });
 
     this.route.queryParams
       .pipe(
@@ -89,11 +96,14 @@ export class PropertiesComponent implements OnInit {
           if (resp) {
             this.properties = resp?.content;
           }
+          this.showMap = false;
           this.propertyResponse = resp;
           this.loading = false;
           this.error = null;
         },
         error: (error) => {
+          this.showMap = false;
+
           this.loading = false;
           this.error = error;
         },
