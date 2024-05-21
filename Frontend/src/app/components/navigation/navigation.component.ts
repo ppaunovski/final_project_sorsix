@@ -35,6 +35,10 @@ import { PropertyService } from '../../service/property.service';
   styleUrl: './navigation.component.css',
 })
 export class NavigationComponent implements OnInit {
+  closeMap() {
+    this.showMapLocal = false;
+    this.propertyService.showMap$.next(false);
+  }
   signOut() {
     sessionStorage.removeItem('jwt');
     this.authService.refreshAuth$.next(true);
@@ -46,6 +50,7 @@ export class NavigationComponent implements OnInit {
   // }
   user: UserAccount | undefined;
   imageURL: string | undefined;
+  showMapLocal = false;
 
   constructor(
     private authService: AuthService,
@@ -106,6 +111,7 @@ export class NavigationComponent implements OnInit {
       });
   }
   showMap() {
-    this.propertyService.showMap$.next(true);
+    this.showMapLocal = !this.showMapLocal;
+    this.propertyService.showMap$.next(this.showMapLocal);
   }
 }

@@ -21,6 +21,10 @@ class PropertyController(
     private val propertyAttributesService: PropertyAttributesService,
     ){
 
+    @GetMapping("/nearest")
+    fun getNearest(@RequestParam(required = false) lat: Double, @RequestParam(required = false) lng: Double) =
+        propertyService.getNearest(lat, lng)
+
     @GetMapping("/pagination")
     fun getAllProperties(
         @RequestParam(required = false, defaultValue = "0") page: Int,

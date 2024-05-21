@@ -15,6 +15,15 @@ import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { ImageToUrlService } from '../../service/image-to-url.service';
 import { PropertyService } from '../../service/property.service';
+import {
+  Observable,
+  Subject,
+  debounceTime,
+  filter,
+  map,
+  mergeMap,
+  of,
+} from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -35,6 +44,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   private marker: L.Marker | undefined;
   private userLocation: L.LatLng | undefined;
   private suggestions: L.Marker[] = [];
+  private moveMap$ = new Subject<L.LatLng>();
 
   tiles: L.TileLayer = L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -59,6 +69,107 @@ export class MapComponent implements AfterViewInit, OnInit {
           console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         }, 0);
     });
+
+    this.moveMap$
+      .pipe(
+        filter((event) => event != undefined),
+        debounceTime(400),
+        mergeMap((event) => {
+          console.log(event);
+
+          return this.propertyService.getNearestProperties(
+            event?.lat,
+            event?.lng
+          );
+        })
+      )
+      .subscribe({
+        next: (resp) => {
+          console.log('new nearest', resp);
+
+          this.properties = resp;
+          this.properties.forEach((p) => {
+            this.headerImages[p.id] = this.urlService.bytesToURL(
+              p.image.imageByteArray,
+              p.image.type
+            );
+          });
+          this.suggestions = this.properties.map((property) => {
+            const coord = new L.LatLng(property.latitude, property.longitude);
+            const marker = L.marker(coord, {
+              title: property.name,
+              draggable: false,
+              icon: L.divIcon({
+                html:
+                  '<div class="rounded-full font-semibold" style="width: 4rem; height: 2rem; background-color: white; display: flex; justify-content: center; align-items: center;"><span style="font-size=0.5rem">' +
+                  property.pricePerNight +
+                  ' MKD' +
+                  '</span></div>',
+              }),
+            })
+              .addTo(this.map as L.Map)
+              .bindPopup(
+                L.popup().setContent(`
+            
+            <a href="${'/properties/' + property.id}">
+            <div class="rounded-lg flex flex-col gap-3">
+              <img
+                src=${this.headerImages[property.id]}
+                alt="img"
+                class="rounded-lg h-64 w-full object-cover"
+              />
+              <div class="p-2">
+                <div class="flex justify-between">
+                  <div class="flex flex-col gap-0 text-ellipsis w-2/3">
+                    <span
+                      class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
+                      >${property.type}in ${property.cityName} 
+                    </span>
+                    <span class="font-light text-gray-800">
+                      ${property.address}
+                    </span>
+                  </div>
+                  <div class="flex items-center">
+                    <mat-icon
+                      aria-hidden="false"
+                      aria-label="Example home icon"
+                      fontIcon="star"
+                    ></mat-icon>
+                    <span class="p-2 font-bold text-lg">
+                      ${
+                        property.averageRating.toString() != 'NaN'
+                          ? property.averageRating.valueOf().toPrecision(2)
+                          : 'New'
+                      }
+                    </span>
+                  </div>
+                </div>
+          
+                <p class="text-nowrap overflow-clip text-ellipsis">
+                  ${property.description.slice(0, 150)}
+                </p>
+          
+                <p>
+                  <span class="font-bold text-lg">
+                    <span>
+                      ${property.pricePerNight.toString()}
+                    </span>
+                    MKD
+                  </span>
+                  <span> per night </span>
+                </p>
+              </div>
+            </div>
+          </a>
+          
+            
+            `)
+              );
+
+            return marker;
+          });
+        },
+      });
   }
 
   ngAfterViewInit(): void {
@@ -224,6 +335,10 @@ export class MapComponent implements AfterViewInit, OnInit {
         return marker;
       });
       this.tiles.addTo(this.map as L.Map);
+
+      this.map?.on('moveend', (event) => {
+        if (this.map) this.moveMap$.next(this.map.getCenter());
+      });
     }
   }
 

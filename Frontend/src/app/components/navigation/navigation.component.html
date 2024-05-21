@@ -2,11 +2,16 @@
   class="w-full flex flex-col justify-center items-center border-b-2 pt-3 pb-3 border-gray-300 border-solid mb-5"
 >
   <div
-    class="w-full flex justify-between items-center pl-1 pr-1 md:pl-5 md:pr-5 lg:pl-20 lg:pr-20 gap-x-1 md:gap-x-2 lg:gap-x-4"
+    class="w-full flex justify-between items-center pl-1 pr-1 md:pl-5 pb-2 md:pr-5 lg:pl-20 lg:pr-20 gap-x-1 md:gap-x-2 lg:gap-x-4"
   >
     <div class="w-1/5">
       <a [routerLink]="['/properties']" [queryParams]="{ page: 0, size: 10 }">
-        <img src="../.././../assets/logo.png" alt="logo" class="w-24" />
+        <img
+          (click)="closeMap()"
+          src="../.././../assets/logo.png"
+          alt="logo"
+          class="w-24"
+        />
       </a>
     </div>
 
@@ -14,12 +19,9 @@
       <app-search-bar class="w-full"></app-search-bar>
     </div>
 
-    
-
     <div
       class="2xl:w-1/5 w-4/5 flex flex-row-reverse gap-10 items-center pr-8 md:pr-0"
     >
-    
       @if(this.user == undefined){
       <a [routerLink]="['/login']">
         <button
@@ -93,8 +95,13 @@
       </mat-menu>
       }
       <div class="flex justify-center items-center">
-        <mat-icon>map</mat-icon>
-        <button (click)="showMap()">Show map</button>
+        <button (click)="showMap()">
+          <span class="flex items-center gap-2">
+            <mat-icon>map</mat-icon>
+
+            Show map
+          </span>
+        </button>
       </div>
     </div>
   </div>

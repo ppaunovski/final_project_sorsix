@@ -1,5 +1,6 @@
 package com.sorsix.backend.config
 
+import com.sorsix.backend.encoder
 import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
 import com.sorsix.backend.service.UserAccountService
 import org.springframework.context.annotation.Bean
@@ -25,10 +26,6 @@ class ApplicationConfig(
         }
     }
 
-    @Bean
-    fun encoder(): PasswordEncoder =
-//        BCryptPasswordEncoder()
-        NoOpPasswordEncoder.getInstance()
 
     @Bean
     fun authenticationProvider(userAccountRepository: UserAccountRepository): AuthenticationProvider {

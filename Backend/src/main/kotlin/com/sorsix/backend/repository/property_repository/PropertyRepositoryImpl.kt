@@ -62,4 +62,7 @@ class PropertyRepositoryImpl(private val propertyRepository: JpaPropertyReposito
     override fun findAllPaginatedByFilterStringWithoutDates(filterString: String, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property> =
         this.propertyRepository.findAllByFilterString(filterString, adults, children, pets, pageable)
 
+    override fun getNearest(lat: Double, lng: Double): List<Property> =
+        this.propertyRepository.getNearest(lat, lng)
+
 }

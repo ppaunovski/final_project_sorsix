@@ -57,7 +57,7 @@ export class PropertiesComponent implements OnInit {
     this.size = 10;
 
     this.service.showMap$.subscribe((x) => {
-      this.showMap = !this.showMap;
+      this.showMap = x;
     });
 
     this.route.queryParams

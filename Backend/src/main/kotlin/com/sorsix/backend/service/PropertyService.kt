@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
+import org.springframework.web.client.HttpClientErrorException.BadRequest
 import org.springframework.web.multipart.MultipartFile
 import java.net.URI
 import java.net.URLDecoder
@@ -175,6 +176,7 @@ class PropertyService(
         if (authentication == null) throw UnauthorizedAccessException("Please log in to reserve a property.")
 
         //TODO: validate checkInDate and checkOutDate
+        if(offerRequest.checkInDate.isAfter(offerRequest.checkOutDate)) throw UnauthorizedAccessException("Check in date must be before check out date.")
 
         val guest = this.userService.findUserByEmail(authentication.name)
 
@@ -323,6 +325,10 @@ class PropertyService(
             last = pages.isLast,
         )
     }
+
+    fun getNearest(lat: Double, lng: Double): List<PropertyCardDTO> =
+        this.propertyRepository.getNearest(lat, lng).map { dtoMapperService.mapPropertyToPropertyCardDTO(it) }
+
 
 }
 

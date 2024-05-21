@@ -116,6 +116,12 @@ interface JpaPropertyRepository: JpaRepository<Property, Long>{
                 "join city c on c.c_id = p.c_id "
         , nativeQuery = true)
     fun findAllPaginated(pageable: Pageable): Page<Property>
+    @Query("select p.p_id, p_nightly_price, p_property_name, p_num_guests, p_num_beds, p_num_bedrooms, p_num_bathrooms, p_is_guest_favorite, p_description, p_address, p_longitude, p_latitude, p.u_id, p.c_id, pt_id "+
+            "from property p " +
+            "order by sqrt(power(p.p_latitude - :lat, 2) + power(p.p_longitude - :lng, 2)) " +
+            "limit 10"
+        , nativeQuery = true)
+    fun getNearest(lat: Double, lng: Double): List<Property>
 
 
 }

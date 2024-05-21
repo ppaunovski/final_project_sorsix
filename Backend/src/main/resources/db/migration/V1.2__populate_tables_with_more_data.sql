@@ -276,7 +276,122 @@ VALUES
 
     (3500.0, 'Historic Castle Stay in Pelister National Park', 10, 5, 4, 3, true,
      'Step back in time with a stay at this Historic Castle in Pelister National Park. Dating back centuries, this magnificent castle offers a unique glimpse into Macedonia`s rich history and heritage. With five elegant bedrooms, a grand dining hall, and sprawling gardens, the castle provides a truly regal accommodation experience. Guests can explore the castle`s historic halls and chambers, stroll through the manicured gardens, or venture into the surrounding national park to explore ancient ruins and breathtaking vistas. Whether you`re a history buff or simply seeking a unique travel experience, this Historic Castle promises an unforgettable stay in the heart of Macedonia.',
-     'Castle Road', 21.2224, 41.0187, 29, 18, 21);
+     'Castle Road', 21.2224, 41.0187, 29, 18, 21),
+    (3000.0, 'Dimitrovski City Loft', 3, 2, 2, 1, true,
+     'Dimitrovski City Loft is a modern and spacious two-bedroom apartment located in the vibrant city center of Skopje. Ideal for families or small groups, this apartment offers a fully equipped kitchen, a large living area with a flat-screen TV, and two cozy bedrooms. Enjoy the stunning city views from the balcony. Conveniently situated close to Macedonia Square and the Old Bazaar, this apartment provides easy access to Skopje`s attractions.',
+     'Makedonska 15', 21.4346, 41.9981, 2, 1, 3),
+     
+    (2500.0, 'Petrovski Cozy Home', 4, 2, 2, 1, false,
+     'Petrovski Cozy Home is a charming two-bedroom house in the heart of Kumanovo. Perfect for families or groups of friends, this home features a fully equipped kitchen, a spacious living room, and a lovely garden. With easy access to local shops, restaurants, and cultural attractions, Petrovski Cozy Home offers a peaceful and welcoming retreat.',
+     'Kumanovska 10', 21.7131, 42.1322, 4, 2, 2),
+     
+    (3200.0, 'Iliev Historic Residence', 6, 3, 3, 2, true,
+     'Iliev Historic Residence is a beautifully preserved historic home located in the heart of Bitola. This spacious house features three bedrooms and three bathrooms, comfortably accommodating up to six guests. Elegantly decorated with antique furniture, the house provides a unique and charming accommodation experience near Sirok Sokak, Bitola`s main street.',
+     'Sirok Sokak 20', 21.3339, 41.0286, 5, 4, 2),
+
+    (3800.0, 'Angelov Mountain Villa', 8, 4, 4, 3, true,
+     'Angelov Mountain Villa is a luxurious four-bedroom villa located in the picturesque mountains of Prilep. This stunning villa offers breathtaking views of the surrounding mountains and the city below. Featuring a spacious living area, a fully equipped kitchen, and beautifully decorated bedrooms, each with an en-suite bathroom, this villa provides a serene and luxurious escape.',
+     'Planinski Pat 5', 21.5494, 41.3464, 9, 5, 4),
+
+    (2600.0, 'Markovska Garden House', 5, 2, 2, 2, true,
+     'Markovska Garden House is a delightful two-bedroom house with a beautiful garden located in Strumica. This charming house is perfect for families or couples seeking a peaceful retreat. The house features a fully equipped kitchen, a cozy living area, and comfortable bedrooms. Guests can relax in the garden and enjoy the fresh air and outdoor dining.',
+     'Gradinarska 8', 22.6413, 41.4401, 10, 6, 2),
+
+    (1500.0, 'Stefanovski Riverside Apartment', 2, 1, 1, 1, false,
+     'Stefanovski Riverside Apartment is a cozy one-bedroom apartment located by the river in the center of Veles. Ideal for couples or solo travelers, this apartment features a fully equipped kitchen, a comfortable living area, and a bedroom with a queen-sized bed. Enjoy views of the river from the balcony and easy access to local shops and cultural attractions.',
+     'Riverska 4', 21.7753, 41.7157, 7, 8, 3),
+
+    (2800.0, 'Georgievska Hillside Retreat', 4, 2, 2, 2, true,
+     'Georgievska Hillside Retreat is a charming two-bedroom house located in the scenic hills of Krushevo. This cozy retreat features a fully equipped kitchen, a spacious living area, and two comfortable bedrooms. Guests can enjoy the stunning hillside views and the peaceful surroundings, making it an ideal getaway for relaxation and outdoor activities.',
+     'Hillside 3', 21.2486, 41.3702, 12, 31, 2),
+
+    (2700.0, 'Jovanovski Lakeside Cabin', 4, 2, 2, 2, true,
+     'Jovanovski Lakeside Cabin is a quaint two-bedroom cabin situated by the lake in Struga. This lovely cabin offers a fully equipped kitchen, a cozy living area, and two bedrooms with comfortable beds. Guests can relax on the deck with a beautiful view of the lake, making it perfect for a peaceful and scenic escape.',
+     'Lakeside 7', 20.6768, 41.1789, 13, 14, 2),
+
+    (3400.0, 'Kostovski Forest Lodge', 6, 3, 3, 2, true,
+     'Kostovski Forest Lodge is a spacious three-bedroom lodge nestled in the forest near Delchevo. This lodge offers a fully equipped kitchen, a large living area, and three bedrooms, making it perfect for families or groups looking for a nature retreat. Enjoy the tranquility and the beautiful forest views from the lodge.',
+     'Forest Path 12', 22.7746, 41.9708, 15, 24, 2),
+
+    (3200.0, 'Ristovski Mountain Escape', 6, 3, 3, 3, true,
+     'Ristovski Mountain Escape is a luxurious three-bedroom cabin located in the mountains near Berovo. This beautifully decorated cabin offers a fully equipped kitchen, a spacious living area, and three comfortable bedrooms. Guests can enjoy the breathtaking mountain views and the serenity of the surrounding nature.',
+     'Mountain Road 5', 22.8581, 41.7074, 17, 22, 2),
+    (2800.0, 'Mihailovski Lake House', 4, 2, 2, 2, true,
+     'Mihailovski Lake House is a charming two-bedroom house located near Lake Ohrid. This cozy retreat features a fully equipped kitchen, a spacious living area, and two comfortable bedrooms. Guests can enjoy the stunning lake views from the terrace, making it an ideal spot for relaxation and outdoor activities.',
+     'Lakeside 20', 20.7984, 41.1125, 2, 3, 2),
+
+    (2900.0, 'Nikoloski City Center Apartment', 3, 1, 1, 1, false,
+     'Nikoloski City Center Apartment is a modern one-bedroom apartment located in the bustling city center of Skopje. Perfect for solo travelers or couples, this apartment features a fully equipped kitchen, a cozy living area, and a comfortable bedroom. Enjoy easy access to Skopje`s attractions, shops, and restaurants.',
+     'Centar 15', 21.4322, 41.9989, 4, 1, 3),
+     
+    (2600.0, 'Petrovska Garden Cottage', 5, 2, 2, 1, true,
+     'Petrovska Garden Cottage is a delightful two-bedroom cottage with a beautiful garden located in the scenic town of Struga. This charming cottage offers a fully equipped kitchen, a cozy living area, and two comfortable bedrooms. Guests can relax in the garden, making it perfect for a peaceful retreat.',
+     'Garden Road 3', 20.6781, 41.1795, 5, 14, 2),
+     
+    (3100.0, 'Stojanovski Riverside Villa', 6, 3, 3, 2, true,
+     'Stojanovski Riverside Villa is a luxurious three-bedroom villa located by the river in the picturesque town of Veles. This stunning villa features a fully equipped kitchen, a spacious living area, and three beautifully decorated bedrooms. Enjoy the serene river views from the balcony and easy access to local attractions.',
+     'Riverside 5', 21.7756, 41.7160, 9, 8, 4),
+     
+    (2700.0, 'Krstevski Hilltop Retreat', 4, 2, 2, 2, true,
+     'Krstevski Hilltop Retreat is a cozy two-bedroom house located on a hilltop in the charming town of Kriva Palanka. This retreat offers a fully equipped kitchen, a comfortable living area, and two bedrooms with beautiful views of the surrounding landscape. It`s perfect for those seeking a peaceful and scenic getaway.',
+     'Hilltop 8', 22.1800, 42.2039, 10, 18, 2),
+    (3200.0, 'Mitrevski Mountain Lodge', 4, 2, 2, 1, true,
+     'Mitrevski Mountain Lodge is a cozy two-bedroom lodge located in the beautiful mountains of Mavrovo. This lodge is perfect for outdoor enthusiasts, offering easy access to hiking trails and ski slopes. It features a fully equipped kitchen, a warm living area with a fireplace, and two comfortable bedrooms.',
+     'Mountain Road 12', 20.6768, 41.7004, 7, 11, 2),
+
+    (2900.0, 'Dimitrovski Seaside Villa', 6, 3, 3, 2, true,
+     'Dimitrovski Seaside Villa is a luxurious three-bedroom villa located near the beach in Struga. This villa offers a stunning seaside view, a fully equipped kitchen, a spacious living area, and three elegantly furnished bedrooms. Guests can enjoy the beautiful garden and terrace, perfect for a relaxing getaway.',
+     'Seaside 23', 20.6695, 41.1779, 13, 14, 4),
+
+    (2400.0, 'Georgievski Historic Apartment', 2, 1, 1, 1, false,
+     'Georgievski Historic Apartment is a charming one-bedroom apartment located in the historic center of Bitola. This apartment features antique furnishings, a fully equipped kitchen, a cozy living area, and a comfortable bedroom. It`s ideal for solo travelers or couples looking to explore the rich history of Bitola.',
+     'Old Town 7', 21.3342, 41.0283, 12, 4, 3),
+     
+    (2700.0, 'Nikolovski Vineyard Cottage', 4, 2, 2, 1, true,
+     'Nikolovski Vineyard Cottage is a delightful two-bedroom cottage located in the picturesque vineyards of Kavadarci. This charming retreat features a fully equipped kitchen, a cozy living area, and two comfortable bedrooms. Guests can enjoy wine tasting and scenic views of the vineyards.',
+     'Vineyard Lane 9', 22.0134, 41.4339, 15, 10, 2),
+     
+    (3100.0, 'Petrovski City Loft', 3, 1, 1, 1, false,
+     'Petrovski City Loft is a stylish one-bedroom loft located in the vibrant city center of Skopje. This loft offers modern amenities, a fully equipped kitchen, a spacious living area, and a comfortable bedroom. Guests can enjoy easy access to Skopje`s main attractions, shops, and restaurants.',
+     'City Center 18', 21.4328, 41.9985, 17, 1, 3),
+    (2800.0, 'Stojanovski Riverside House', 4, 2, 2, 1, true,
+     'Stojanovski Riverside House is a beautiful two-bedroom house located by the river in Veles. This charming house offers a peaceful retreat with stunning river views. It features a fully equipped kitchen, a cozy living area, and two comfortable bedrooms, making it perfect for families or small groups.',
+     'Riverside 15', 21.7788, 41.7154, 10, 8, 2),
+
+    (2600.0, 'Trajkovski Lakeside Villa', 5, 3, 3, 2, true,
+     'Trajkovski Lakeside Villa is a luxurious three-bedroom villa located on the shores of Lake Ohrid. This villa offers breathtaking lake views, a spacious living area, a fully equipped kitchen, and three elegant bedrooms. Guests can enjoy the private garden and terrace, ideal for a relaxing stay.',
+     'Lakeside 9', 20.7886, 41.1131, 5, 3, 4),
+
+    (2700.0, 'Stefanovski Garden Apartment', 3, 1, 1, 1, false,
+     'Stefanovski Garden Apartment is a charming one-bedroom apartment located in a quiet neighborhood in Kumanovo. The apartment features a fully equipped kitchen, a comfortable living area, and a beautiful garden where guests can relax. It`s perfect for couples or solo travelers looking for a peaceful stay.',
+     'Garden Street 3', 21.7132, 42.1356, 9, 2, 3),
+
+    (2500.0, 'Andonovski City Retreat', 4, 2, 2, 1, false,
+     'Andonovski City Retreat is a modern two-bedroom apartment located in the bustling city center of Tetovo. This apartment offers a comfortable stay with a fully equipped kitchen, a spacious living area, and two cozy bedrooms. Guests can easily explore local attractions, shops, and restaurants.',
+     'Central Boulevard 5', 20.9731, 42.0098, 2, 7, 3),
+
+    (3000.0, 'Markovski Mountain Cabin', 6, 3, 3, 2, true,
+     'Markovski Mountain Cabin is a spacious three-bedroom cabin located in the scenic mountains of Krushevo. This cabin is ideal for nature lovers and adventure seekers, offering a fully equipped kitchen, a large living area with a fireplace, and three comfortable bedrooms. Enjoy the beautiful mountain views and hiking trails.',
+     'Mountain Road 22', 21.2464, 41.3672, 1, 31, 2),
+    (3200.0, 'Nikoloski Hilltop House', 4, 2, 2, 2, true,
+     'Nikoloski Hilltop House is a stunning two-bedroom house located on a hilltop in Bitola. This property offers breathtaking views of the city and surrounding landscapes. It features a fully equipped kitchen, a cozy living room with a fireplace, and two elegant bedrooms. Perfect for a serene getaway.',
+     'Hilltop 18', 21.3375, 41.0325, 17, 4, 2),
+
+    (2400.0, 'Petrovski Old Town Flat', 2, 1, 1, 1, false,
+     'Petrovski Old Town Flat is a charming one-bedroom apartment situated in the historic Old Town of Struga. This cozy flat is ideal for couples or solo travelers and offers a fully equipped kitchen, a comfortable living area, and a lovely balcony overlooking the narrow streets of Struga.',
+     'Old Town 6', 20.6781, 41.1772, 13, 14, 3),
+
+    (3100.0, 'Dimitrovski Seaside Villa', 6, 3, 3, 3, true,
+     'Dimitrovski Seaside Villa is a luxurious three-bedroom villa located by the seaside in Gevgelija. The villa features a spacious living area, a modern kitchen, and three en-suite bedrooms. Guests can enjoy the private pool and the beautiful garden, making it perfect for a relaxing vacation.',
+     'Seaside 12', 22.5111, 41.1414, 12, 16, 4),
+
+    (2700.0, 'Kostovski Garden Home', 5, 2, 2, 1, false,
+     'Kostovski Garden Home is a delightful two-bedroom home with a beautiful garden, located in the heart of Kavadarci. This home features a fully equipped kitchen, a cozy living room, and two comfortable bedrooms. The garden is perfect for outdoor dining and relaxing, making it an ideal family retreat.',
+     'Garden Lane 9', 22.0134, 41.4339, 15, 10, 2),
+
+    (2900.0, 'Tasevski Urban Apartment', 3, 1, 1, 1, true,
+     'Tasevski Urban Apartment is a modern one-bedroom apartment situated in the vibrant city center of Shtip. The apartment offers a fully equipped kitchen, a stylish living area, and a comfortable bedroom. It is perfect for business travelers or couples looking to explore the city`s attractions.',
+     'Central Street 4', 22.1953, 41.7464, 30, 9, 3);
 
 -- Biljana Luxury Apartment
 INSERT INTO property_attribute (p_id, a_id) VALUES
@@ -385,6 +500,38 @@ INSERT INTO property_attribute (p_id, a_id) VALUES
 
 INSERT INTO property_attribute (p_id, a_id) VALUES
                                                 (30, 2), (30, 3), (30, 5), (30, 7), (30, 12), (30, 13), (30, 16), (30, 18), (30, 22), (30, 24);
+
+INSERT INTO property_attribute (p_id, a_id) VALUES
+                                                (31, 2), (31, 3), (31, 4), (31, 7), (31, 13), (31, 15), (31, 16), (31, 18), (31, 19), (31, 28),
+                                                (32, 2), (32, 3), (32, 4), (32, 7), (32, 13), (32, 15), (32, 16), (32, 18), (32, 19), (32, 28),
+                                                (33, 2), (33, 3), (33, 4), (33, 7), (33, 13), (33, 15), (33, 16), (33, 18), (33, 19), (33, 28),
+                                                (34, 2), (34, 3), (34, 4), (34, 7), (34, 13), (34, 15), (34, 16), (34, 18), (34, 19), (34, 28),
+                                                (35, 2), (35, 3), (35, 4), (35, 7), (35, 13), (35, 15), (35, 16), (35, 18), (35, 19), (35, 28),
+                                                (36, 2), (36, 3), (36, 4), (36, 7), (36, 13), (36, 15), (36, 16), (36, 18), (36, 19), (36, 28),
+                                                (37, 2), (37, 3), (37, 4), (37, 7), (37, 13), (37, 15), (37, 16), (37, 18), (37, 19), (37, 28),
+                                                (38, 2), (38, 3), (38, 4), (38, 7), (38, 13), (38, 15), (38, 16), (38, 18), (38, 19), (38, 28),
+                                                (39, 2), (39, 3), (39, 4), (39, 7), (39, 13), (39, 15), (39, 16), (39, 18), (39, 19), (39, 28),
+                                                (40, 2), (40, 3), (40, 4), (40, 7), (40, 13), (40, 15), (40, 16), (40, 18), (40, 19), (40, 28),
+                                                (41, 2), (41, 3), (41, 4), (41, 7), (41, 13), (41, 15), (41, 16), (41, 18), (41, 19), (41, 28),
+                                                (42, 2), (42, 3), (42, 4), (42, 7), (42, 13), (42, 15), (42, 16), (42, 18), (42, 19), (42, 28),
+                                                (43, 2), (43, 3), (43, 4), (43, 7), (43, 13), (43, 15), (43, 16), (43, 18), (43, 19), (43, 28),
+                                                (44, 2), (44, 3), (44, 4), (44, 7), (44, 13), (44, 15), (44, 16), (44, 18), (44, 19), (44, 28),
+                                                (45, 2), (45, 3), (45, 4), (45, 7), (45, 13), (45, 15), (45, 16), (45, 18), (45, 19), (45, 28),
+                                                (46, 2), (46, 3), (46, 4), (46, 7), (46, 13), (46, 15), (46, 16), (46, 18), (46, 19), (46, 28),
+                                                (47, 2), (47, 3), (47, 4), (47, 7), (47, 13), (47, 15), (47, 16), (47, 18), (47, 19), (47, 28),
+                                                (48, 2), (48, 3), (48, 4), (48, 7), (48, 13), (48, 15), (48, 16), (48, 18), (48, 19), (48, 28),
+                                                (49, 2), (49, 3), (49, 4), (49, 7), (49, 13), (49, 15), (49, 16), (49, 18), (49, 19), (49, 28),
+                                                (50, 2), (50, 3), (50, 4), (50, 7), (50, 13), (50, 15), (50, 16), (50, 18), (50, 19), (50, 28),
+                                                (51, 2), (51, 3), (51, 4), (51, 7), (51, 13), (51, 15), (51, 16), (51, 18), (51, 19), (51, 28),
+                                                (52, 2), (52, 3), (52, 4), (52, 7), (52, 13), (52, 15), (52, 16), (52, 18), (52, 19), (52, 28),
+                                                (53, 2), (53, 3), (53, 4), (53, 7), (53, 13), (53, 15), (53, 16), (53, 18), (53, 19), (53, 28),
+                                                (54, 2), (54, 3), (54, 4), (54, 7), (54, 13), (54, 15), (54, 16), (54, 18), (54, 19), (54, 28),
+                                                (55, 2), (55, 3), (55, 4), (55, 7), (55, 13), (55, 15), (55, 16), (55, 18), (55, 19), (55, 28),
+                                                (56, 2), (56, 3), (56, 4), (56, 7), (56, 13), (56, 15), (56, 16), (56, 18), (56, 19), (56, 28),
+                                                (57, 2), (57, 3), (57, 4), (57, 7), (57, 13), (57, 15), (57, 16), (57, 18), (57, 19), (57, 28),
+                                                (58, 2), (58, 3), (58, 4), (58, 7), (58, 13), (58, 15), (58, 16), (58, 18), (58, 19), (58, 28),
+                                                (59, 2), (59, 3), (59, 4), (59, 7), (59, 13), (59, 15), (59, 16), (59, 18), (59, 19), (59, 28),
+                                                (60, 2), (60, 3), (60, 4), (60, 7), (60, 13), (60, 15), (60, 16), (60, 18), (60, 19), (60, 28);
 
 
 insert into booking_status (bs_status_name)
@@ -503,3 +650,36 @@ VALUES
     ('2024-01-01', '2024-12-31', 28),
     ('2024-01-01', '2024-12-31', 29),
     ('2024-01-01', '2024-12-31', 30);
+
+INSERT INTO property_availabilities (pav_start_date, pav_end_date, p_id)
+VALUES
+    ('2024-01-01', '2024-12-31', 31),
+    ('2024-01-01', '2024-12-31', 32),
+    ('2024-01-01', '2024-12-31', 33),
+    ('2024-01-01', '2024-12-31', 34),
+    ('2024-01-01', '2024-12-31', 35),
+    ('2024-01-01', '2024-12-31', 36),
+    ('2024-01-01', '2024-12-31', 37),
+    ('2024-01-01', '2024-12-31', 38),
+    ('2024-01-01', '2024-12-31', 39),
+    ('2024-01-01', '2024-12-31', 40),
+    ('2024-01-01', '2024-12-31', 41),
+    ('2024-01-01', '2024-12-31', 42),
+    ('2024-01-01', '2024-12-31', 43),
+    ('2024-01-01', '2024-12-31', 44),
+    ('2024-01-01', '2024-12-31', 45),
+    ('2024-01-01', '2024-12-31', 46),
+    ('2024-01-01', '2024-12-31', 47),
+    ('2024-01-01', '2024-12-31', 48),
+    ('2024-01-01', '2024-12-31', 49),
+    ('2024-01-01', '2024-12-31', 50),
+    ('2024-01-01', '2024-12-31', 51),
+    ('2024-01-01', '2024-12-31', 52),
+    ('2024-01-01', '2024-12-31', 53),
+    ('2024-01-01', '2024-12-31', 54),
+    ('2024-01-01', '2024-12-31', 55),
+    ('2024-01-01', '2024-12-31', 56),
+    ('2024-01-01', '2024-12-31', 57),
+    ('2024-01-01', '2024-12-31', 58),
+    ('2024-01-01', '2024-12-31', 59),
+    ('2024-01-01', '2024-12-31', 60);

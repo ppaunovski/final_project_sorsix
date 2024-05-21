@@ -19,4 +19,5 @@ interface PropertyRepository {
     fun findAllWithCheckIn(filterString: String,checkIn: LocalDate, adults: Int, children: Int, pets: Int): List<Property>
     fun filterWithPagination(filterString: String, checkIn: LocalDate, checkOut: LocalDate, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property>
     fun findAllPaginatedByFilterStringWithoutDates(filterString: String, adults: Int, children: Int, pets: Int, pageable: Pageable): Page<Property>
+    fun getNearest(lat: Double, lng: Double): List<Property>
 }

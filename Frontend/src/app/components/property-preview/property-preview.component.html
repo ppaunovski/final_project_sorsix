@@ -2,37 +2,37 @@
   <a [routerLink]="['/properties', this.property?.id]">
     <div class="rounded-lg flex flex-col gap-3">
       <img
-      [src]="this.headerImage"
-      alt="img"
-      class="rounded-lg h-64 w-full object-cover"
+        [src]="this.headerImage"
+        alt="img"
+        class="rounded-lg h-64 w-full object-cover"
       />
       <div class="p-2">
         <div class="flex justify-between">
           <div class="flex flex-col gap-0 text-ellipsis w-2/3">
             <span
-            class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
-            >{{ this.property?.type }} in {{ this.property?.cityName }}
-          </span>
-          <span class="font-light text-gray-800">
-            {{ this.property?.address }}
-          </span>
-        </div>
-        <div class="flex items-center">
-          <mat-icon
-          aria-hidden="false"
-          aria-label="Example home icon"
-          fontIcon="star"
-          ></mat-icon>
-          <span class="p-2 font-bold text-lg">
-            @if (this.property?.averageRating?.toString() != 'NaN') {
+              class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
+              >{{ this.property?.type }} in {{ this.property?.cityName }}
+            </span>
+            <span class="font-light text-gray-800">
+              {{ this.property?.address }}
+            </span>
+          </div>
+          <div class="flex items-center">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="star"
+            ></mat-icon>
+            <span class="p-2 font-bold text-lg">
+              @if (this.property?.averageRating?.toString() != 'NaN') {
               {{ this.property?.averageRating?.valueOf() | number : "0.1-1" }}}
               @else {
-                {{ "New" }}
+              {{ "New" }}
               }
             </span>
           </div>
         </div>
-        
+
         <p class="text-nowrap overflow-clip text-ellipsis">
           {{ this.property?.description | slice : 0 : 150 }}
         </p>
@@ -50,10 +50,11 @@
       </div>
     </div>
   </a>
-  <button 
-  (click)="handleFavorite()"
-  [ngClass]="{'text-red-600': isFavorite}"
-  ><mat-icon class="absolute top-4 right-2"
-  >favorite</mat-icon></button>
-
+  <button
+    (click)="handleFavorite()"
+    [ngClass]="{ 'text-red-600': isFavorite }"
+    class="absolute top-4 right-2"
+  >
+    <mat-icon [matTooltip]="this.favoriteHoverText">favorite</mat-icon>
+  </button>
 </div>

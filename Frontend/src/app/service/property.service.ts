@@ -24,7 +24,7 @@ import { PropertyResponse } from '../model/PropertyResponse';
 })
 export class PropertyService {
   search$ = new Subject<any>();
-  showMap$ = new Subject<any>();
+  showMap$ = new Subject<boolean>();
 
   private url = '/api/properties';
 
@@ -152,5 +152,13 @@ export class PropertyService {
         )
         .pipe(catchError(this.handleError(undefined)));
     return this.getPaginationProperties(page, size);
+  }
+  getNearestProperties(
+    lat: number | undefined,
+    lng: number | undefined
+  ): Observable<PropertyInfo[]> {
+    return this.http.get<PropertyInfo[]>(
+      `${this.url}/nearest?lat=${lat}&lng=${lng}`
+    );
   }
 }

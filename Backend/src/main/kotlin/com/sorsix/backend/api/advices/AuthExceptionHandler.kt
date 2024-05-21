@@ -38,6 +38,7 @@ class AuthExceptionHandler {
                 )
             )
     }
+
     @ExceptionHandler(ExpiredJwtException::class)
     fun handleExpiredJwtException(e: ExpiredJwtException): ResponseEntity<ErrorDTO> {
         return ResponseEntity
