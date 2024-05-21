@@ -165,7 +165,7 @@ export class MapComponent implements AfterViewInit, OnInit {
           .addTo(this.map as L.Map)
           .bindPopup(
             L.popup().setContent(`
-        
+
         <a href="${'/properties/' + property.id}">
         <div class="rounded-lg flex flex-col gap-3">
           <img
@@ -178,7 +178,7 @@ export class MapComponent implements AfterViewInit, OnInit {
               <div class="flex flex-col gap-0 text-ellipsis w-2/3">
                 <span
                   class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
-                  >${property.type}in ${property.cityName} 
+                  >${property.type}in ${property.cityName}
                 </span>
                 <span class="font-light text-gray-800">
                   ${property.address}
@@ -199,11 +199,11 @@ export class MapComponent implements AfterViewInit, OnInit {
                 </span>
               </div>
             </div>
-      
+
             <p class="text-nowrap overflow-clip text-ellipsis">
               ${property.description.slice(0, 150)}
             </p>
-      
+
             <p>
               <span class="font-bold text-lg">
                 <span>
@@ -216,8 +216,8 @@ export class MapComponent implements AfterViewInit, OnInit {
           </div>
         </div>
       </a>
-      
-        
+
+
         `)
           );
 

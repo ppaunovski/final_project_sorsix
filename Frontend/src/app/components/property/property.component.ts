@@ -102,11 +102,11 @@ export class PropertyComponent implements OnInit {
             this.property.latitude as number,
             this.property.longitude as number);
             console.log('Coordinates', this.propertyCoordinates);
-            
+
           }
           else
           console.log('No coordinates');
-          
+
           console.log(this.imagesUrl);
           console.log(this.property);
           this.loading = false;
@@ -183,7 +183,7 @@ export class PropertyComponent implements OnInit {
           ).toPrecision(2);
         },
       });
-    
+
   }
   dataURItoBlob(dataURI: string, type: string): string {
     const byteString = window.atob(dataURI);
