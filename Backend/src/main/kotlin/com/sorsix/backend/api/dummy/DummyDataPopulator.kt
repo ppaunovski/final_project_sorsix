@@ -7,6 +7,7 @@ import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.PropertyImages
 import com.sorsix.backend.domain.entities.UserImage
 import com.sorsix.backend.domain.enums.BookingStatusEnum
+import com.sorsix.backend.encoder
 import com.sorsix.backend.repository.booking_repository.BookingRepository
 import com.sorsix.backend.repository.booking_repository.BookingRepositoryImpl
 import com.sorsix.backend.repository.booking_status_repository.BookingStatusRepository
@@ -217,6 +218,14 @@ class DummyDataPopulator(
                 booking = booking
             )
 
+        }
+    }
+
+    fun encodePasswordsForDummyUsers() {
+        this.userAccountRepository.findAll().forEach {
+            user ->
+            user.userPassword = encoder().encode(user.userPassword)
+            this.userAccountRepository.save(user)
         }
     }
 }
