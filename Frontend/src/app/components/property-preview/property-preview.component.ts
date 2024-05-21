@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Property } from '../../model/property';
 import { RouterLink } from '@angular/router';
@@ -11,6 +11,7 @@ import { FavoriteService } from '../../service/favorite-service.service';
 import { ImageToUrlService } from '../../service/image-to-url.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-property-preview',
@@ -61,22 +62,19 @@ export class PropertyPreviewComponent implements OnInit {
   @Input()
   property: PropertyInfo | undefined;
 
-  // dataURItoBlob(dataURI: string, type: string): string {
-  //   const byteString = window.atob(dataURI);
-  //   const ab = new ArrayBuffer(byteString.length);
-  //   const ia = new Uint8Array(ab);
-  //   for (let i = 0; i < byteString.length; i++) {
-  //     ia[i] = byteString.charCodeAt(i);
-  //   }
-  //   var blob = new Blob([ab], { type: type });
-  //   return URL.createObjectURL(blob);
-  // }
+  @Output()
+  unfavorited$ = new EventEmitter<number>();
 
   handleFavorite() {
     console.log('Favorite clicked');
     if (this.isFavorite) {
       if (this.property) {
-        this.favoriteService.removeFavorite(this.property.id).subscribe({
+        this.favoriteService.removeFavorite(this.property.id).pipe(
+          tap(() => {
+            if(this.property)
+            this.unfavorited$.emit(this.property.id);
+          })
+        ).subscribe({
           next: (n) => {
             console.log(n);
             this.isFavorite = false;
@@ -105,3 +103,5 @@ export class PropertyPreviewComponent implements OnInit {
     }
   }
 }
+
+

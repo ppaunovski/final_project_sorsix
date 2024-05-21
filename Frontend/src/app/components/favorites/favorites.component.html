@@ -11,6 +11,7 @@
         <app-property-preview
           class="w-full relative"
           [property]="property"
+          (unfavorited$)="removeFromFavorites($event)"
         ></app-property-preview>
         <div class="absolute bottom-5 right-5">
         </div>

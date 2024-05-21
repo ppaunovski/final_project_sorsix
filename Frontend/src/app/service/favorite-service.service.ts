@@ -19,8 +19,8 @@ export class FavoriteService {
     return this.http.post(`${this.url}save/${propertyId}`, null);
   }
 
-  removeFavorite(propertyId: number) {
-    return this.http.delete(`${this.url}delete/${propertyId}`);
+  removeFavorite(propertyId: number):Observable<number> {
+    return this.http.delete<number>(`${this.url}delete/${propertyId}`);
   }
 
   isFavorite(propertyId: number): Observable<boolean> {

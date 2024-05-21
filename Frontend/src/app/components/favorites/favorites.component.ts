@@ -46,4 +46,9 @@ export class FavoritesComponent implements OnInit {
         },
       });
   }
+  removeFromFavorites(propertyId: number): void {
+    this.properties = this.properties.filter(
+      (property) => property.id !== propertyId
+    );
+  }
 }

@@ -32,11 +32,12 @@ class FavoriteService(private val favoriteRepository: FavoriteRepository,
         return propertyList
     }
 
-    fun deleteFavoriteByUserIdAndPropertyId(authenticate: Authentication?, propertyId: Long){
+    fun deleteFavoriteByUserIdAndPropertyId(authenticate: Authentication?, propertyId: Long):Long{
         if(authenticate == null) throw UnauthorizedAccessException("User not authenticated")
         val user = userAccountRepository.findByEmail(authenticate.name)?.id
             ?: throw UserAccountNotFoundException("User not found")
         this.favoriteRepository.deleteByUserIdAndPropertyId(user, propertyId)
+        return propertyId
     }
     fun saveFavorite(authenticate: Authentication?,propertyId: Long){
         if(authenticate == null) throw UnauthorizedAccessException("User not authenticated")
