@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Property } from '../../model/property';
 import { RouterLink } from '@angular/router';
@@ -32,6 +32,7 @@ export class PropertyPreviewComponent implements OnInit {
   headerImage: string = '';
   isFavorite: boolean = false;
   favoriteHoverText = '';
+
   constructor(
     private favoriteService: FavoriteService,
     private imageService: ImageToUrlService

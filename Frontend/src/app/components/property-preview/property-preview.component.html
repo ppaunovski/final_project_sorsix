@@ -51,10 +51,12 @@
     </div>
   </a>
   <button
+    #tooltip="matTooltip"
+    [matTooltip]="this.favoriteHoverText"
     (click)="handleFavorite()"
     [ngClass]="{ 'text-red-600': isFavorite }"
     class="absolute top-4 right-2"
   >
-    <mat-icon [matTooltip]="this.favoriteHoverText">favorite</mat-icon>
+    <mat-icon>favorite</mat-icon>
   </button>
 </div>
