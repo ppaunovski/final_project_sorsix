@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
-class qqqApplicationConfig(
+class ApplicationConfig(
     private val userAccountRepository: UserAccountRepository,
     private val userAccountService: UserAccountService
 ) {
