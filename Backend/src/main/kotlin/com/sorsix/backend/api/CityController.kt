@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/city")
 class CityController(val cityService: CityService) {
-    @GetMapping
+    @GetMapping()
     fun findAllCities() = cityService.findAllCities()
     @GetMapping("/{id}")
     fun findCityById(@PathVariable id: Long) = cityService.findCityById(id)
