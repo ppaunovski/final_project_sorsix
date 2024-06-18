@@ -12,7 +12,7 @@ class BookingController(
     val bookingService: BookingService,
     private val dummyDataPopulator: DummyDataPopulator
 ) {
-    @GetMapping
+    @GetMapping()
     fun findAllBookings() = bookingService.findAllBookings()
     @GetMapping("/{id}")
     fun findBookingById(@PathVariable id: Long) = bookingService.getBookingDTOById(id)
