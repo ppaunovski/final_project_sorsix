@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/attributes")
 class AttributeController(private val attributeRepository: AttributeRepository) {
-    @GetMapping
+    @GetMapping()
     fun getAllAttributes() = attributeRepository.findAll()
 }
