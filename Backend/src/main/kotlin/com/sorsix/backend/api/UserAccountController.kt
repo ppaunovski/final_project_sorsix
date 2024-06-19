@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/users")
 class UserAccountController(val userAccountService: UserAccountService, private val dummyDataPopulator: DummyDataPopulator) {
-    @GetMapping
+    @GetMapping()
     fun findUser(@RequestHeader(name = "Authorization") authorizationHeader: String, auth: Authentication) =
         userAccountService.findUserAccountByJWT(authorizationHeader, auth)
     @GetMapping("/{id}")
