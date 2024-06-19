@@ -24,14 +24,11 @@ jobs:
       - name: Run Super Linter
         uses: github/super-linter@v4
         env:
-          VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: "master"
           VALIDATE_JS: true
           VALIDATE_TS: true
           VALIDATE_HTML: true
           VALIDATE_CSS: true
-          VALIDATE_SHELL_SHFMT: false
-          VALIDATE_MARKDOWN: false
           VALIDATE_KOTLIN: true
           FILES_TO_LINT: ${{ matrix.folder }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
