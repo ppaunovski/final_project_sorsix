@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/guest-type")
 class GuestTypeController(private val guestTypeRepository: GuestTypeRepository) {
-    @GetMapping
+    @GetMapping()
     fun getAllGuestTypes() = guestTypeRepository.findAll()
 }
