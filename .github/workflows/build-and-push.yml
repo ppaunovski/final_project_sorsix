@@ -52,10 +52,10 @@ jobs:
           gradle-version: '8.5'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./Backend/gradlew
+        run: chmod +x Backend/gradlew
 
       - name: Build with Gradle
-        run: ./Backend/gradlew clean build -x test
+        run: Backend/gradlew clean build -x test
 
   build-and-push:
     runs-on: ubuntu-latest
