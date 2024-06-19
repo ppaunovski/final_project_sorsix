@@ -159,12 +159,10 @@ jobs:
 
       - name: Build and push backend image
         run: |
-          cd Backend
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest -f backend.dockerfile .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
 
       - name: Build and push frontend image
         run: |
-          cd Frontend
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest -f frontend.dockerfile .
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest
