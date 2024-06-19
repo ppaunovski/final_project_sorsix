@@ -32,6 +32,4 @@ class PropertyImageController(
 
     @GetMapping("/populate")
     fun populatePropertyImages() = dummyDataPopulator.addPropertyImages()
-//    @PostMapping("/{id}/save-file")
-//    fun savePropertyImageFileSystem(@PathVariable id: Long, @RequestBody file: MultipartFile) = propertyImagesService.savePropertyImageFileSystem(id, file)
 }
