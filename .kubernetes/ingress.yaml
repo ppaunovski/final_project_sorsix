@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  namespace: smeshtaj
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: smeshtaj.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+#---
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: backend-ingress
+#  namespace: smeshtaj
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /api/$1
+#spec:
+#  ingressClassName: nginx
+#  rules:
+#    - host: localhost
+#      http:
+#        paths:
+#          - path: /(.*)
+#            pathType: ImplementationSpecific
+#            backend:
+#              service:
+#                name: backend
+#                port:
+#                  number: 8080

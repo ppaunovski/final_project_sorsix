@@ -35,6 +35,7 @@ class SecurityConfig(
             }
             .authorizeHttpRequests{
                 it
+                    .requestMatchers("/api/booking/populate").permitAll()
                     .requestMatchers("/api/booking/**").authenticated()
                     .requestMatchers(HttpMethod.GET,"/api/city/**").permitAll()
                     .requestMatchers("/api/city/**").authenticated()

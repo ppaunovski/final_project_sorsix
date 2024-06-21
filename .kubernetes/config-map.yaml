@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: smeshtaj
+data:
+  postgres-db: "smeshtaj_dan_trebit"
