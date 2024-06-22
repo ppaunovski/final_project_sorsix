@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/city")
 class CityController(
-    val cityService: CityService,
+    private val cityService: CityService,
 ) {
     @GetMapping()
     fun findAllCities() = cityService.findAllCities()
