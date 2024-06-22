@@ -9,7 +9,7 @@ COPY Backend/settings.gradle.kts .
 
 COPY Backend/src src
 RUN chmod +x gradlew
-RUN ./gradlew clean build --no-daemon -x test -x ktlintMainSourceSetCheck
+RUN ./gradlew clean build --no-daemon -x test
 
 FROM eclipse-temurin:21-jdk-jammy
 
