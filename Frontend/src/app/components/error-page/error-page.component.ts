@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ErrorResponse } from '../../model/ErrorResponse';
+import {Component, Input} from '@angular/core';
+import {ErrorResponse} from '../../model/ErrorResponse';
 
 @Component({
   selector: 'app-error-page',

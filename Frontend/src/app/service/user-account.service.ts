@@ -1,10 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, catchError, of, throwError } from 'rxjs';
-import { UserAccount } from '../model/UserAccount';
-import { PropertyInfo } from '../model/PropertyInfo';
-import { UserImage } from '../model/UserImage';
-import { ProfitsPerProperty } from '../model/ProfitsPerProperty';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {catchError, Observable, of} from 'rxjs';
+import {UserAccount} from '../model/UserAccount';
+import {PropertyInfo} from '../model/PropertyInfo';
+import {UserImage} from '../model/UserImage';
+import {ProfitsPerProperty} from '../model/ProfitsPerProperty';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,8 @@ import { ProfitsPerProperty } from '../model/ProfitsPerProperty';
 export class UserAccountService {
   private url = '/api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getUserInfo(): Observable<UserAccount | undefined> {
     return this.http

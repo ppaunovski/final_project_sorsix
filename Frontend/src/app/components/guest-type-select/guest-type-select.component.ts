@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { GuestType } from '../../model/GuestType';
-import { CountGuests } from '../../model/CountGuests';
-import { MatButtonModule } from '@angular/material/button';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {GuestType} from '../../model/GuestType';
+import {CountGuests} from '../../model/CountGuests';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-guest-type-select',

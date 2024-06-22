@@ -1,23 +1,16 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, of, throwError } from 'rxjs';
-import { Property } from '../model/property';
-import { Review } from '../model/Review';
-import { BookingRequest } from '../model/BookingRequest';
-import { PropertyInfo } from '../model/PropertyInfo';
-import { Booking } from '../model/Booking';
-import { PropertyAvailability } from '../model/PropertyAvailability';
-import { ReviewAveragesComponent } from '../components/review-averages/review-averages.component';
-import { AverageRating } from '../model/AverageRating';
-import { PropertyImage } from '../model/PropertyImage';
-import { UserAccount } from '../model/UserAccount';
-import { CityService } from './city.service';
-import { Attribute } from '../model/Attribute';
-import { PropertyResponse } from '../model/PropertyResponse';
+import {HttpClient,} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {catchError, Observable, of, Subject} from 'rxjs';
+import {Property} from '../model/property';
+import {Review} from '../model/Review';
+import {BookingRequest} from '../model/BookingRequest';
+import {PropertyInfo} from '../model/PropertyInfo';
+import {Booking} from '../model/Booking';
+import {PropertyAvailability} from '../model/PropertyAvailability';
+import {AverageRating} from '../model/AverageRating';
+import {PropertyImage} from '../model/PropertyImage';
+import {Attribute} from '../model/Attribute';
+import {PropertyResponse} from '../model/PropertyResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +21,8 @@ export class PropertyService {
 
   private url = '/api/properties';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   private formatDate(date: Date) {
     const year = date.getFullYear();
@@ -105,6 +99,7 @@ export class PropertyService {
       `${this.url}/${id}/average-component-ratings`
     );
   }
+
   createProperty(
     property: Property,
     images: PropertyImage[],
@@ -153,6 +148,7 @@ export class PropertyService {
         .pipe(catchError(this.handleError(undefined)));
     return this.getPaginationProperties(page, size);
   }
+
   getNearestProperties(
     lat: number | undefined,
     lng: number | undefined

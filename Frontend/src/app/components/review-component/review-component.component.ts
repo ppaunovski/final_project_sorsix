@@ -1,28 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { PropertyService } from '../../service/property.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, mergeMap, tap } from 'rxjs';
-import { PropertyInfo } from '../../model/PropertyInfo';
-import { Property } from '../../model/property';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { ReviewComponent } from '../../model/ReviewComponent';
-import { ReviewService } from '../../service/review.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSliderModule } from '@angular/material/slider';
-import { ComponentRating } from '../../model/ComponentRating';
-import { ComponentRatingRequest } from '../../model/ComponentRatingReqeust';
-import { MatButtonModule } from '@angular/material/button';
-import { ErrorPageComponent } from '../error-page/error-page.component';
-import { ErrorResponse } from '../../model/ErrorResponse';
-import {
-  MatProgressSpinner,
-  MatProgressSpinnerModule,
-} from '@angular/material/progress-spinner';
-import { HttpErrorResponse } from '@angular/common/http';
-import { BookingService } from '../../service/booking.service';
-import { BookingForReview } from '../../model/BookingForReview';
+import {Component, OnInit} from '@angular/core';
+import {PropertyService} from '../../service/property.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {filter, map, mergeMap, tap} from 'rxjs';
+import {PropertyInfo} from '../../model/PropertyInfo';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {ReviewComponent} from '../../model/ReviewComponent';
+import {ReviewService} from '../../service/review.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSliderModule} from '@angular/material/slider';
+import {ComponentRatingRequest} from '../../model/ComponentRatingReqeust';
+import {MatButtonModule} from '@angular/material/button';
+import {ErrorPageComponent} from '../error-page/error-page.component';
+import {ErrorResponse} from '../../model/ErrorResponse';
+import {MatProgressSpinnerModule,} from '@angular/material/progress-spinner';
+import {HttpErrorResponse} from '@angular/common/http';
+import {BookingService} from '../../service/booking.service';
+import {BookingForReview} from '../../model/BookingForReview';
 
 @Component({
   selector: 'app-review-component',
@@ -63,7 +58,8 @@ export class ReviewComponentComponent implements OnInit {
     private reviewService: ReviewService,
     private bookingService: BookingService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap

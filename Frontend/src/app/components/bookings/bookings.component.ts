@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../../service/booking.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, mergeMap, tap } from 'rxjs';
-import { Booking } from '../../model/Booking';
-import { BookingPreviewComponent } from '../booking-preview/booking-preview.component';
-import { ErrorResponse } from '../../model/ErrorResponse';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ErrorPageComponent } from '../error-page/error-page.component';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { BookingResponse } from '../../model/BookingResponse';
+import {Component, OnInit} from '@angular/core';
+import {BookingService} from '../../service/booking.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {mergeMap, tap} from 'rxjs';
+import {BookingPreviewComponent} from '../booking-preview/booking-preview.component';
+import {ErrorResponse} from '../../model/ErrorResponse';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {ErrorPageComponent} from '../error-page/error-page.component';
+import {HttpErrorResponse} from '@angular/common/http';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {BookingResponse} from '../../model/BookingResponse';
 
 @Component({
   selector: 'app-bookings',
@@ -34,7 +33,8 @@ export class BookingsComponent implements OnInit {
     private bookingService: BookingService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams

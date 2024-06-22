@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PropertyFormComponent } from './property-form.component';
+import {PropertyFormComponent} from './property-form.component';
 
 describe('PropertyFormComponent', () => {
   let component: PropertyFormComponent;
@@ -10,8 +10,8 @@ describe('PropertyFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PropertyFormComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(PropertyFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

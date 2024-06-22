@@ -1,29 +1,14 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
 import * as L from 'leaflet';
-import { PropertyInfo } from '../../model/PropertyInfo';
-import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
-import { DecimalPipe, SlicePipe } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { ImageToUrlService } from '../../service/image-to-url.service';
-import { PropertyService } from '../../service/property.service';
-import {
-  Observable,
-  Subject,
-  debounceTime,
-  filter,
-  map,
-  mergeMap,
-  of,
-} from 'rxjs';
+import {PropertyInfo} from '../../model/PropertyInfo';
+import {PropertyPreviewComponent} from '../property-preview/property-preview.component';
+import {DecimalPipe, SlicePipe} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+import {RouterLink} from '@angular/router';
+import {MatCardModule} from '@angular/material/card';
+import {ImageToUrlService} from '../../service/image-to-url.service';
+import {PropertyService} from '../../service/property.service';
+import {debounceTime, filter, mergeMap, Subject,} from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -59,7 +44,8 @@ export class MapComponent implements AfterViewInit, OnInit {
   constructor(
     private urlService: ImageToUrlService,
     private propertyService: PropertyService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.propertyService.showMap$.subscribe((x) => {
@@ -110,7 +96,7 @@ export class MapComponent implements AfterViewInit, OnInit {
               .addTo(this.map as L.Map)
               .bindPopup(
                 L.popup().setContent(`
-            
+
             <a href="${'/properties/' + property.id}">
             <div class="rounded-lg flex flex-col gap-3">
               <img
@@ -123,7 +109,7 @@ export class MapComponent implements AfterViewInit, OnInit {
                   <div class="flex flex-col gap-0 text-ellipsis w-2/3">
                     <span
                       class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
-                      >${property.type}in ${property.cityName} 
+                      >${property.type}in ${property.cityName}
                     </span>
                     <span class="font-light text-gray-800">
                       ${property.address}
@@ -137,18 +123,18 @@ export class MapComponent implements AfterViewInit, OnInit {
                     ></mat-icon>
                     <span class="p-2 font-bold text-lg">
                       ${
-                        property.averageRating.toString() != 'NaN'
-                          ? property.averageRating.valueOf().toPrecision(2)
-                          : 'New'
-                      }
+                  property.averageRating.toString() != 'NaN'
+                    ? property.averageRating.valueOf().toPrecision(2)
+                    : 'New'
+                }
                     </span>
                   </div>
                 </div>
-          
+
                 <p class="text-nowrap overflow-clip text-ellipsis">
                   ${property.description.slice(0, 150)}
                 </p>
-          
+
                 <p>
                   <span class="font-bold text-lg">
                     <span>
@@ -161,8 +147,8 @@ export class MapComponent implements AfterViewInit, OnInit {
               </div>
             </div>
           </a>
-          
-            
+
+
             `)
               );
 
@@ -303,10 +289,10 @@ export class MapComponent implements AfterViewInit, OnInit {
                 ></mat-icon>
                 <span class="p-2 font-bold text-lg">
                   ${
-                    property.averageRating.toString() != 'NaN'
-                      ? property.averageRating.valueOf().toPrecision(2)
-                      : 'New'
-                  }
+              property.averageRating.toString() != 'NaN'
+                ? property.averageRating.valueOf().toPrecision(2)
+                : 'New'
+            }
                 </span>
               </div>
             </div>
@@ -345,6 +331,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   emitEvent() {
     this.changeCoordinates$.emit(this.marker?.getLatLng() as L.LatLng);
   }
+
   @Output()
   changeCoordinates$ = new EventEmitter<L.LatLng>();
   @Input()
@@ -355,4 +342,5 @@ export class MapComponent implements AfterViewInit, OnInit {
   properties: PropertyInfo[] = [];
   headerImages: { [id: number]: string } = {};
 }
+
 //recenter button i onclick create marker

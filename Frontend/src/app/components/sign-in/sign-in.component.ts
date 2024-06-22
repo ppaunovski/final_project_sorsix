@@ -1,21 +1,14 @@
-import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterLink, withDebugTracing } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { AuthService } from '../../service/auth.service';
-import { tap } from 'rxjs';
-import { Oauth2Service } from '../../service/oauth2.service';
+import {Component} from '@angular/core';
+import {FormControl, FormGroupDirective, FormsModule, NgForm, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {AuthService} from '../../service/auth.service';
+import {tap} from 'rxjs';
+import {Oauth2Service} from '../../service/oauth2.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -49,7 +42,8 @@ export class SignInComponent {
   constructor(
     private authService: AuthService,
     private oauthService: Oauth2Service
-  ) {}
+  ) {
+  }
 
   handleInput(type: string, value: string) {
     switch (type) {
@@ -61,6 +55,7 @@ export class SignInComponent {
         break;
     }
   }
+
   handleSubmit() {
     if (this.email && this.password)
       this.authService
@@ -86,6 +81,7 @@ export class SignInComponent {
           },
         });
   }
+
   googleAuth() {
     window.location.href = 'http://localhost:8080/oauth2/authorization/google';
     // window.location.href =

@@ -2,32 +2,32 @@
   <div class="text-3xl lg:text-7xl pb-16 text-center">
     @if (this.averageRating?.toString() == 'NaN') {
 
-    <p>Not rated yet</p>
-    <p class="text-sm">
-      Be the first to leave a review and help the community out!
-    </p>
+      <p>Not rated yet</p>
+      <p class="text-sm">
+        Be the first to leave a review and help the community out!
+      </p>
 
     } @else {
 
-    {{ this.averageRating }}
+      {{ this.averageRating }}
     }
   </div>
 
   <div class="flex flex-wrap gap-5 items-center justify-evenly w-full">
     @for (rating of averageRatings; track $index) {
-    <div>
-      <div class="font-semibold text-xl mb-[-0.1rem] flex items-center gap-2">
+      <div>
+        <div class="font-semibold text-xl mb-[-0.1rem] flex items-center gap-2">
         <span>
           {{ rating.name }}
         </span>
-        <mat-icon>
-          {{ rating.icon }}
-        </mat-icon>
+          <mat-icon>
+            {{ rating.icon }}
+          </mat-icon>
+        </div>
+        <p class="text-xl font-semibold text-center">
+          {{ rating.averageRating.toPrecision(2) }}
+        </p>
       </div>
-      <p class="text-xl font-semibold text-center">
-        {{ rating.averageRating.toPrecision(2) }}
-      </p>
-    </div>
     }
   </div>
 </div>

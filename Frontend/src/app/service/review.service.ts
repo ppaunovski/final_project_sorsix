@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ComponentRating } from '../model/ComponentRating';
-import { ReviewComponent } from '../model/ReviewComponent';
-import { ReviewRequest } from '../model/ReviewRequest';
-import { Review } from '../model/Review';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ComponentRating} from '../model/ComponentRating';
+import {ReviewComponent} from '../model/ReviewComponent';
+import {ReviewRequest} from '../model/ReviewRequest';
+import {Review} from '../model/Review';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,8 @@ import { Review } from '../model/Review';
 export class ReviewService {
   private url = '/api/reviews';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getComponentRatingsForReview(id: Number): Observable<ComponentRating[]> {
     return this.http.get<ComponentRating[]>(`${this.url}/${id}/components`);

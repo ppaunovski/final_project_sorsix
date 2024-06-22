@@ -1,48 +1,48 @@
 <div class="w-full flex justify-center flex-col items-center">
   @if (loading) {
-  <mat-spinner></mat-spinner>
+    <mat-spinner></mat-spinner>
   } @else {
-  <div
-    [classList]="!this.showMap ? 'flex w-full' : 'hidden'"
-    class="flex w-full h-[100vh] overflow-x-scroll"
-  >
-    <div class="w-full flex flex-col items-center">
-      <div
-        [classList]="
+    <div
+      [classList]="!this.showMap ? 'flex w-full' : 'hidden'"
+      class="flex w-full h-[100vh] overflow-x-scroll"
+    >
+      <div class="w-full flex flex-col items-center">
+        <div
+          [classList]="
           this.filterString != undefined
             ? 'flex flex-wrap w-4/5 justify-center'
             : 'flex flex-wrap w-2/3 justify-center'
         "
-      >
-        @for (property of this.propertyResponse?.content; track property.id) {
-        <app-property-preview
-          class="max-w-[400px] min-w-[300px] w-full sm:w-full md:w-1/2 lg:w-1/6 p-2"
-          [property]="property"
-        ></app-property-preview>
+        >
+          @for (property of this.propertyResponse?.content; track property.id) {
+            <app-property-preview
+              class="max-w-[400px] min-w-[300px] w-full sm:w-full md:w-1/2 lg:w-1/6 p-2"
+              [property]="property"
+            ></app-property-preview>
 
-        }
+          }
+        </div>
+        <mat-paginator
+          [pageIndex]="this.page"
+          [length]="this.propertyResponse?.totalElements"
+          [pageSize]="this.size"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          (page)="handlePageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
       </div>
-      <mat-paginator
-        [pageIndex]="this.page"
-        [length]="this.propertyResponse?.totalElements"
-        [pageSize]="this.size"
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        (page)="handlePageChange($event)"
-        aria-label="Select page"
-      >
-      </mat-paginator>
     </div>
-  </div>
 
-  <div
-    [classList]="
+    <div
+      [classList]="
       this.showMap ? 'flex w-full justify-center items-center' : 'hidden'
     "
-  >
-    <div class="flex">
-      <app-map [properties]="this.properties"></app-map>
+    >
+      <div class="flex">
+        <app-map [properties]="this.properties"></app-map>
+      </div>
     </div>
-  </div>
 
   }
 </div>

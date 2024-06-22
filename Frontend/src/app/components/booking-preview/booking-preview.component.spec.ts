@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BookingPreviewComponent } from './booking-preview.component';
+import {BookingPreviewComponent} from './booking-preview.component';
 
 describe('BookingPreviewComponent', () => {
   let component: BookingPreviewComponent;
@@ -10,8 +10,8 @@ describe('BookingPreviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [BookingPreviewComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(BookingPreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

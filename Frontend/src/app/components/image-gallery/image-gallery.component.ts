@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { PropertyImage } from '../../model/PropertyImage';
-import { ImageService } from '../../service/property-image.service';
-import { ImageToUrlService } from '../../service/image-to-url.service';
-import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, mergeMap } from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {PropertyImage} from '../../model/PropertyImage';
+import {ImageService} from '../../service/property-image.service';
+import {ImageToUrlService} from '../../service/image-to-url.service';
+import {MatButtonModule} from '@angular/material/button';
+import {ActivatedRoute, Router} from '@angular/router';
+import {filter, map, mergeMap} from 'rxjs';
 
 @Component({
   selector: 'app-image-gallery',
@@ -28,7 +28,8 @@ export class ImageGalleryComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: ImageService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.queryParamMap

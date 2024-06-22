@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput, MatInputModule } from '@angular/material/input';
-import { RouterLink } from '@angular/router';
-import { AuthService } from '../../service/auth.service';
-import { tap } from 'rxjs';
-import { ImageService } from '../../service/property-image.service';
-import { UserImage } from '../../model/UserImage';
+import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {RouterLink} from '@angular/router';
+import {AuthService} from '../../service/auth.service';
+import {tap} from 'rxjs';
+import {UserImage} from '../../model/UserImage';
 
 @Component({
   selector: 'app-register',
@@ -42,6 +41,7 @@ export class RegisterComponent {
         break;
     }
   }
+
   firstName: string | undefined;
   lastName: string | undefined;
   email: string | undefined;
@@ -52,12 +52,13 @@ export class RegisterComponent {
     image: '',
     userAccountId: 0,
     type: '',
-    };
+  };
   error: any;
   loading = false;
- 
 
-  constructor(private authService: AuthService) {}
+
+  constructor(private authService: AuthService) {
+  }
 
   // onImagePicked(event: Event) {
   //   const target = event.target as HTMLInputElement;
@@ -81,9 +82,8 @@ export class RegisterComponent {
   //     };
   //     reader.readAsDataURL(this.images[i]);
   //   }
-    
-  // }
 
+  // }
 
 
   onImagePicked($event: Event) {
@@ -91,18 +91,18 @@ export class RegisterComponent {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       const reader = new FileReader();
-      
+
       reader.onload = () => {
         this.profileImage.image = (reader.result as string).split(',')[1];
-        console.log(this.profileImage.image); 
+        console.log(this.profileImage.image);
       };
       reader.onerror = (error) => {
         console.error('Error reading file:', error);
       };
 
       reader.readAsDataURL(file);
-      
-      
+
+
     }
     if (fileInput.files && fileInput.files.length > 0) {
       this.profileImage = {
@@ -113,9 +113,9 @@ export class RegisterComponent {
       };
     }
   }
-    
-    
-    handleSubmit() {
+
+
+  handleSubmit() {
     console.log(
       this.firstName,
       this.lastName,
@@ -123,7 +123,7 @@ export class RegisterComponent {
       this.password,
       this.confirmPassword
     );
-     
+
     if (
       this.firstName &&
       this.lastName &&

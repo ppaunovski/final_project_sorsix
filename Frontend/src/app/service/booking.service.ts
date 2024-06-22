@@ -1,17 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Booking } from '../model/Booking';
-import { Observable } from 'rxjs';
-import { BookingRequest } from '../model/BookingRequest';
-import { BookingForReview } from '../model/BookingForReview';
-import { BookingResponse } from '../model/BookingResponse';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Booking} from '../model/Booking';
+import {Observable} from 'rxjs';
+import {BookingForReview} from '../model/BookingForReview';
+import {BookingResponse} from '../model/BookingResponse';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookingService {
   private url = '/api/booking';
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) {
+  }
 
   getBookingsByUserId(page: number, size: number): Observable<BookingResponse> {
     return this.http.get<BookingResponse>(
@@ -30,6 +31,7 @@ export class BookingService {
   cancelBooking(id: Number): Observable<Booking> {
     return this.http.post<Booking>(`${this.url}/${id}/cancel`, {});
   }
+
   getBookingForReview(id: number): Observable<BookingForReview> {
     return this.http.get<BookingForReview>(`${this.url}/${id}/for-review`);
   }

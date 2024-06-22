@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Property } from '../../model/property';
-import { PropertyInfo } from '../../model/PropertyInfo';
-import { ActivatedRoute } from '@angular/router';
-import { PropertyService } from '../../service/property.service';
-import { UserAccountService } from '../../service/user-account.service';
-import { filter, mergeMap, tap } from 'rxjs';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
-import { MatButtonModule } from '@angular/material/button';
+import {Component, OnInit} from '@angular/core';
+import {PropertyInfo} from '../../model/PropertyInfo';
+import {ActivatedRoute} from '@angular/router';
+import {PropertyService} from '../../service/property.service';
+import {UserAccountService} from '../../service/user-account.service';
+import {filter, mergeMap, tap} from 'rxjs';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {PropertyPreviewComponent} from '../property-preview/property-preview.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-my-properties',
@@ -25,7 +24,8 @@ export class MyPropertiesComponent implements OnInit {
     private route: ActivatedRoute,
     private propertyService: PropertyService,
     private userService: UserAccountService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.userService

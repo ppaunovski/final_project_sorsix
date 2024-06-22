@@ -1,6 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-import { PropertyTypeService } from './property-type.service';
-
+import {TestBed} from '@angular/core/testing';
+import {PropertyTypeService} from './property-type.service';
 
 
 describe('PropertyTypeService', () => {

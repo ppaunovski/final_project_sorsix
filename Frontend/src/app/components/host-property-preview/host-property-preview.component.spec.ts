@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HostPropertyPreviewComponent } from './host-property-preview.component';
+import {HostPropertyPreviewComponent} from './host-property-preview.component';
 
 describe('HostPropertyPreviewComponent', () => {
   let component: HostPropertyPreviewComponent;
@@ -10,8 +10,8 @@ describe('HostPropertyPreviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HostPropertyPreviewComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(HostPropertyPreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -11,7 +11,7 @@
           <div class="flex flex-col gap-0 text-ellipsis w-2/3">
             <span
               class="text-lg font-bold text-ellipsis text-nowrap overflow-x-clip min-w-[150px]"
-              >{{ this.property?.type }} in {{ this.property?.cityName }}
+            >{{ this.property?.type }} in {{ this.property?.cityName }}
             </span>
             <span class="font-light text-gray-800">
               {{ this.property?.address }}
@@ -25,9 +25,9 @@
             ></mat-icon>
             <span class="p-2 font-bold text-lg">
               @if (this.property?.averageRating?.toString() != 'NaN') {
-              {{ this.property?.averageRating?.valueOf() | number : "0.1-1" }}}
-              @else {
-              {{ "New" }}
+                {{ this.property?.averageRating?.valueOf() | number : "0.1-1" }}
+              } @else {
+                {{ "New" }}
               }
             </span>
           </div>

@@ -1,4 +1,4 @@
-import { GuestType } from './GuestType';
+import {GuestType} from './GuestType';
 
 export interface CountGuests {
   guestType: GuestType;

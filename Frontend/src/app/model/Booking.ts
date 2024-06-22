@@ -1,5 +1,5 @@
-import { UserAccount } from './UserAccount';
-import { Property } from './property';
+import {UserAccount} from './UserAccount';
+import {Property} from './property';
 
 export interface Booking {
   id: number;

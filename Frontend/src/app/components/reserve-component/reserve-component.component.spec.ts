@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ReserveComponentComponent } from './reserve-component.component';
+import {ReserveComponentComponent} from './reserve-component.component';
 
 describe('ReserveComponentComponent', () => {
   let component: ReserveComponentComponent;
@@ -10,8 +10,8 @@ describe('ReserveComponentComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ReserveComponentComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ReserveComponentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,17 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { Property } from '../../model/property';
-import { RouterLink } from '@angular/router';
-import { DecimalPipe, SlicePipe } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { PropertyInfo } from '../../model/PropertyInfo';
-import { DomSanitizer } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { FavoriteService } from '../../service/favorite-service.service';
-import { ImageToUrlService } from '../../service/image-to-url.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { tap } from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatCardModule} from '@angular/material/card';
+import {RouterLink} from '@angular/router';
+import {CommonModule, DecimalPipe, SlicePipe} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+import {PropertyInfo} from '../../model/PropertyInfo';
+import {FavoriteService} from '../../service/favorite-service.service';
+import {ImageToUrlService} from '../../service/image-to-url.service';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {tap} from 'rxjs';
 
 @Component({
   selector: 'app-property-preview',
@@ -37,7 +34,9 @@ export class PropertyPreviewComponent implements OnInit {
   constructor(
     private favoriteService: FavoriteService,
     private imageService: ImageToUrlService
-  ) {}
+  ) {
+  }
+
   ngOnInit(): void {
     if (this.property && this.property.image) {
       this.headerImage = this.imageService.bytesToURL(
@@ -59,6 +58,7 @@ export class PropertyPreviewComponent implements OnInit {
       });
     }
   }
+
   @Input()
   property: PropertyInfo | undefined;
 
@@ -71,8 +71,8 @@ export class PropertyPreviewComponent implements OnInit {
       if (this.property) {
         this.favoriteService.removeFavorite(this.property.id).pipe(
           tap(() => {
-            if(this.property)
-            this.unfavorited$.emit(this.property.id);
+            if (this.property)
+              this.unfavorited$.emit(this.property.id);
           })
         ).subscribe({
           next: (n) => {

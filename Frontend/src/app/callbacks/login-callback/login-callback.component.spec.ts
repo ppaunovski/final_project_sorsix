@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoginCallbackComponent } from './login-callback.component';
+import {LoginCallbackComponent} from './login-callback.component';
 
 describe('LoginCallbackComponent', () => {
   let component: LoginCallbackComponent;
@@ -10,8 +10,8 @@ describe('LoginCallbackComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LoginCallbackComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LoginCallbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

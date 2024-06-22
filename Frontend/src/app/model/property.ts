@@ -1,8 +1,8 @@
-import { City } from './City';
-import { PropertyType } from './PropertyType';
-import { UserAccount } from './UserAccount';
-import { PropertyImage } from './PropertyImage';
-import { Attribute } from './Attribute';
+import {City} from './City';
+import {PropertyType} from './PropertyType';
+import {UserAccount} from './UserAccount';
+import {PropertyImage} from './PropertyImage';
+import {Attribute} from './Attribute';
 
 export interface Property {
   id: Number;

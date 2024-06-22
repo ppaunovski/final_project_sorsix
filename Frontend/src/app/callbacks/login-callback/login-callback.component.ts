@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../service/auth.service';
-import { filter, map, merge, mergeMap } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-login-callback',
@@ -15,7 +14,8 @@ export class LoginCallbackComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams

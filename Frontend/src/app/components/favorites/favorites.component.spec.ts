@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FavoritesComponent } from './favorites.component';
+import {FavoritesComponent} from './favorites.component';
 
 describe('FavoritesComponent', () => {
   let component: FavoritesComponent;
@@ -10,8 +10,8 @@ describe('FavoritesComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FavoritesComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(FavoritesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

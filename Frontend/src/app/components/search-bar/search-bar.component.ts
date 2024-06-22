@@ -1,19 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CalendarComponent } from '../calendar/calendar.component';
-import { DateRangeComponent } from '../date-range/date-range.component';
-import { Subject } from 'rxjs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { GuestsDialogComponent } from '../guests-dialog/guests-dialog.component';
-import { PropertyService } from '../../service/property.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import {Component, OnInit} from '@angular/core';
+import {CalendarComponent} from '../calendar/calendar.component';
+import {DateRangeComponent} from '../date-range/date-range.component';
+import {Subject} from 'rxjs';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {GuestsDialogComponent} from '../guests-dialog/guests-dialog.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-search-bar',
@@ -40,9 +34,11 @@ export class SearchBarComponent implements OnInit {
 
     return `${year}-${month}-${day}`;
   }
+
   changeFilterString(value: string) {
     this.filterString = value;
   }
+
   search() {
     this.isCheckinOpen = false;
     this.isCheckoutOpen = false;
@@ -61,9 +57,11 @@ export class SearchBarComponent implements OnInit {
       size: 10,
     };
 
-    this.router.navigate(['/properties'], { queryParams: queryParams });
+    this.router.navigate(['/properties'], {queryParams: queryParams});
   }
-  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe({
@@ -93,6 +91,7 @@ export class SearchBarComponent implements OnInit {
       this.endDate = date;
     });
   }
+
   isCheckinOpen = false;
   isCheckoutOpen = false;
   isGuestDialongOpen = false;
@@ -107,16 +106,16 @@ export class SearchBarComponent implements OnInit {
   filterString = '';
 
   form: FormGroup = new FormGroup<SearchRequest>({
-    filterString: new FormControl<string>('', { nonNullable: false }),
+    filterString: new FormControl<string>('', {nonNullable: false}),
     startDate: new FormControl<Date | undefined | null>(undefined, {
       nonNullable: false,
     }),
     endDate: new FormControl<Date | undefined | null>(undefined, {
       nonNullable: false,
     }),
-    numberOfAdults: new FormControl<number>(1, { nonNullable: false }),
-    numberOfChildren: new FormControl<number>(0, { nonNullable: false }),
-    numberOfPets: new FormControl<number>(0, { nonNullable: false }),
+    numberOfAdults: new FormControl<number>(1, {nonNullable: false}),
+    numberOfChildren: new FormControl<number>(0, {nonNullable: false}),
+    numberOfPets: new FormControl<number>(0, {nonNullable: false}),
   });
 
   changeStartDate(date: Date | undefined | null) {
@@ -153,6 +152,7 @@ export class SearchBarComponent implements OnInit {
   countAdults(count: number) {
     this.numberOfAdults = count;
   }
+
   countChildren(count: number) {
     this.numberOfChildren = count;
   }
@@ -217,4 +217,5 @@ export class SearchBarComponent implements OnInit {
   }
 }
 
-interface SearchRequest {}
+interface SearchRequest {
+}

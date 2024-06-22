@@ -1,37 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { PropertyService } from '../../service/property.service';
-import { Property } from '../../model/property';
-import { PropertyRequest } from '../../model/requests/PropertyRequest';
-import { PropertyType } from '../../model/PropertyType';
-import { PropertyTypeService } from '../../service/property-type.service';
-import { Router } from '@angular/router';
-import { PropertyImage } from '../../model/PropertyImage';
-import { UserAccountService } from '../../service/user-account.service';
-import { UserAccount } from '../../model/UserAccount';
-import { City } from '../../model/City';
-import { CityService } from '../../service/city.service';
-import { MatButtonModule } from '@angular/material/button';
-import { AttributeService } from '../../service/attribute.service';
-import { Attribute } from '../../model/Attribute';
-import {
-  MatCheckboxChange,
-  MatCheckboxModule,
-} from '@angular/material/checkbox';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {PropertyService} from '../../service/property.service';
+import {Property} from '../../model/property';
+import {PropertyRequest} from '../../model/requests/PropertyRequest';
+import {PropertyType} from '../../model/PropertyType';
+import {PropertyTypeService} from '../../service/property-type.service';
+import {Router} from '@angular/router';
+import {PropertyImage} from '../../model/PropertyImage';
+import {UserAccountService} from '../../service/user-account.service';
+import {UserAccount} from '../../model/UserAccount';
+import {City} from '../../model/City';
+import {CityService} from '../../service/city.service';
+import {MatButtonModule} from '@angular/material/button';
+import {AttributeService} from '../../service/attribute.service';
+import {Attribute} from '../../model/Attribute';
+import {MatCheckboxChange, MatCheckboxModule,} from '@angular/material/checkbox';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import * as L from 'leaflet';
-import { MapComponent } from '../map/map.component';
-import { MatIcon } from '@angular/material/icon';
+import {MapComponent} from '../map/map.component';
+import {MatIcon} from '@angular/material/icon';
 
-import { AuthService } from '../../service/auth.service';
-import { SlicePipe } from '@angular/common';
+import {AuthService} from '../../service/auth.service';
+import {SlicePipe} from '@angular/common';
 
 @Component({
   selector: 'app-property-form',
@@ -60,25 +51,26 @@ export class PropertyFormComponent implements OnInit {
     private propertyTypeService: PropertyTypeService,
     private attributeService: AttributeService,
     private authService: AuthService
-  ) {}
+  ) {
+  }
 
   form: FormGroup = new FormGroup<PropertyRequest>({
-    nightlyPrice: new FormControl<Number>(0, { nonNullable: true }),
-    name: new FormControl<string>('', { nonNullable: true }),
-    guests: new FormControl<Number>(0, { nonNullable: true }),
-    beds: new FormControl<Number>(0, { nonNullable: true }),
-    bedrooms: new FormControl<Number>(0, { nonNullable: true }),
-    bathrooms: new FormControl<Number>(0, { nonNullable: true }),
-    isGuestFavorite: new FormControl<Boolean>(false, { nonNullable: true }),
-    description: new FormControl<string>('', { nonNullable: true }),
-    address: new FormControl<string>('', { nonNullable: true }),
-    longitude: new FormControl<Number>(0, { nonNullable: true }),
-    latitude: new FormControl<Number>(0, { nonNullable: true }),
-    city: new FormControl<City>({} as City, { nonNullable: true }),
+    nightlyPrice: new FormControl<Number>(0, {nonNullable: true}),
+    name: new FormControl<string>('', {nonNullable: true}),
+    guests: new FormControl<Number>(0, {nonNullable: true}),
+    beds: new FormControl<Number>(0, {nonNullable: true}),
+    bedrooms: new FormControl<Number>(0, {nonNullable: true}),
+    bathrooms: new FormControl<Number>(0, {nonNullable: true}),
+    isGuestFavorite: new FormControl<Boolean>(false, {nonNullable: true}),
+    description: new FormControl<string>('', {nonNullable: true}),
+    address: new FormControl<string>('', {nonNullable: true}),
+    longitude: new FormControl<Number>(0, {nonNullable: true}),
+    latitude: new FormControl<Number>(0, {nonNullable: true}),
+    city: new FormControl<City>({} as City, {nonNullable: true}),
     propertyType: new FormControl<PropertyType>({} as PropertyType, {
       nonNullable: true,
     }),
-    attributes: new FormControl<Number[]>([], { nonNullable: true }),
+    attributes: new FormControl<Number[]>([], {nonNullable: true}),
   });
   propertyForm: any;
   propertyTypes: PropertyType[] = [];
@@ -116,6 +108,7 @@ export class PropertyFormComponent implements OnInit {
       console.log(this.attributes);
     });
   }
+
   onImagePicked(event: Event) {
     const target = event.target as HTMLInputElement;
     const files = target.files as FileList;
@@ -162,6 +155,7 @@ export class PropertyFormComponent implements OnInit {
       console.log(error);
     },
   };
+
   handleSubmit() {
     console.log('submitting form');
     if (this.user === undefined) {
@@ -189,9 +183,11 @@ export class PropertyFormComponent implements OnInit {
     this.latitude = $event.lat;
     this.longitude = $event.lng;
   }
+
   foundType(type: Number): String | undefined {
     return this.propertyTypes.find((t) => t.id == type)?.typeName;
   }
+
   foundCity(city: Number): String | undefined {
     return this.cities.find((c) => c.id == city)?.name;
   }

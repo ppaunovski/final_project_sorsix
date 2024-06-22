@@ -1,4 +1,4 @@
-import { UserAccount } from './UserAccount';
+import {UserAccount} from './UserAccount';
 
 export interface Review {
   id: Number;

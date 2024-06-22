@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PropertyPreviewComponent } from './property-preview.component';
+import {PropertyPreviewComponent} from './property-preview.component';
 
 describe('PropertyPreviewComponent', () => {
   let component: PropertyPreviewComponent;
@@ -10,8 +10,8 @@ describe('PropertyPreviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PropertyPreviewComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(PropertyPreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

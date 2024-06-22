@@ -1,31 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Property } from '../../model/property';
-import { PropertyService } from '../../service/property.service';
-import { ActivatedRoute } from '@angular/router';
-import { filter, forkJoin, map, mergeMap, switchMap, tap } from 'rxjs';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { PropertyAttributeService } from '../../service/property-attribute.service';
-import { PropertyAttribute } from '../../model/PropertyAttribite';
-import { PropertyAttributeComponent } from '../property-attribute/property-attribute.component';
-import { ReserveComponentComponent } from '../reserve-component/reserve-component.component';
-import { HostPropertyPreviewComponent } from '../host-property-preview/host-property-preview.component';
-import { RatingReviewPreviewComponent } from '../rating-review-preview/rating-review-preview.component';
-import { PropertyInfoComponent } from '../property-info/property-info.component';
-import { ReviewService } from '../../service/review.service';
-import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
-import { ComponentRating } from '../../model/ComponentRating';
-import { ReviewAveragesComponent } from '../review-averages/review-averages.component';
-import { ReviewComponent } from '../review/review.component';
-import { AverageRating } from '../../model/AverageRating';
-import { Review } from '../../model/Review';
-import { ImageGalleryComponent } from '../image-gallery/image-gallery.component';
-import { MapComponent } from '../map/map.component';
+import {Component, OnInit} from '@angular/core';
+import {Property} from '../../model/property';
+import {PropertyService} from '../../service/property.service';
+import {ActivatedRoute} from '@angular/router';
+import {filter, map, mergeMap, tap} from 'rxjs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {PropertyAttributeService} from '../../service/property-attribute.service';
+import {PropertyAttribute} from '../../model/PropertyAttribite';
+import {PropertyAttributeComponent} from '../property-attribute/property-attribute.component';
+import {ReserveComponentComponent} from '../reserve-component/reserve-component.component';
+import {HostPropertyPreviewComponent} from '../host-property-preview/host-property-preview.component';
+import {RatingReviewPreviewComponent} from '../rating-review-preview/rating-review-preview.component';
+import {PropertyInfoComponent} from '../property-info/property-info.component';
+import {ReviewService} from '../../service/review.service';
+import {ReviewAveragesComponent} from '../review-averages/review-averages.component';
+import {ReviewComponent} from '../review/review.component';
+import {AverageRating} from '../../model/AverageRating';
+import {Review} from '../../model/Review';
+import {ImageGalleryComponent} from '../image-gallery/image-gallery.component';
+import {MapComponent} from '../map/map.component';
 import * as L from 'leaflet';
 
 @Component({
@@ -72,7 +70,8 @@ export class PropertyComponent implements OnInit {
     private route: ActivatedRoute,
     private propertyAttributeService: PropertyAttributeService,
     private reviewService: ReviewService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap
@@ -97,15 +96,14 @@ export class PropertyComponent implements OnInit {
               this.dataURItoBlob(image.imageByteArray, image.type)
             );
           }
-          if(this.property && this.property.latitude && this.property.longitude){
-          this.propertyCoordinates = new L.LatLng(
-            this.property.latitude as number,
-            this.property.longitude as number);
+          if (this.property && this.property.latitude && this.property.longitude) {
+            this.propertyCoordinates = new L.LatLng(
+              this.property.latitude as number,
+              this.property.longitude as number);
             console.log('Coordinates', this.propertyCoordinates);
 
-          }
-          else
-          console.log('No coordinates');
+          } else
+            console.log('No coordinates');
 
           console.log(this.imagesUrl);
           console.log(this.property);
@@ -185,6 +183,7 @@ export class PropertyComponent implements OnInit {
       });
 
   }
+
   dataURItoBlob(dataURI: string, type: string): string {
     const byteString = window.atob(dataURI);
     const ab = new ArrayBuffer(byteString.length);
@@ -192,7 +191,7 @@ export class PropertyComponent implements OnInit {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    var blob = new Blob([ab], { type: type });
+    var blob = new Blob([ab], {type: type});
     return URL.createObjectURL(blob);
   }
 }

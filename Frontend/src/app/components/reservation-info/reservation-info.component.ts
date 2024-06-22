@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Property } from '../../model/property';
-import { PropertyService } from '../../service/property.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Property} from '../../model/property';
 
 @Component({
   selector: 'app-reservation-info',

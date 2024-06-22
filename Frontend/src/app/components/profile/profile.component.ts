@@ -1,17 +1,9 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { UserAccountService } from '../../service/user-account.service';
-import { UserAccount } from '../../model/UserAccount';
-import { BaseChartDirective } from 'ng2-charts';
-import { CustomChartData } from '../../model/CustomChartData';
-import { ProfitsPerProperty } from '../../model/ProfitsPerProperty';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
+import {UserAccountService} from '../../service/user-account.service';
+import {UserAccount} from '../../model/UserAccount';
+import {BaseChartDirective} from 'ng2-charts';
+import {ProfitsPerProperty} from '../../model/ProfitsPerProperty';
 import * as echarts from 'echarts';
-import { canvas } from 'leaflet';
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +20,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   profits: ProfitsPerProperty[] = [];
   data: any[] = [];
 
-  constructor(private userService: UserAccountService) {}
+  constructor(private userService: UserAccountService) {
+  }
 
   ngAfterViewInit(): void {
     var myChart = echarts.init(this.canvas.nativeElement);

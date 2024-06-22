@@ -1,23 +1,23 @@
 <div class="flex w-full justify-center">
-    @if (this.loading) {
+  @if (this.loading) {
     <mat-spinner></mat-spinner>
-    } @else {
-  
+  } @else {
+
     <div class="flex w-4/5 flex-wrap justify-center">
       @for (property of this.properties; track property.id) {
-      <div
-        class="relative w-full sm:w-full md:w-1/2 lg:w-1/6 p-2 max-w-[400px] min-w-[300px]"
-      >
-        <app-property-preview
-          class="w-full relative"
-          [property]="property"
-          (unfavorited$)="removeFromFavorites($event)"
-        ></app-property-preview>
-        <div class="absolute bottom-5 right-5">
+        <div
+          class="relative w-full sm:w-full md:w-1/2 lg:w-1/6 p-2 max-w-[400px] min-w-[300px]"
+        >
+          <app-property-preview
+            class="w-full relative"
+            [property]="property"
+            (unfavorited$)="removeFromFavorites($event)"
+          ></app-property-preview>
+          <div class="absolute bottom-5 right-5">
+          </div>
         </div>
-      </div>
       }
     </div>
-    }
-  </div>
-  
+  }
+</div>
+

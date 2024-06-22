@@ -1,7 +1,7 @@
-import { JsonPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { Unit } from '../../model/unit';
-import { UnitService } from '../../service/unit.service';
+import {JsonPipe} from '@angular/common';
+import {Component, Input, OnInit} from '@angular/core';
+import {Unit} from '../../model/unit';
+import {UnitService} from '../../service/unit.service';
 
 @Component({
   selector: 'app-units',
@@ -15,7 +15,8 @@ export class UnitsComponent implements OnInit {
   propertyId: Number = 1;
   units: Unit[] = [];
 
-  constructor(private service: UnitService) {}
+  constructor(private service: UnitService) {
+  }
 
   ngOnInit(): void {
     this.service.getAllUnitsForProperty(this.propertyId).subscribe((units) => {

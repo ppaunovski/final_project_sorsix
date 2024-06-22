@@ -1,4 +1,4 @@
-import { ComponentRatingRequest } from './ComponentRatingReqeust';
+import {ComponentRatingRequest} from './ComponentRatingReqeust';
 
 export interface ReviewRequest {
   propertyId: number;

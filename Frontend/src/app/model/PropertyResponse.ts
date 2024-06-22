@@ -1,4 +1,4 @@
-import { PropertyInfo } from './PropertyInfo';
+import {PropertyInfo} from './PropertyInfo';
 
 export interface PropertyResponse {
   content: PropertyInfo[];

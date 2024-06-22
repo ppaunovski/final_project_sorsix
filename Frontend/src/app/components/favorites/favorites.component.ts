@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FavoriteService } from '../../service/favorite-service.service';
-import { PropertyInfo } from '../../model/PropertyInfo';
-import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { CommonModule } from '@angular/common';
-import {  tap } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {FavoriteService} from '../../service/favorite-service.service';
+import {PropertyInfo} from '../../model/PropertyInfo';
+import {PropertyPreviewComponent} from '../property-preview/property-preview.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {CommonModule} from '@angular/common';
+import {tap} from 'rxjs';
 
 @Component({
   selector: 'app-favorites',
@@ -23,7 +23,10 @@ export class FavoritesComponent implements OnInit {
   properties: PropertyInfo[] = [];
   loading: any;
   error: any;
-  constructor(private favoriteService: FavoriteService) {}
+
+  constructor(private favoriteService: FavoriteService) {
+  }
+
   ngOnInit(): void {
     this.favoriteService
       .getFavorites()
@@ -46,6 +49,7 @@ export class FavoritesComponent implements OnInit {
         },
       });
   }
+
   removeFromFavorites(propertyId: number): void {
     this.properties = this.properties.filter(
       (property) => property.id !== propertyId

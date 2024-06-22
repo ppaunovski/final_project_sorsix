@@ -1,4 +1,4 @@
-import { UserImage } from "./UserImage";
+import {UserImage} from "./UserImage";
 
 export interface RegisterRequest {
   firstName: string;

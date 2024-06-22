@@ -1,20 +1,19 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
-import { AuthService } from '../../service/auth.service';
-import { __importDefault } from 'tslib';
-import { filter, map, mergeMap, tap } from 'rxjs';
-import { UserAccountService } from '../../service/user-account.service';
-import { UserAccount } from '../../model/UserAccount';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { ImageToUrlService } from '../../service/image-to-url.service';
-import { PropertyService } from '../../service/property.service';
+import {Component, OnInit} from '@angular/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {RouterLink} from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+import {SearchBarComponent} from '../search-bar/search-bar.component';
+import {AuthService} from '../../service/auth.service';
+import {filter, map, mergeMap, tap} from 'rxjs';
+import {UserAccountService} from '../../service/user-account.service';
+import {UserAccount} from '../../model/UserAccount';
+import {MatMenuModule} from '@angular/material/menu';
+import {ImageToUrlService} from '../../service/image-to-url.service';
+import {PropertyService} from '../../service/property.service';
 
 @Component({
   selector: 'app-navigation',
@@ -39,10 +38,12 @@ export class NavigationComponent implements OnInit {
     this.showMapLocal = false;
     this.propertyService.showMap$.next(false);
   }
+
   signOut() {
     sessionStorage.removeItem('jwt');
     this.authService.refreshAuth$.next(true);
   }
+
   // @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   // someMethod() {
@@ -57,7 +58,8 @@ export class NavigationComponent implements OnInit {
     private userService: UserAccountService,
     private urlService: ImageToUrlService,
     private propertyService: PropertyService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.authService.refreshAuth$
@@ -110,6 +112,7 @@ export class NavigationComponent implements OnInit {
         },
       });
   }
+
   showMap() {
     this.showMapLocal = !this.showMapLocal;
     this.propertyService.showMap$.next(this.showMapLocal);

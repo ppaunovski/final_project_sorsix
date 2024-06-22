@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MapComponent } from '../map/map.component';
-import { PropertyService } from '../../service/property.service';
+import {Component, OnInit} from '@angular/core';
+import {MapComponent} from '../map/map.component';
+import {PropertyService} from '../../service/property.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -10,7 +10,8 @@ import { PropertyService } from '../../service/property.service';
   styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent implements OnInit {
-  constructor(private propertyService: PropertyService) {}
+  constructor(private propertyService: PropertyService) {
+  }
 
   ngOnInit(): void {
     throw new Error('Method not implemented.');

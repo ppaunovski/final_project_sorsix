@@ -1,5 +1,5 @@
-import { ComponentRating } from './ComponentRating';
-import { Review } from './Review';
+import {ComponentRating} from './ComponentRating';
+import {Review} from './Review';
 
 export interface ReviewWithComponents {
   review: Review;

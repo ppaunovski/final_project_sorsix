@@ -1,19 +1,19 @@
 <div class="grid items-center justify-center w-full h-full">
-  @if(this.loading){
-  <mat-spinner></mat-spinner>
+  @if (this.loading) {
+    <mat-spinner></mat-spinner>
   } @else {
-  <div>
-    <app-booking-preview [booking]="booking"></app-booking-preview>
-    <div class="flex justify-center gap-10 p-4">
-      <button (click)="confirm()" mat-flat-button color="primary">
-        <span> Confirm </span>
-        <mat-icon>check</mat-icon>
-      </button>
-      <button (click)="cancel()" mat-flat-button color="warn">
-        <span> Cancel </span>
-        <mat-icon>cancel</mat-icon>
-      </button>
+    <div>
+      <app-booking-preview [booking]="booking"></app-booking-preview>
+      <div class="flex justify-center gap-10 p-4">
+        <button (click)="confirm()" mat-flat-button color="primary">
+          <span> Confirm </span>
+          <mat-icon>check</mat-icon>
+        </button>
+        <button (click)="cancel()" mat-flat-button color="warn">
+          <span> Cancel </span>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
   }
 </div>

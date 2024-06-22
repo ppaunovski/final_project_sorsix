@@ -1,19 +1,20 @@
-import { ElementRef, Injectable } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { GuestsDialogComponent } from '../components/guests-dialog/guests-dialog.component';
+import {ElementRef, Injectable} from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {GuestsDialogComponent} from '../components/guests-dialog/guests-dialog.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DialogService {
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {
+  }
 
   public openDialog({
-    positionRelativeToElement,
-    hasBackdrop = false,
-    height = '135px',
-    width = '290px',
-  }: {
+                      positionRelativeToElement,
+                      hasBackdrop = false,
+                      height = '135px',
+                      width = '290px',
+                    }: {
     positionRelativeToElement: ElementRef;
     hasBackdrop?: boolean;
     height?: string;
@@ -25,7 +26,7 @@ export class DialogService {
         hasBackdrop: hasBackdrop,
         height: height,
         width: width,
-        data: { positionRelativeToElement: positionRelativeToElement },
+        data: {positionRelativeToElement: positionRelativeToElement},
       }
     );
     return dialogRef;

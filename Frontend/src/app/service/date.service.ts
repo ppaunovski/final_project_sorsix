@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DateService {
-  constructor() {}
+  constructor() {
+  }
 
   formatDateToMonthYear(date: Date): string {
     const months = [

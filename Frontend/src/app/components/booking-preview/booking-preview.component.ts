@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Booking } from '../../model/Booking';
-import { ImageToUrlService } from '../../service/image-to-url.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { BookingService } from '../../service/booking.service';
-import { getLocaleFirstDayOfWeek } from '@angular/common';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {Booking} from '../../model/Booking';
+import {ImageToUrlService} from '../../service/image-to-url.service';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {BookingService} from '../../service/booking.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-booking-preview',
@@ -56,7 +55,8 @@ export class BookingPreviewComponent implements OnInit {
     private service: ImageToUrlService,
     private bookingService: BookingService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.booking && this.booking.property)

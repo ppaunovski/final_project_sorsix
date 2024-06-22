@@ -1,33 +1,24 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { Property } from '../../model/property';
-import { GuestsDialogComponent } from '../guests-dialog/guests-dialog.component';
-import {
-  FormGroup,
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { JsonPipe } from '@angular/common';
-import {
-  DateFilterFn,
-  MatDatepickerModule,
-} from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { Subject, of } from 'rxjs';
-import { ReservationInfoComponent } from '../reservation-info/reservation-info.component';
-import { PropertyService } from '../../service/property.service';
-import { PropertyAvailability } from '../../model/PropertyAvailability';
-import { CalendarComponent } from '../calendar/calendar.component';
-import { DateRangeComponent } from '../date-range/date-range.component';
-import { Router } from '@angular/router';
-import { ErrorResponse } from '../../model/ErrorResponse';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorService } from '../../service/error.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {Property} from '../../model/property';
+import {GuestsDialogComponent} from '../guests-dialog/guests-dialog.component';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule,} from '@angular/forms';
+import {JsonPipe} from '@angular/common';
+import {DateFilterFn, MatDatepickerModule,} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {Subject} from 'rxjs';
+import {ReservationInfoComponent} from '../reservation-info/reservation-info.component';
+import {PropertyService} from '../../service/property.service';
+import {PropertyAvailability} from '../../model/PropertyAvailability';
+import {CalendarComponent} from '../calendar/calendar.component';
+import {DateRangeComponent} from '../date-range/date-range.component';
+import {Router} from '@angular/router';
+import {ErrorResponse} from '../../model/ErrorResponse';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorService} from '../../service/error.service';
 
 @Component({
   selector: 'app-reserve-component',
@@ -90,7 +81,8 @@ export class ReserveComponentComponent implements OnInit {
     private propertyService: PropertyService,
     private errorService: ErrorService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.changeStartDate$.subscribe((start) => {
@@ -166,6 +158,7 @@ export class ReserveComponentComponent implements OnInit {
   countAdults(count: number) {
     this.numberOfAdults = count;
   }
+
   countChildren(count: number) {
     this.numberOfChildren = count;
   }

@@ -1,19 +1,18 @@
-import { Routes } from '@angular/router';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { RegisterComponent } from './components/register/register.component';
-import { PropertiesComponent } from './components/properties/properties.component';
-import { UnitsComponent } from './components/units/units.component';
-import { PropertyComponent } from './components/property/property.component';
-import { CreatePropertyComponent } from './components/create-property/create-property.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { PropertyFormComponent } from './components/property-form/property-form.component';
-import { BookingsComponent } from './components/bookings/bookings.component';
-import { ConfirmBookingComponent } from './components/confirm-booking/confirm-booking.component';
-import { MyPropertiesComponent } from './components/my-properties/my-properties.component';
-import { ReviewComponentComponent } from './components/review-component/review-component.component';
-import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
-import { LoginCallbackComponent } from './callbacks/login-callback/login-callback.component';
-import { FavoritesComponent } from './components/favorites/favorites.component';
+import {Routes} from '@angular/router';
+import {SignInComponent} from './components/sign-in/sign-in.component';
+import {RegisterComponent} from './components/register/register.component';
+import {PropertiesComponent} from './components/properties/properties.component';
+import {UnitsComponent} from './components/units/units.component';
+import {PropertyComponent} from './components/property/property.component';
+import {ProfileComponent} from './components/profile/profile.component';
+import {PropertyFormComponent} from './components/property-form/property-form.component';
+import {BookingsComponent} from './components/bookings/bookings.component';
+import {ConfirmBookingComponent} from './components/confirm-booking/confirm-booking.component';
+import {MyPropertiesComponent} from './components/my-properties/my-properties.component';
+import {ReviewComponentComponent} from './components/review-component/review-component.component';
+import {ImageGalleryComponent} from './components/image-gallery/image-gallery.component';
+import {LoginCallbackComponent} from './callbacks/login-callback/login-callback.component';
+import {FavoritesComponent} from './components/favorites/favorites.component';
 
 export const routes: Routes = [
   {

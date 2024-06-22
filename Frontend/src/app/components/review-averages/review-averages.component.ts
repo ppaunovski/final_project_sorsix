@@ -1,8 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
-import { PropertyService } from '../../service/property.service';
-import { AverageRating } from '../../model/AverageRating';
-import { MatIconModule } from '@angular/material/icon';
+import {Component, Input} from '@angular/core';
+import {AverageRating} from '../../model/AverageRating';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-review-averages',

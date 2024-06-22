@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ErrorPageComponent } from './error-page.component';
+import {ErrorPageComponent} from './error-page.component';
 
 describe('ErrorPageComponent', () => {
   let component: ErrorPageComponent;
@@ -10,8 +10,8 @@ describe('ErrorPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ErrorPageComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ErrorPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

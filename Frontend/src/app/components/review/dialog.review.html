@@ -22,30 +22,32 @@
       <span> {{ dialog.formatedDate }} </span>
     </div>
     <div class="">
-      <span class="text-wrap"> {{ dialog.fullReview.review.comment}} </span>
+      <span class="text-wrap"> {{ dialog.fullReview.review.comment }} </span>
     </div>
   </div>
 
   <div class="w-full flex flex-wrap justify-center">
-    @for(component of dialog.fullReview.components; track component.id) {
-    <div class="w-full md:w-1/3 flex flex-col items-center pb-5 pt-5">
-      <div class="example-label-container">
-        <label id="example-name-label" class="example-name-label"
-          >{{component.reviewComponent.rcComponentName}}</label
-        >
+    @for (component of dialog.fullReview.components; track component.id) {
+      <div class="w-full md:w-1/3 flex flex-col items-center pb-5 pt-5">
+        <div class="example-label-container">
+          <label id="example-name-label" class="example-name-label"
+          >{{ component.reviewComponent.rcComponentName }}</label
+          >
+        </div>
+
+        <div>
+          @for (star of [1, 2, 3, 4, 5]; track star) {
+            @if (component.rating.valueOf()
+            >= star) {
+
+              <mat-icon color="accent">star</mat-icon>
+            } @else {
+              <mat-icon color="">grade</mat-icon>
+
+            }
+          }
+        </div>
       </div>
-
-      <div>
-        @for (star of [1,2,3,4,5]; track star) { @if (component.rating.valueOf()
-        >= star) {
-
-        <mat-icon color="accent">star</mat-icon>
-        } @else {
-        <mat-icon color="">grade</mat-icon>
-
-        } }
-      </div>
-    </div>
     }
   </div>
 </mat-dialog-content>

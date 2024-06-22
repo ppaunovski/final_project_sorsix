@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GuestsDialogComponent } from './guests-dialog.component';
+import {GuestsDialogComponent} from './guests-dialog.component';
 
 describe('GuestsDialogComponent', () => {
   let component: GuestsDialogComponent;
@@ -10,8 +10,8 @@ describe('GuestsDialogComponent', () => {
     await TestBed.configureTestingModule({
       imports: [GuestsDialogComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(GuestsDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GuestTypeSelectComponent } from './guest-type-select.component';
+import {GuestTypeSelectComponent} from './guest-type-select.component';
 
 describe('GuestTypeSelectComponent', () => {
   let component: GuestTypeSelectComponent;
@@ -10,8 +10,8 @@ describe('GuestTypeSelectComponent', () => {
     await TestBed.configureTestingModule({
       imports: [GuestTypeSelectComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(GuestTypeSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

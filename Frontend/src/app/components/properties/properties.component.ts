@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { PropertyService } from '../../service/property.service';
-import { Property } from '../../model/property';
-import { JsonPipe } from '@angular/common';
-import { PropertyPreviewComponent } from '../property-preview/property-preview.component';
-import { PropertyInfo } from '../../model/PropertyInfo';
-import { filter, flatMap, map, mergeMap, tap } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { PropertyResponse } from '../../model/PropertyResponse';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MapComponent } from '../map/map.component';
+import {Component, OnInit} from '@angular/core';
+import {PropertyService} from '../../service/property.service';
+import {JsonPipe} from '@angular/common';
+import {PropertyPreviewComponent} from '../property-preview/property-preview.component';
+import {PropertyInfo} from '../../model/PropertyInfo';
+import {mergeMap, tap} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {PropertyResponse} from '../../model/PropertyResponse';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
+import {MapComponent} from '../map/map.component';
 
 @Component({
   selector: 'app-properties',
@@ -50,7 +49,8 @@ export class PropertiesComponent implements OnInit {
     private service: PropertyService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.page = 0;
@@ -120,6 +120,7 @@ export class PropertiesComponent implements OnInit {
     //   },
     // });
   }
+
   handlePageChange(event: PageEvent) {
     const page = event.pageIndex;
     const size = event.pageSize;

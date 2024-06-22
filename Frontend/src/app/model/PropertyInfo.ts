@@ -1,4 +1,4 @@
-import { PropertyImage } from './PropertyImage';
+import {PropertyImage} from './PropertyImage';
 
 export interface PropertyInfo {
   id: number;

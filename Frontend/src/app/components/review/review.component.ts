@@ -1,24 +1,23 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { Review } from '../../model/Review';
-import { ReviewWithComponents } from '../../model/ReviewWIthComponents';
-import { MatIconModule } from '@angular/material/icon';
-import { SlicePipe } from '@angular/common';
+import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Review} from '../../model/Review';
+import {ReviewWithComponents} from '../../model/ReviewWIthComponents';
+import {MatIconModule} from '@angular/material/icon';
+import {SlicePipe} from '@angular/common';
 import {
-  MatDialog,
   MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
 } from '@angular/material/dialog';
-import { ReviewService } from '../../service/review.service';
-import { ComponentRating } from '../../model/ComponentRating';
-import { MatSlider } from '@angular/material/slider';
-import { UserAccountService } from '../../service/user-account.service';
-import { ImageToUrlService } from '../../service/image-to-url.service';
-import { DialogData } from '../../model/DialogData';
-import { DateService } from '../../service/date.service';
+import {ReviewService} from '../../service/review.service';
+import {ComponentRating} from '../../model/ComponentRating';
+import {MatSlider} from '@angular/material/slider';
+import {UserAccountService} from '../../service/user-account.service';
+import {ImageToUrlService} from '../../service/image-to-url.service';
+import {DialogData} from '../../model/DialogData';
+import {DateService} from '../../service/date.service';
 
 @Component({
   selector: 'app-review',
@@ -41,7 +40,9 @@ export class ReviewComponent implements OnInit {
     private userService: UserAccountService,
     private urlService: ImageToUrlService,
     private dateService: DateService
-  ) {}
+  ) {
+  }
+
   ngOnInit(): void {
     if (this.review) {
       this.reviewService
@@ -78,6 +79,7 @@ export class ReviewComponent implements OnInit {
       });
     }
   }
+
   getFormatedDate() {
     if (this.review)
       return this.dateService.formatDateToMonthYear(this.review.reviewDate);
@@ -100,5 +102,6 @@ export class ReviewComponent implements OnInit {
   ],
 })
 export class ReviewDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public dialog: DialogData) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public dialog: DialogData) {
+  }
 }

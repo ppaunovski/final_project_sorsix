@@ -22,77 +22,77 @@
     <div
       class="2xl:w-1/5 w-4/5 flex flex-row-reverse gap-10 items-center pr-8 md:pr-0"
     >
-      @if(this.user == undefined){
-      <a [routerLink]="['/login']">
-        <button
-          mat-flat-button
-          color="primary"
-          aria-label="Example icon button with a vertical three dot icon"
-        >
-          Sign In
-          <mat-icon>person</mat-icon>
-        </button>
-      </a>
+      @if (this.user == undefined) {
+        <a [routerLink]="['/login']">
+          <button
+            mat-flat-button
+            color="primary"
+            aria-label="Example icon button with a vertical three dot icon"
+          >
+            Sign In
+            <mat-icon>person</mat-icon>
+          </button>
+        </a>
       } @else {
 
-      <button
-        [matMenuTriggerFor]="menu"
-        aria-label="Example icon button with a vertical three dot icon"
-        class="border border-gray-300 hover:border-gray-500 rounded-full p-2 transition-colors duration-200"
-      >
-        <div class="flex items-center gap-2">
-          @if (this.imageURL) {
+        <button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon button with a vertical three dot icon"
+          class="border border-gray-300 hover:border-gray-500 rounded-full p-2 transition-colors duration-200"
+        >
+          <div class="flex items-center gap-2">
+            @if (this.imageURL) {
 
-          <img class="w-12 rounded-full" [src]="this.imageURL" />
-          <span>
+              <img class="w-12 rounded-full" [src]="this.imageURL"/>
+              <span>
             {{ this.user.firstName }}
           </span>
-          } @else {
-          <mat-icon>person</mat-icon>
-          <span class="text-lg font-medium">
+            } @else {
+              <mat-icon>person</mat-icon>
+              <span class="text-lg font-medium">
             {{ this.user.firstName }}
           </span>
-          }
-        </div>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button (click)="signOut()" mat-menu-item>
-          <mat-icon>person</mat-icon>
-          <span>Sign out</span>
+            }
+          </div>
         </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="signOut()" mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Sign out</span>
+          </button>
 
-        <a [routerLink]="['/properties/create']">
-          <button mat-menu-item>
-            <mat-icon>real_estate_agent</mat-icon>
-            <span>Add your property</span>
-          </button>
-        </a>
+          <a [routerLink]="['/properties/create']">
+            <button mat-menu-item>
+              <mat-icon>real_estate_agent</mat-icon>
+              <span>Add your property</span>
+            </button>
+          </a>
 
-        <a [routerLink]="['/profiles']">
-          <button mat-menu-item>
-            <mat-icon>settings</mat-icon>
-            <span>Settings</span>
-          </button>
-        </a>
-        <a [routerLink]="['/profiles', 'bookings']">
-          <button mat-menu-item>
-            <mat-icon>bookmark_added</mat-icon>
-            <span>My bookings</span>
-          </button>
-        </a>
-        <a [routerLink]="['/profiles', 'favorites']">
-          <button mat-menu-item>
-            <mat-icon>favorite</mat-icon>
-            <span>My favorites</span>
-          </button>
-        </a>
-        <a [routerLink]="['/profiles', 'properties']">
-          <button mat-menu-item>
-            <mat-icon>home</mat-icon>
-            <span>My properties</span>
-          </button>
-        </a>
-      </mat-menu>
+          <a [routerLink]="['/profiles']">
+            <button mat-menu-item>
+              <mat-icon>settings</mat-icon>
+              <span>Settings</span>
+            </button>
+          </a>
+          <a [routerLink]="['/profiles', 'bookings']">
+            <button mat-menu-item>
+              <mat-icon>bookmark_added</mat-icon>
+              <span>My bookings</span>
+            </button>
+          </a>
+          <a [routerLink]="['/profiles', 'favorites']">
+            <button mat-menu-item>
+              <mat-icon>favorite</mat-icon>
+              <span>My favorites</span>
+            </button>
+          </a>
+          <a [routerLink]="['/profiles', 'properties']">
+            <button mat-menu-item>
+              <mat-icon>home</mat-icon>
+              <span>My properties</span>
+            </button>
+          </a>
+        </mat-menu>
       }
       <div class="flex justify-center items-center">
         <button (click)="showMap()">

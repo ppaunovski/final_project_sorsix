@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ReviewAveragesComponent } from './review-averages.component';
+import {ReviewAveragesComponent} from './review-averages.component';
 
 describe('ReviewAveragesComponent', () => {
   let component: ReviewAveragesComponent;
@@ -10,8 +10,8 @@ describe('ReviewAveragesComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ReviewAveragesComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ReviewAveragesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

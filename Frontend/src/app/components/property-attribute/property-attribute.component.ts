@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { PropertyAttribute } from '../../model/PropertyAttribite';
-import { MatIconModule } from '@angular/material/icon';
+import {Component, Input} from '@angular/core';
+import {PropertyAttribute} from '../../model/PropertyAttribite';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-property-attribute',

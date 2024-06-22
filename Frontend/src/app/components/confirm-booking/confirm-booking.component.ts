@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Booking } from '../../model/Booking';
-import { BookingService } from '../../service/booking.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { filter, map, merge, mergeMap, tap } from 'rxjs';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BookingPreviewComponent } from '../booking-preview/booking-preview.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import {Component, OnInit} from '@angular/core';
+import {Booking} from '../../model/Booking';
+import {BookingService} from '../../service/booking.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {filter, map, mergeMap, tap} from 'rxjs';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {BookingPreviewComponent} from '../booking-preview/booking-preview.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-confirm-booking',
@@ -33,6 +33,7 @@ export class ConfirmBookingComponent implements OnInit {
         },
       });
   }
+
   confirm() {
     if (this.booking)
       this.bookingService.confirmBooking(this.booking.id).subscribe({
@@ -44,6 +45,7 @@ export class ConfirmBookingComponent implements OnInit {
         },
       });
   }
+
   booking: Booking | undefined;
   loading = false;
   error: any;
@@ -52,7 +54,8 @@ export class ConfirmBookingComponent implements OnInit {
     private bookingService: BookingService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DateRangeComponent } from './date-range.component';
+import {DateRangeComponent} from './date-range.component';
 
 describe('DateRangeComponent', () => {
   let component: DateRangeComponent;
@@ -10,8 +10,8 @@ describe('DateRangeComponent', () => {
     await TestBed.configureTestingModule({
       imports: [DateRangeComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(DateRangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

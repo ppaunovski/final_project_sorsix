@@ -1,10 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { AuthRequest } from '../model/AuthRequest';
-import { Observable, Subject, catchError, of, throwError } from 'rxjs';
-import { AuthResponse } from '../model/AuthResponse';
-import { RegisterRequest } from '../model/RegisterRequest';
-import { UserAccount } from '../model/UserAccount';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {AuthRequest} from '../model/AuthRequest';
+import {catchError, Observable, of, Subject} from 'rxjs';
+import {AuthResponse} from '../model/AuthResponse';
+import {RegisterRequest} from '../model/RegisterRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,8 @@ export class AuthService {
   private url = '/api/auth';
   refreshAuth$ = new Subject<boolean>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   login(authRequest: AuthRequest): Observable<AuthResponse | undefined> {
     return this.http
@@ -43,6 +43,7 @@ export class AuthService {
       }
     );
   }
+
   isAuthenticated(): Observable<Boolean> {
     return this.http.get<Boolean>(`${this.url}`);
   }

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RatingReviewPreviewComponent } from './rating-review-preview.component';
+import {RatingReviewPreviewComponent} from './rating-review-preview.component';
 
 describe('RatingReviewPreviewComponent', () => {
   let component: RatingReviewPreviewComponent;
@@ -10,8 +10,8 @@ describe('RatingReviewPreviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RatingReviewPreviewComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(RatingReviewPreviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

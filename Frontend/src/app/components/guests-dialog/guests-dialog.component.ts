@@ -1,19 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
-} from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { ReserveComponentComponent } from '../reserve-component/reserve-component.component';
-import { MatIconModule } from '@angular/material/icon';
-import { GuestType } from '../../model/GuestType';
-import { GuestTypeService } from '../../service/guest-type.service';
-import { GuestTypeSelectComponent } from '../guest-type-select/guest-type-select.component';
-import { CountGuests } from '../../model/CountGuests';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle,} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {GuestType} from '../../model/GuestType';
+import {GuestTypeService} from '../../service/guest-type.service';
+import {GuestTypeSelectComponent} from '../guest-type-select/guest-type-select.component';
+import {CountGuests} from '../../model/CountGuests';
 
 @Component({
   selector: 'app-guests-dialog',
@@ -45,7 +37,8 @@ export class GuestsDialogComponent implements OnInit {
   maxGuests: number | undefined;
   counts: number[] = [];
 
-  constructor(private guestTypeService: GuestTypeService) {}
+  constructor(private guestTypeService: GuestTypeService) {
+  }
 
   ngOnInit(): void {
     this.guestTypeService.getAllGuestTypes().subscribe({
