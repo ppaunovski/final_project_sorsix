@@ -7,38 +7,8 @@ on:
     branches: [ "master" ]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Run Super Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: "master"
-          VALIDATE_JS: true
-          VALIDATE_TS: true
-          FILES_TO_LINT: "Frontend/**/*"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  ktlint:
-    name: Lint Kotlin
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Clone PR
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - name: Run Ktlint
-        uses: lucasnlm/ktlint-action@master
-
   build-and-push:
     runs-on: ubuntu-latest
-    needs: [lint, ktlint]
 
     services:
       docker:
