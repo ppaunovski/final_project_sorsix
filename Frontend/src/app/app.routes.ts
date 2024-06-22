@@ -2,7 +2,6 @@ import {Routes} from '@angular/router';
 import {SignInComponent} from './components/sign-in/sign-in.component';
 import {RegisterComponent} from './components/register/register.component';
 import {PropertiesComponent} from './components/properties/properties.component';
-import {UnitsComponent} from './components/units/units.component';
 import {PropertyComponent} from './components/property/property.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {PropertyFormComponent} from './components/property-form/property-form.component';
@@ -46,10 +45,6 @@ export const routes: Routes = [
   {
     path: 'properties/:id/images',
     component: ImageGalleryComponent,
-  },
-  {
-    path: 'units',
-    component: UnitsComponent,
   },
   {
     path: 'profiles',
