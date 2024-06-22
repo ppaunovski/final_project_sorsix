@@ -16,7 +16,8 @@ interface JpaComponentRatingRepository : JpaRepository<ComponentRating, Long> {
     //    @Query("select new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, cr.rating) " +
 //            "from ComponentRating cr ")
     @Query(
-        "SELECT new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(cr.reviewComponent.rcComponentName, AVG(cr.rating), cr.reviewComponent.icon) " +
+        "SELECT new com.sorsix.backend.api.dtos.AverageComponentRatingDTO(" +
+            "cr.reviewComponent.rcComponentName, AVG(cr.rating), cr.reviewComponent.icon) " +
             "FROM ReviewComponent rc " +
             "JOIN  ComponentRating cr on cr.reviewComponent = rc " +
             "JOIN UserReview ur ON ur.id = cr.userReview.id " +

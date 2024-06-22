@@ -1,7 +1,22 @@
 package com.sorsix.backend.service
 
-import com.sorsix.backend.api.dtos.*
-import com.sorsix.backend.domain.entities.*
+import com.sorsix.backend.api.dtos.BookingDTO
+import com.sorsix.backend.api.dtos.ComponentRatingDTO
+import com.sorsix.backend.api.dtos.PropertyAttributeDTO
+import com.sorsix.backend.api.dtos.PropertyCardDTO
+import com.sorsix.backend.api.dtos.PropertyDTO
+import com.sorsix.backend.api.dtos.PropertyImageDTO
+import com.sorsix.backend.api.dtos.ReviewDTO
+import com.sorsix.backend.api.dtos.UserAccountDTO
+import com.sorsix.backend.api.dtos.UserImageDTO
+import com.sorsix.backend.domain.entities.Booking
+import com.sorsix.backend.domain.entities.ComponentRating
+import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.PropertyAttribute
+import com.sorsix.backend.domain.entities.PropertyImages
+import com.sorsix.backend.domain.entities.UserAccount
+import com.sorsix.backend.domain.entities.UserImage
+import com.sorsix.backend.domain.entities.UserReview
 import com.sorsix.backend.repository.property.images.PropertyImagesRepository
 import com.sorsix.backend.repository.rating.ComponentRatingRepository
 import com.sorsix.backend.repository.users.review.UserReviewRepository
@@ -124,7 +139,9 @@ class ClassToDTOMapperService(
             description = property.description,
             pricePerNight = property.nightlyPrice,
             image =
-                this.imagesRepository.findThumbnail(property.id)?.let { this.mapToPropertyImageDTO(it) } ?: PropertyImageDTO(
+                this.imagesRepository
+                    .findThumbnail(property.id)
+                    ?.let { this.mapToPropertyImageDTO(it) } ?: PropertyImageDTO(
                     id = 0,
                     propertyId = 0,
                     order = 0,

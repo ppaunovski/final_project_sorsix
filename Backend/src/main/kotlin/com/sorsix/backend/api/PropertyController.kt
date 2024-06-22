@@ -4,9 +4,19 @@ import com.sorsix.backend.api.requests.OfferRequest
 import com.sorsix.backend.api.requests.PropertyImageRequest
 import com.sorsix.backend.api.requests.PropertyRequest
 import com.sorsix.backend.domain.entities.Property
-import com.sorsix.backend.service.*
+import com.sorsix.backend.service.ComponentRatingService
+import com.sorsix.backend.service.PropertyImagesService
+import com.sorsix.backend.service.PropertyService
+import com.sorsix.backend.service.ReviewService
 import org.springframework.security.core.Authentication
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDate
 
@@ -17,7 +27,6 @@ class PropertyController(
     private val reviewService: ReviewService,
     private val propertyImagesService: PropertyImagesService,
     private val componentRatingService: ComponentRatingService,
-    private val propertyAttributesService: PropertyAttributesService,
 ) {
     @GetMapping("/nearest")
     fun getNearest(

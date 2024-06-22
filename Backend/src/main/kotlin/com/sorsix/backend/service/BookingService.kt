@@ -1,6 +1,7 @@
 package com.sorsix.backend.service
 
-import com.sorsix.backend.api.dtos.*
+import com.sorsix.backend.api.dtos.BookingDTO
+import com.sorsix.backend.api.dtos.BookingForReviewDTO
 import com.sorsix.backend.domain.entities.Booking
 import com.sorsix.backend.domain.entities.Property
 import com.sorsix.backend.domain.entities.PropertyAvailability

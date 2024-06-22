@@ -2,7 +2,11 @@ package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.ReviewDTO
 import com.sorsix.backend.api.requests.ReviewRequest
-import com.sorsix.backend.domain.entities.*
+import com.sorsix.backend.domain.entities.Booking
+import com.sorsix.backend.domain.entities.ComponentRating
+import com.sorsix.backend.domain.entities.Property
+import com.sorsix.backend.domain.entities.UserAccount
+import com.sorsix.backend.domain.entities.UserReview
 import com.sorsix.backend.repository.booking.BookingRepository
 import com.sorsix.backend.repository.rating.ComponentRatingRepository
 import com.sorsix.backend.repository.review.component.ReviewComponentRepository
