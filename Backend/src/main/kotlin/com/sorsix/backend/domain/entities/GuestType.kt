@@ -12,5 +12,5 @@ data class GuestType(
     @Column(name = "gt_type_name", nullable = false)
     val name: String,
     @Column(name = "gt_description", nullable = false)
-    val description:String
+    val description: String,
 )

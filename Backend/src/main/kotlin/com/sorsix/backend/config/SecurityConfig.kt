@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.DefaultSecurityFilterChain
-import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
@@ -27,40 +26,43 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(
         http: HttpSecurity,
-        jwtAuthFilter: JwtAuthFilter
+        jwtAuthFilter: JwtAuthFilter,
     ): DefaultSecurityFilterChain =
         http
-            .csrf{
+            .csrf {
                 it.disable()
-            }
-            .authorizeHttpRequests{
+            }.authorizeHttpRequests {
                 it
-                    .requestMatchers("/api/booking/populate").permitAll()
-                    .requestMatchers("/api/booking/**").authenticated()
-                    .requestMatchers(HttpMethod.GET,"/api/city/**").permitAll()
-                    .requestMatchers("/api/city/**").authenticated()
-                    .requestMatchers(HttpMethod.POST, "/api/properties/**").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/properties/{id}/for-review").authenticated()
-                    .requestMatchers(HttpMethod.POST, "/api/property-image/{id}/save-file").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/property-image/**").authenticated()
-                    .requestMatchers(HttpMethod.POST, "/api/reviews/**").authenticated()
+                    .requestMatchers("/api/booking/populate")
+                    .permitAll()
+                    .requestMatchers("/api/booking/**")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/city/**")
+                    .permitAll()
+                    .requestMatchers("/api/city/**")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/properties/**")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/properties/{id}/for-review")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/property-image/{id}/save-file")
+                    .permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/property-image/**")
+                    .authenticated()
+                    .requestMatchers(HttpMethod.POST, "/api/reviews/**")
+                    .authenticated()
                     .anyRequest()
                     .permitAll()
-
-            }
-            .oauth2Login { oAuth2LoginConfigurer ->
+            }.oauth2Login { oAuth2LoginConfigurer ->
                 oAuth2LoginConfigurer
                     .userInfoEndpoint {
                         it
                             .userService(customOAuth2UserDetailsService)
-                    }
-                    .successHandler(customOAUth2SuccessHandler)
+                    }.successHandler(customOAUth2SuccessHandler)
                     .failureHandler(customOAuth2FailureHandler)
-            }
-            .sessionManagement {
+            }.sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            }
-            .authenticationProvider(authenticationProvider)
+            }.authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
             .build()
 }

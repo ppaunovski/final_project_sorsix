@@ -1,6 +1,5 @@
 package com.sorsix.backend.config
 
-import com.sorsix.backend.service.AuthService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -15,15 +14,14 @@ import org.springframework.web.filter.OncePerRequestFilter
 @Component
 class JwtAuthFilter(
     private val jwtService: JwtService,
-    private val userDetailsService: UserDetailsService
+    private val userDetailsService: UserDetailsService,
 ) : OncePerRequestFilter() {
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        filterChain: FilterChain
+        filterChain: FilterChain,
     ) {
-        val authHeader: String? = request.getHeader("Authorization");
+        val authHeader: String? = request.getHeader("Authorization")
 
         if (authHeader.doesNotContainBearer()) {
             filterChain.doFilter(request, response)
@@ -41,11 +39,12 @@ class JwtAuthFilter(
             }
             filterChain.doFilter(request, response)
         }
-
-
     }
 
-    private fun updateContext(userDetails: UserDetails, request: HttpServletRequest) {
+    private fun updateContext(
+        userDetails: UserDetails,
+        request: HttpServletRequest,
+    ) {
         val authToken = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
         authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
 

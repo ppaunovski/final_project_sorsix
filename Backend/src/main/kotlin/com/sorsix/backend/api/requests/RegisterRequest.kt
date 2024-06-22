@@ -8,5 +8,5 @@ data class RegisterRequest(
     val confirmPassword: String,
     val firstName: String,
     val lastName: String,
-    val image: UserImageDTO
+    val image: UserImageDTO,
 )

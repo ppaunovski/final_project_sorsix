@@ -1,9 +1,7 @@
 package com.sorsix.backend.api.requests
 
-data class ComponentRatingRequest (
+data class ComponentRatingRequest(
     val rating: Int,
     val reviewComponentId: Long,
-    val reviewComponentName: String
+    val reviewComponentName: String,
 )
-
-

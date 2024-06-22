@@ -1,15 +1,13 @@
 package com.sorsix.backend.service
 
-import com.sorsix.backend.api.dtos.ComponentRatingDTO
 import com.sorsix.backend.api.dtos.ReviewDTO
-import com.sorsix.backend.api.dtos.UserAccountDTO
 import com.sorsix.backend.api.requests.ReviewRequest
 import com.sorsix.backend.domain.entities.*
-import com.sorsix.backend.repository.booking_repository.BookingRepository
-import com.sorsix.backend.repository.component_rating_repository.ComponentRatingRepository
-import com.sorsix.backend.repository.review_component_repository.ReviewComponentRepository
-import com.sorsix.backend.repository.user_account_repository.UserAccountRepository
-import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
+import com.sorsix.backend.repository.booking.BookingRepository
+import com.sorsix.backend.repository.rating.ComponentRatingRepository
+import com.sorsix.backend.repository.review.component.ReviewComponentRepository
+import com.sorsix.backend.repository.users.UserAccountRepository
+import com.sorsix.backend.repository.users.review.UserReviewRepository
 import com.sorsix.backend.service.exceptions.ReviewComponentNotFound
 import com.sorsix.backend.service.exceptions.UnauthorizedAccessException
 import com.sorsix.backend.service.exceptions.UserReviewNotFoundException
@@ -26,7 +24,7 @@ class ReviewService(
     private val userAccountRepository: UserAccountRepository,
     private val reviewComponentRepository: ReviewComponentRepository,
     private val bookingRepository: BookingRepository,
-    private val dtoMapperService: ClassToDTOMapperService
+    private val dtoMapperService: ClassToDTOMapperService,
 ) {
     fun getAllReviewsForProperty(id: Long): List<ReviewDTO> {
         val property = this.propertyService.findPropertyById(id)
@@ -37,33 +35,36 @@ class ReviewService(
     fun findById(id: Long): UserReview =
         this.reviewRepository.findById(id) ?: throw UserReviewNotFoundException("Review with id $id not found")
 
-    fun getReviewDTOById(id: Long): ReviewDTO {
-        return this.findById(id).let {
+    fun getReviewDTOById(id: Long): ReviewDTO =
+        this.findById(id).let {
             dtoMapperService.mapUserReviewToReviewDTO(it)
         }
-    }
-
 
     @Transactional
-    fun saveReview(review: ReviewRequest, authentication: Authentication?): ReviewDTO {
+    fun saveReview(
+        review: ReviewRequest,
+        authentication: Authentication?,
+    ): ReviewDTO {
         if (authentication == null) throw UnauthorizedAccessException("User must be authenticated to leave a review")
 
-        val guest = this.userAccountRepository.findByEmail(authentication.name)
-            ?: throw UnauthorizedAccessException("User must be authenticated to leave a review")
+        val guest =
+            this.userAccountRepository.findByEmail(authentication.name)
+                ?: throw UnauthorizedAccessException("User must be authenticated to leave a review")
 
         val property = this.propertyService.findPropertyById(review.propertyId)
 
-        if (guest.id == property.host.id)
+        if (guest.id == property.host.id) {
             throw UnauthorizedAccessException("Hosts cannot leave reviews for their own properties")
+        }
 
-        val booking = this.bookingRepository
-            .findById(review.bookingId)
-            ?: throw UserReviewNotFoundException("Booking with id ${review.bookingId} not found")
+        val booking =
+            this.bookingRepository
+                .findById(review.bookingId)
+                ?: throw UserReviewNotFoundException("Booking with id ${review.bookingId} not found")
 
-        if (this.reviewRepository.hasUserLeftReviewForPropertyAndBooking(guest, property, booking))
+        if (this.reviewRepository.hasUserLeftReviewForPropertyAndBooking(guest, property, booking)) {
             throw UnauthorizedAccessException("User has already left a review for this booking")
-
-
+        }
 
         return dtoMapperService.mapUserReviewToReviewDTO(createUserReview(review, guest, property, booking))
     }
@@ -72,28 +73,30 @@ class ReviewService(
         review: ReviewRequest,
         guest: UserAccount,
         property: Property,
-        booking: Booking
+        booking: Booking,
     ): UserReview {
-        val userReview = this.reviewRepository.save(
-            UserReview(
-                comment = review.comment,
-                user = guest,
-                property = property,
-                id = 0,
-                reviewDate = LocalDate.now(),
-                booking = booking
+        val userReview =
+            this.reviewRepository.save(
+                UserReview(
+                    comment = review.comment,
+                    user = guest,
+                    property = property,
+                    id = 0,
+                    reviewDate = LocalDate.now(),
+                    booking = booking,
+                ),
             )
-        )
 
         review.componentRatings.forEach {
             this.componentRatingRepository.save(
                 ComponentRating(
                     id = 0,
                     userReview = userReview,
-                    reviewComponent = this.reviewComponentRepository.findById(it.reviewComponentId)
-                        ?: throw ReviewComponentNotFound("Review component with id ${it.reviewComponentId} not found"),
-                    rating = it.rating
-                )
+                    reviewComponent =
+                        this.reviewComponentRepository.findById(it.reviewComponentId)
+                            ?: throw ReviewComponentNotFound("Review component with id ${it.reviewComponentId} not found"),
+                    rating = it.rating,
+                ),
             )
         }
         return userReview

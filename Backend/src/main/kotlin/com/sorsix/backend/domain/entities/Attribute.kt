@@ -13,5 +13,5 @@ data class Attribute(
     @Column(name = "a_description", nullable = false)
     var description: String,
     @Column(name = "a_icon")
-    val icon: String
+    val icon: String,
 )

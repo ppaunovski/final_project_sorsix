@@ -16,5 +16,5 @@ data class ComponentRating(
     val userReview: UserReview,
     @ManyToOne
     @JoinColumn(name = "rc_id", nullable = false)
-    val reviewComponent: ReviewComponent
+    val reviewComponent: ReviewComponent,
 )

@@ -2,7 +2,7 @@ package com.sorsix.backend.api.dtos
 
 import java.time.LocalDate
 
-data class UserAccountDTO (
+data class UserAccountDTO(
     val id: Long,
     val email: String,
     val firstName: String,

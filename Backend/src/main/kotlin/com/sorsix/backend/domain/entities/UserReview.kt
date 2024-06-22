@@ -22,5 +22,5 @@ data class UserReview(
     val reviewDate: LocalDate,
     @OneToOne
     @JoinColumn(name = "b_id", nullable = false)
-    val booking: Booking
+    val booking: Booking,
 )

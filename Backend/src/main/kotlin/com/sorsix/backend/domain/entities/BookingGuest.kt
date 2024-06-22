@@ -16,5 +16,5 @@ data class BookingGuest(
     val numGuests: Int,
     @ManyToOne
     @JoinColumn(name = "gt_id", nullable = false)
-    val guestType: GuestType
+    val guestType: GuestType,
 )

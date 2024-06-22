@@ -14,7 +14,6 @@ import java.time.LocalDateTime
 class PropertyExceptionHandler {
     @ExceptionHandler(PropertyNotFoundException::class)
     fun handlePropertyNotFoundException(e: PropertyNotFoundException): ResponseEntity<ErrorDTO> {
-
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(
@@ -22,14 +21,13 @@ class PropertyExceptionHandler {
                     e.message,
                     HttpStatus.NOT_FOUND.value(),
                     HttpStatus.NOT_FOUND.reasonPhrase,
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
     }
 
     @ExceptionHandler(PropertyNotAvailableException::class)
     fun handlePropertyNotAvailableException(e: PropertyNotAvailableException): ResponseEntity<ErrorDTO> {
-
         return ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(
@@ -37,14 +35,13 @@ class PropertyExceptionHandler {
                     e.message,
                     HttpStatus.NOT_FOUND.value(),
                     HttpStatus.NOT_FOUND.reasonPhrase,
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
     }
 
     @ExceptionHandler(PropertyCapacityException::class)
     fun handlePropertyCapacityException(e: PropertyCapacityException): ResponseEntity<ErrorDTO> {
-
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(
@@ -52,8 +49,8 @@ class PropertyExceptionHandler {
                     e.message,
                     HttpStatus.BAD_REQUEST.value(),
                     HttpStatus.BAD_REQUEST.reasonPhrase,
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
     }
 }

@@ -2,20 +2,17 @@ package com.sorsix.backend.service
 
 import com.sorsix.backend.api.dtos.*
 import com.sorsix.backend.domain.entities.*
-import com.sorsix.backend.repository.component_rating_repository.ComponentRatingRepository
-import com.sorsix.backend.repository.property_images_repository.PropertyImagesRepository
-import com.sorsix.backend.repository.review_component_repository.ReviewComponentRepository
-import com.sorsix.backend.repository.user_review_repository.UserReviewRepository
+import com.sorsix.backend.repository.property.images.PropertyImagesRepository
+import com.sorsix.backend.repository.rating.ComponentRatingRepository
+import com.sorsix.backend.repository.users.review.UserReviewRepository
 import org.springframework.stereotype.Service
-import java.io.File
-import java.nio.file.Files
 
 @Service
 class ClassToDTOMapperService(
     private val componentRatingRepository: ComponentRatingRepository,
     private val propertyImagesRepository: PropertyImagesRepository,
     private val reviewComponentRepository: UserReviewRepository,
-    private val imagesRepository: PropertyImagesRepository
+    private val imagesRepository: PropertyImagesRepository,
 ) {
     fun mapUserAccountToDTO(userAccount: UserAccount) =
         UserAccountDTO(
@@ -24,55 +21,52 @@ class ClassToDTOMapperService(
             lastName = userAccount.lastName,
             email = userAccount.email,
             joinedDate = userAccount.joinedDate,
-            dateHostStarted = userAccount.dateHostStarted
+            dateHostStarted = userAccount.dateHostStarted,
         )
 
-    fun mapUserReviewToReviewDTO(userReview: UserReview): ReviewDTO {
-        return ReviewDTO(
+    fun mapUserReviewToReviewDTO(userReview: UserReview): ReviewDTO =
+        ReviewDTO(
             id = userReview.id,
             comment = userReview.comment,
-            user = UserAccountDTO(
-                id = userReview.user.id,
-                email = userReview.user.email,
-                firstName = userReview.user.firstName,
-                lastName = userReview.user.lastName,
-                joinedDate = userReview.user.joinedDate,
-                dateHostStarted = userReview.user.dateHostStarted
-            ),
+            user =
+                UserAccountDTO(
+                    id = userReview.user.id,
+                    email = userReview.user.email,
+                    firstName = userReview.user.firstName,
+                    lastName = userReview.user.lastName,
+                    joinedDate = userReview.user.joinedDate,
+                    dateHostStarted = userReview.user.dateHostStarted,
+                ),
             reviewDate = userReview.reviewDate,
-            averageRating = this.componentRatingRepository.averageRatingByUserReview(userReview)
+            averageRating = this.componentRatingRepository.averageRatingByUserReview(userReview),
         )
-    }
 
-    fun mapComponentRatingToDTO(componentRating: ComponentRating): ComponentRatingDTO {
-        return ComponentRatingDTO(
+    fun mapComponentRatingToDTO(componentRating: ComponentRating): ComponentRatingDTO =
+        ComponentRatingDTO(
             id = componentRating.id,
             rating = componentRating.rating,
             reviewComponent = componentRating.reviewComponent,
-            userReview = this.mapUserReviewToReviewDTO(componentRating.userReview)
+            userReview = this.mapUserReviewToReviewDTO(componentRating.userReview),
         )
-    }
 
-    fun mapPropertyAttributeToDTO(propertyAttribute: PropertyAttribute): PropertyAttributeDTO {
-        return PropertyAttributeDTO(
+    fun mapPropertyAttributeToDTO(propertyAttribute: PropertyAttribute): PropertyAttributeDTO =
+        PropertyAttributeDTO(
             id = propertyAttribute.paId,
             property = this.mapPropertyToDTO(propertyAttribute.property),
-            attribute = propertyAttribute.attribute
+            attribute = propertyAttribute.attribute,
         )
-    }
 
-    fun mapToPropertyImageDTO(propertyImages: PropertyImages): PropertyImageDTO {
-        return PropertyImageDTO(
+    fun mapToPropertyImageDTO(propertyImages: PropertyImages): PropertyImageDTO =
+        PropertyImageDTO(
             id = propertyImages.id,
             propertyId = propertyImages.property.id,
             order = propertyImages.order,
             imageByteArray = propertyImages.image,
-            type = propertyImages.type
+            type = propertyImages.type,
         )
-    }
 
-    fun mapPropertyToDTO(property: Property): PropertyDTO {
-        return PropertyDTO(
+    fun mapPropertyToDTO(property: Property): PropertyDTO =
+        PropertyDTO(
             id = property.id,
             name = property.name,
             description = property.description,
@@ -85,74 +79,74 @@ class ClassToDTOMapperService(
             isGuestFavorite = property.isGuestFavorite,
             longitude = property.longitude,
             latitude = property.latitude,
-            host = UserAccountDTO(
-                id = property.host.id,
-                email = property.host.email,
-                firstName = property.host.firstName,
-                lastName = property.host.lastName,
-                joinedDate = property.host.joinedDate,
-                dateHostStarted = property.host.dateHostStarted,
-            ),
+            host =
+                UserAccountDTO(
+                    id = property.host.id,
+                    email = property.host.email,
+                    firstName = property.host.firstName,
+                    lastName = property.host.lastName,
+                    joinedDate = property.host.joinedDate,
+                    dateHostStarted = property.host.dateHostStarted,
+                ),
             city = property.city,
             propertyType = property.propertyType,
-            images = this.propertyImagesRepository.findAllByPropertyId(property.id).map {
-                PropertyImageDTO(
-                    id = it.id,
-                    propertyId = it.property.id,
-                    order = it.order,
-                    imageByteArray = it.image,
-                    type = it.type
-                )
-            }
+            images =
+                this.propertyImagesRepository.findAllByPropertyId(property.id).map {
+                    PropertyImageDTO(
+                        id = it.id,
+                        propertyId = it.property.id,
+                        order = it.order,
+                        imageByteArray = it.image,
+                        type = it.type,
+                    )
+                },
         )
-    }
-    fun mapUserImageToDTO(userImage: UserImage): UserImageDTO {
-        return UserImageDTO(
+
+    fun mapUserImageToDTO(userImage: UserImage): UserImageDTO =
+        UserImageDTO(
             id = userImage.id,
             image = userImage.image,
             type = userImage.type,
-            userId = userImage.user.id
+            userId = userImage.user.id,
         )
-    }
-    fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO {
-        return PropertyCardDTO(
+
+    fun mapPropertyToPropertyCardDTO(property: Property): PropertyCardDTO =
+        PropertyCardDTO(
             id = property.id,
             cityName = property.city.name,
             address = property.address,
-            averageRating = this.reviewComponentRepository
-                .findAllByProperty(property)
-                .map {
-                    this.componentRatingRepository.averageRatingByUserReview(it)
-                }.average(),
+            averageRating =
+                this.reviewComponentRepository
+                    .findAllByProperty(property)
+                    .map {
+                        this.componentRatingRepository.averageRatingByUserReview(it)
+                    }.average(),
             description = property.description,
             pricePerNight = property.nightlyPrice,
-            image = this.imagesRepository.findThumbnail(property.id)?.let { this.mapToPropertyImageDTO(it)} ?: PropertyImageDTO(
+            image =
+                this.imagesRepository.findThumbnail(property.id)?.let { this.mapToPropertyImageDTO(it) } ?: PropertyImageDTO(
                     id = 0,
                     propertyId = 0,
                     order = 0,
                     imageByteArray = ByteArray(0),
-                    type = ""
+                    type = "",
                 ),
             type = property.propertyType.typeName,
             name = property.name,
             latitude = property.latitude,
-            longitude = property.longitude
+            longitude = property.longitude,
         )
-    }
 
-    fun mapBookingToDTO(booking: Booking): BookingDTO {
-        return BookingDTO(
+    fun mapBookingToDTO(booking: Booking): BookingDTO =
+        BookingDTO(
             id = booking.id,
             guest = this.mapUserAccountToDTO(booking.guest),
             property = this.mapPropertyToDTO(booking.property),
-            checkIn= booking.checkIn,
+            checkIn = booking.checkIn,
             checkOut = booking.checkOut,
             nightlyPrice = booking.nightlyPrice,
             serviceFee = booking.serviceFee,
             cleaningFee = booking.cleaningFee,
-            status = booking.status.name
+            status = booking.status.name,
         )
-    }
-
-
 }

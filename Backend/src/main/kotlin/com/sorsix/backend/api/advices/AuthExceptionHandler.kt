@@ -20,8 +20,8 @@ class AuthExceptionHandler {
                     e.message,
                     401,
                     "Unauthorized",
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
     }
 
@@ -34,8 +34,8 @@ class AuthExceptionHandler {
                     e.message,
                     401,
                     "Unauthorized",
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
     }
 
@@ -48,8 +48,8 @@ class AuthExceptionHandler {
                     e.message,
                     401,
                     "Unauthorized",
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
     }
 }

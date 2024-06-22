@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
 }
 
 group = "com.sorsix"
@@ -33,7 +34,6 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.12.5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito:mockito-core:5.12.0")
-
 }
 
 tasks.withType<KotlinCompile> {

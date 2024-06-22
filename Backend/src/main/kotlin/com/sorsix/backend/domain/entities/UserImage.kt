@@ -3,7 +3,7 @@ package com.sorsix.backend.domain.entities
 import jakarta.persistence.*
 
 @Entity
-data class  UserImage(
+data class UserImage(
     @Id
     @Column(name = "ui_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,5 +14,5 @@ data class  UserImage(
     val type: String,
     @OneToOne
     @JoinColumn(name = "u_id")
-    val user: UserAccount
+    val user: UserAccount,
 )

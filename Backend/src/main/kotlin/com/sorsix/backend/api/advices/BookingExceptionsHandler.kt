@@ -18,7 +18,7 @@ class BookingExceptionsHandler {
                     e.message,
                     404,
                     "Not Found",
-                    LocalDateTime.now()
-                )
+                    LocalDateTime.now(),
+                ),
             )
 }

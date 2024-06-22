@@ -1,9 +1,6 @@
 package com.sorsix.backend.api.dtos
 
 import jakarta.persistence.Column
-import org.hibernate.annotations.View
-
-
 
 data class AverageComponentRatingDTO(
     @Column(name = "rc_component_name")
@@ -11,5 +8,5 @@ data class AverageComponentRatingDTO(
     @Column(name = "avg_rating")
     val averageRating: Double,
     @Column(name = "rc_icon")
-    val icon: String
+    val icon: String,
 )

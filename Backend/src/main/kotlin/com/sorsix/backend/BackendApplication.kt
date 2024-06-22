@@ -13,6 +13,5 @@ fun main(args: Array<String>) {
     runApplication<BackendApplication>(*args)
 }
 
-
 @Bean
 fun encoder(): PasswordEncoder = BCryptPasswordEncoder()

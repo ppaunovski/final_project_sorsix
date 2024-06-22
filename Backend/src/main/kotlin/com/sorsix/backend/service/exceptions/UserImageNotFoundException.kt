@@ -1,5 +1,3 @@
 package com.sorsix.backend.service.exceptions
 
-class UserImageNotFoundException(s: String) : RuntimeException(s) {
-
-}
+class UserImageNotFoundException(s: String) : RuntimeException(s)

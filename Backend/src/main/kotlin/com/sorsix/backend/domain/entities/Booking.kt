@@ -30,5 +30,5 @@ data class Booking(
     val cleaningFee: Double,
     @ManyToOne
     @JoinColumn(name = "bs_id", nullable = false)
-    var status: BookingStatus
+    var status: BookingStatus,
 )

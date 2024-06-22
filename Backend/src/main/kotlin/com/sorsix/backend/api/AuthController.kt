@@ -10,23 +10,22 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.security.Principal
 
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
-    private val authService: AuthService
+    private val authService: AuthService,
 ) {
-
     @GetMapping()
     fun isAuthenticated(authentication: Authentication?) = this.authService.isAuthenticated(authentication)
 
     @PostMapping("/register")
-    fun register(@RequestBody registerRequest: RegisterRequest): AuthResponse =
-        authService.register(registerRequest)
+    fun register(
+        @RequestBody registerRequest: RegisterRequest,
+    ): AuthResponse = authService.register(registerRequest)
 
     @PostMapping()
-    fun authenticate(@RequestBody authRequest: AuthRequest): AuthResponse =
-        authService.authenticate(authRequest)
-
+    fun authenticate(
+        @RequestBody authRequest: AuthRequest,
+    ): AuthResponse = authService.authenticate(authRequest)
 }

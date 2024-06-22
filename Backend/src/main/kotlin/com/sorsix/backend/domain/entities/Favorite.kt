@@ -14,5 +14,5 @@ data class Favorite(
     val user: UserAccount,
     @ManyToOne
     @JoinColumn(name = "p_id", nullable = false)
-    val property: Property
+    val property: Property,
 )

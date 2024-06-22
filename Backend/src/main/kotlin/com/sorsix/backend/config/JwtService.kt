@@ -6,26 +6,30 @@ import io.jsonwebtoken.security.Keys
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.security.Key
-import java.util.*
+import java.util.Date
 
 @Service
 class JwtService {
+    private val secretKey =
+        Keys.hmacShaKeyFor(
+            "hu55nfa3pRrBRV4DIlvKVDMrg7jnqla9".toByteArray(),
+        )
 
-    private val SECRET_KEY = Keys.hmacShaKeyFor(
-        "hu55nfa3pRrBRV4DIlvKVDMrg7jnqla9".toByteArray()
-    )
+    fun extractUsername(token: String): String? = extractClaim(token, Claims::getSubject)
 
-    fun extractUsername(token: String): String? {
-        return extractClaim(token, Claims::getSubject)
-    }
-
-    fun <T> extractClaim(token: String, claimsResolver: (Claims) -> T): T {
+    fun <T> extractClaim(
+        token: String,
+        claimsResolver: (Claims) -> T,
+    ): T {
         val claims = extractAllClaims(token)
         return claimsResolver(claims)
     }
 
-    fun generateToken(extraClaims: Map<String, Any> = emptyMap(), userDetails: UserDetails): String {
-        return Jwts
+    fun generateToken(
+        extraClaims: Map<String, Any> = emptyMap(),
+        userDetails: UserDetails,
+    ): String =
+        Jwts
             .builder()
             .claims()
             .subject(userDetails.username)
@@ -35,32 +39,26 @@ class JwtService {
             .and()
             .signWith(getSignInKey())
             .compact()
-    }
 
-    fun isTokenValid(token: String, userDetails: UserDetails): Boolean {
+    fun isTokenValid(
+        token: String,
+        userDetails: UserDetails,
+    ): Boolean {
         val username = extractUsername(token)
         return username == userDetails.username && !isTokenExpired(token)
     }
 
-    private fun isTokenExpired(token: String): Boolean {
-        return extractExpiration(token).before(Date())
-    }
+    private fun isTokenExpired(token: String): Boolean = extractExpiration(token).before(Date())
 
-    private fun extractExpiration(token: String): Date {
-        return extractClaim(token, Claims::getExpiration)
-    }
+    private fun extractExpiration(token: String): Date = extractClaim(token, Claims::getExpiration)
 
-    private fun extractAllClaims(token: String): Claims {
-        return Jwts
+    private fun extractAllClaims(token: String): Claims =
+        Jwts
             .parser()
-            .verifyWith(SECRET_KEY)
+            .verifyWith(secretKey)
             .build()
             .parseSignedClaims(token)
             .payload
 
-    }
-
-    private fun getSignInKey(): Key {
-        return SECRET_KEY
-    }
+    private fun getSignInKey(): Key = secretKey
 }

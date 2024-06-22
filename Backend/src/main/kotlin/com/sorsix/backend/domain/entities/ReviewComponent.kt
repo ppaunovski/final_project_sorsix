@@ -12,5 +12,5 @@ data class ReviewComponent(
     @Column(nullable = false, name = "rc_component_name")
     val rcComponentName: String,
     @Column(nullable = false, name = "rc_icon")
-    val icon: String
+    val icon: String,
 )

@@ -5,5 +5,5 @@ enum class BookingStatusEnum {
     APPROVED,
     CANCELLED,
     WAITING_FOR_APPROVAL,
-    REJECTED
+    REJECTED,
 }

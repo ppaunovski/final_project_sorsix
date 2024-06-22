@@ -4,5 +4,5 @@ data class ReviewRequest(
     val propertyId: Long,
     val bookingId: Long,
     val comment: String,
-    val componentRatings: List<ComponentRatingRequest>
+    val componentRatings: List<ComponentRatingRequest>,
 )

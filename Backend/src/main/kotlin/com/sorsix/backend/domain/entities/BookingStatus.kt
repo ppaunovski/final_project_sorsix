@@ -10,5 +10,5 @@ data class BookingStatus(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
     @Column(name = "bs_status_name", nullable = false)
-    val name: String
+    val name: String,
 )

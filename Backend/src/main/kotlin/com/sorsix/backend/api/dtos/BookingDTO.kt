@@ -2,7 +2,7 @@ package com.sorsix.backend.api.dtos
 
 import java.time.LocalDate
 
-data class BookingDTO (
+data class BookingDTO(
     val id: Long,
     val guest: UserAccountDTO,
     val property: PropertyDTO,
@@ -11,5 +11,5 @@ data class BookingDTO (
     val nightlyPrice: Double,
     val serviceFee: Double,
     val cleaningFee: Double,
-    val status: String
+    val status: String,
 )

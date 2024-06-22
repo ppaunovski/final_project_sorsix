@@ -2,12 +2,8 @@ package com.sorsix.backend.api.dtos
 
 import com.sorsix.backend.domain.entities.City
 import com.sorsix.backend.domain.entities.PropertyType
-import com.sorsix.backend.domain.entities.UserAccount
-import jakarta.persistence.Column
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
 
-data class PropertyDTO (
+data class PropertyDTO(
     val id: Long,
     var nightlyPrice: Double,
     var name: String,

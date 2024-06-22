@@ -4,5 +4,5 @@ enum class GuestTypeEnum {
     BLANK,
     ADULT,
     CHILD,
-    PET
+    PET,
 }

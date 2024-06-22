@@ -4,5 +4,5 @@ data class UserImageDTO(
     val id: Long,
     val image: ByteArray,
     val type: String,
-    val userId: Long
+    val userId: Long,
 )

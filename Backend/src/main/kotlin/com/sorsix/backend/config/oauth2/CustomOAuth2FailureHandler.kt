@@ -11,7 +11,7 @@ class CustomOAuth2FailureHandler : SimpleUrlAuthenticationFailureHandler() {
     override fun onAuthenticationFailure(
         request: HttpServletRequest?,
         response: HttpServletResponse?,
-        exception: AuthenticationException?
+        exception: AuthenticationException?,
     ) {
         redirectStrategy.sendRedirect(request, response, "/login?error=true")
     }
