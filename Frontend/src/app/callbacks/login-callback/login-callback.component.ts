@@ -7,7 +7,6 @@ import {AuthService} from '../../service/auth.service';
   standalone: true,
   imports: [],
   templateUrl: './login-callback.component.html',
-  styleUrl: './login-callback.component.css',
 })
 export class LoginCallbackComponent implements OnInit {
   constructor(

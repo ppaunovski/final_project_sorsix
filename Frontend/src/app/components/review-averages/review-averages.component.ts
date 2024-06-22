@@ -7,7 +7,6 @@ import {MatIconModule} from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './review-averages.component.html',
-  styleUrl: './review-averages.component.css',
 })
 export class ReviewAveragesComponent {
   @Input()

@@ -13,7 +13,6 @@ import {MatButtonModule} from '@angular/material/button';
   standalone: true,
   imports: [MatProgressSpinner, PropertyPreviewComponent, MatButtonModule],
   templateUrl: './my-properties.component.html',
-  styleUrl: './my-properties.component.css',
 })
 export class MyPropertiesComponent implements OnInit {
   properties: PropertyInfo[] = [];

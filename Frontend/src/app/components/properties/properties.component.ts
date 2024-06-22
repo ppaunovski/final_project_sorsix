@@ -27,7 +27,6 @@ import {MapComponent} from '../map/map.component';
     MapComponent,
   ],
   templateUrl: './properties.component.html',
-  styleUrl: './properties.component.css',
 })
 export class PropertiesComponent implements OnInit {
   propertyResponse: PropertyResponse | undefined;

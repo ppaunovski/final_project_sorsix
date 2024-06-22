@@ -11,7 +11,6 @@ import {tap} from 'rxjs';
   selector: 'app-favorites',
   standalone: true,
   templateUrl: './favorites.component.html',
-  styleUrl: './favorites.component.css',
   imports: [
     PropertyPreviewComponent,
     MatProgressSpinner,

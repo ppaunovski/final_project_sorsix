@@ -7,7 +7,6 @@ import {MatIconModule} from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule],
   templateUrl: './property-attribute.component.html',
-  styleUrl: './property-attribute.component.css',
 })
 export class PropertyAttributeComponent {
   @Input()

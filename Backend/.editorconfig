@@ -1,0 +1,10 @@
+root = true
+
+[*]
+indent_size = 4
+insert_final_newline = true
+
+[*.{kt,kts}]
+ktlint_standard_trailing-comma = enabled
+ktlint_standard_trailing-comma-on-call-site = enabled
+ktlint_standard_trailing-comma-on-declaration-site = enabled

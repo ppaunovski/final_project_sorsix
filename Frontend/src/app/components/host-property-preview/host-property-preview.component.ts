@@ -10,7 +10,6 @@ import {ImageToUrlService} from '../../service/image-to-url.service';
   standalone: true,
   imports: [],
   templateUrl: './host-property-preview.component.html',
-  styleUrl: './host-property-preview.component.css',
 })
 export class HostPropertyPreviewComponent implements OnInit {
   @Input()

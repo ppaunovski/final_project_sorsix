@@ -20,7 +20,6 @@ import {BookingResponse} from '../../model/BookingResponse';
     MatPaginatorModule,
   ],
   templateUrl: './bookings.component.html',
-  styleUrl: './bookings.component.css',
 })
 export class BookingsComponent implements OnInit {
   bookingResponse: BookingResponse | undefined;

@@ -6,7 +6,6 @@ import {Property} from '../../model/property';
   standalone: true,
   imports: [],
   templateUrl: './property-info.component.html',
-  styleUrl: './property-info.component.css',
 })
 export class PropertyInfoComponent {
   @Input()

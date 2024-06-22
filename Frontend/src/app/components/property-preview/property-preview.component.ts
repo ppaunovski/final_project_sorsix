@@ -24,7 +24,6 @@ import {tap} from 'rxjs';
     MatTooltipModule,
   ],
   templateUrl: './property-preview.component.html',
-  styleUrl: './property-preview.component.css',
 })
 export class PropertyPreviewComponent implements OnInit {
   headerImage: string = '';

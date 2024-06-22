@@ -9,7 +9,6 @@ import {MatButtonModule} from '@angular/material/button';
   standalone: true,
   imports: [MatIconModule, MatButtonModule],
   templateUrl: './guest-type-select.component.html',
-  styleUrl: './guest-type-select.component.css',
 })
 export class GuestTypeSelectComponent {
   @Input()

@@ -20,7 +20,6 @@ import {CountGuests} from '../../model/CountGuests';
     GuestTypeSelectComponent,
   ],
   templateUrl: './guests-dialog.component.html',
-  styleUrl: './guests-dialog.component.css',
 })
 export class GuestsDialogComponent implements OnInit {
   guestTypes: GuestType[] = [];

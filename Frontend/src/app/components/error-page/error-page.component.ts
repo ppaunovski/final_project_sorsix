@@ -6,7 +6,6 @@ import {ErrorResponse} from '../../model/ErrorResponse';
   standalone: true,
   imports: [],
   templateUrl: './error-page.component.html',
-  styleUrl: './error-page.component.css',
 })
 export class ErrorPageComponent {
   @Input()

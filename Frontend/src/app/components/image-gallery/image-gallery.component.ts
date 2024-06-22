@@ -11,7 +11,6 @@ import {filter, map, mergeMap} from 'rxjs';
   standalone: true,
   imports: [MatButtonModule],
   templateUrl: './image-gallery.component.html',
-  styleUrl: './image-gallery.component.css',
 })
 export class ImageGalleryComponent implements OnInit {
   @Input()

@@ -7,7 +7,6 @@ import {PropertyService} from '../../service/property.service';
   standalone: true,
   imports: [MapComponent],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent implements OnInit {
   constructor(private propertyService: PropertyService) {

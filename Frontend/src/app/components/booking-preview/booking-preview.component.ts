@@ -11,7 +11,6 @@ import {Router} from '@angular/router';
   standalone: true,
   imports: [MatButtonModule, MatIconModule],
   templateUrl: './booking-preview.component.html',
-  styleUrl: './booking-preview.component.css',
 })
 export class BookingPreviewComponent implements OnInit {
   review() {

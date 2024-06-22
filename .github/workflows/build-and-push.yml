@@ -27,15 +27,13 @@ jobs:
           DEFAULT_BRANCH: "master"
           VALIDATE_JS: true
           VALIDATE_TS: true
-          VALIDATE_HTML: true
-          VALIDATE_CSS: true
           VALIDATE_KOTLIN: true
           FILES_TO_LINT: ${{ matrix.folder }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-push:
     runs-on: ubuntu-latest
-#    needs: lint
+    needs: lint
 
     services:
       docker:

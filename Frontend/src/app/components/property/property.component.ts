@@ -48,7 +48,6 @@ import * as L from 'leaflet';
     MapComponent,
   ],
   templateUrl: './property.component.html',
-  styleUrl: './property.component.css',
 })
 export class PropertyComponent implements OnInit {
   property: Property | undefined;
