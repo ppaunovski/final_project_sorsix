@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/users")
 class UserAccountController(
-    val userAccountService: UserAccountService,
+    private val userAccountService: UserAccountService,
     private val dummyDataPopulator: DummyDataPopulator,
 ) {
     @GetMapping()
