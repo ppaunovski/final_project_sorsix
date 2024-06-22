@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/booking")
 class BookingController(
-    val bookingService: BookingService,
+    private val bookingService: BookingService,
     private val dummyDataPopulator: DummyDataPopulator,
 ) {
     @GetMapping()
