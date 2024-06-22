@@ -2,7 +2,6 @@ package com.sorsix.backend.service
 
 import com.sorsix.backend.domain.entities.UserAccount
 import com.sorsix.backend.domain.entities.UserImage
-import com.sorsix.backend.repository.users.UserAccountRepository
 import com.sorsix.backend.repository.users.image.UserImageRepository
 import org.springframework.stereotype.Service
 import java.io.ByteArrayOutputStream
@@ -11,7 +10,6 @@ import java.net.URL
 @Service
 class UserImageService(
     private val userImageRepository: UserImageRepository,
-    private val userAccountRepository: UserAccountRepository,
 ) {
     fun saveImageFromUrl(
         imageUrl: String,

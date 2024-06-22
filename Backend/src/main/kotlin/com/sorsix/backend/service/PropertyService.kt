@@ -146,13 +146,10 @@ class PropertyService(
         id: Long,
         offerRequest: OfferRequest,
     ): Any {
-        val property = findPropertyById(id)
         // TODO: Implement the logic for calculating the offer.
         //  The offer should be calculated based on the nightly price of the property and the number of nights the
-        //  guest wants to stay, also check for seasonal prices since the period from start to end can be part of two different seasonal prices
-
-        val range = offerRequest.checkInDate..offerRequest.checkOutDate
-
+        //  guest wants to stay, also check for seasonal prices since the period from start to end can be part of
+        //  two different seasonal prices
         return OfferForBookingDTO(
             start = offerRequest.checkInDate,
             end = offerRequest.checkOutDate,
