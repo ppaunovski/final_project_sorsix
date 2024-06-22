@@ -94,11 +94,6 @@ class PropertyController(
         @RequestBody offerRequest: OfferRequest,
     ) = propertyService.getOfferForProperty(id, offerRequest)
 
-//    @PostMapping("/{id}/book")
-//    fun createBookingForProperty(@PathVariable id: Long,
-//                                 @RequestBody offerRequest: OfferRequest,
-//                                 authentication: Authentication) =
-//        propertyService.createBookingForProperty(id, offerRequest, authentication)
     @PostMapping("/{id}/reserve")
     fun reserveProperty(
         @PathVariable id: Long,
