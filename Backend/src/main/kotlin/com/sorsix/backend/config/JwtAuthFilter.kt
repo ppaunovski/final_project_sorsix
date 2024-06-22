@@ -51,11 +51,7 @@ class JwtAuthFilter(
         SecurityContextHolder.getContext().authentication = authToken
     }
 
-    private fun String?.doesNotContainBearer(): Boolean {
-        return this == null || !this.startsWith("Bearer ")
-    }
+    private fun String?.doesNotContainBearer(): Boolean = this == null || !this.startsWith("Bearer ")
 
-    private fun String?.extractTokenValue(): String {
-        return this!!.substringAfter("Bearer ")
-    }
+    private fun String?.extractTokenValue(): String = this!!.substringAfter("Bearer ")
 }

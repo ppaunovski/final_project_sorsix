@@ -13,40 +13,23 @@ data class OAuth2UserDetailsCustom(
     var isNonLocked: Boolean,
     var isEnable: Boolean,
     var isNonExpired: Boolean,
-) : OAuth2User, UserDetails {
-    override fun getName(): String {
-        return id.toString()
-    }
+) : OAuth2User,
+    UserDetails {
+    override fun getName(): String = id.toString()
 
-    override fun getAttributes(): MutableMap<String, Any> {
-        return attribs.toMutableMap()
-    }
+    override fun getAttributes(): MutableMap<String, Any> = attribs.toMutableMap()
 
-    override fun getPassword(): String {
-        return pass
-    }
+    override fun getPassword(): String = pass
 
-    override fun getUsername(): String {
-        return email
-    }
+    override fun getUsername(): String = email
 
-    override fun isAccountNonExpired(): Boolean {
-        return isNonExpired
-    }
+    override fun isAccountNonExpired(): Boolean = isNonExpired
 
-    override fun isAccountNonLocked(): Boolean {
-        return isNonLocked
-    }
+    override fun isAccountNonLocked(): Boolean = isNonLocked
 
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
+    override fun isCredentialsNonExpired(): Boolean = true
 
-    override fun isEnabled(): Boolean {
-        return isEnable
-    }
+    override fun isEnabled(): Boolean = isEnable
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return authorities.toMutableList()
-    }
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> = authorities.toMutableList()
 }

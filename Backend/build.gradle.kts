@@ -6,7 +6,6 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
 }
 
 group = "com.sorsix"
@@ -21,6 +20,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.pinterest.ktlint:ktlint-cli:1.3.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")

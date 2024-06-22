@@ -98,7 +98,9 @@ class ReviewService(
                     userReview = userReview,
                     reviewComponent =
                         this.reviewComponentRepository.findById(it.reviewComponentId)
-                            ?: throw ReviewComponentNotFound("Review component with id ${it.reviewComponentId} not found"),
+                            ?: throw ReviewComponentNotFound(
+                                "Review component with id ${it.reviewComponentId} not found",
+                            ),
                     rating = it.rating,
                 ),
             )

@@ -1,3 +1,5 @@
 package com.sorsix.backend.service.exceptions
 
-class PropertyNotAvailableException(s: String) : RuntimeException(s)
+class PropertyNotAvailableException(
+    s: String,
+) : RuntimeException(s)

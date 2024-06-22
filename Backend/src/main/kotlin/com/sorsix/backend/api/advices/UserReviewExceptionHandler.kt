@@ -11,8 +11,8 @@ import java.time.LocalDateTime
 @ControllerAdvice
 class UserReviewExceptionHandler {
     @ExceptionHandler(UserReviewNotFoundException::class)
-    fun handleUserReviewNotFoundException(e: UserReviewNotFoundException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleUserReviewNotFoundException(e: UserReviewNotFoundException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(404)
             .body(
                 ErrorDTO(
@@ -22,11 +22,10 @@ class UserReviewExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(ReviewComponentNotFound::class)
-    fun handleReviewComponentNotFound(e: ReviewComponentNotFound): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleReviewComponentNotFound(e: ReviewComponentNotFound): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(404)
             .body(
                 ErrorDTO(
@@ -36,5 +35,4 @@ class UserReviewExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 }

@@ -14,8 +14,8 @@ import java.time.LocalDateTime
 @ControllerAdvice
 class UserAccountExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException::class)
-    fun handleInvalidCredentialsException(e: InvalidCredentialsException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleInvalidCredentialsException(e: InvalidCredentialsException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.BAD_REQUEST.value())
             .body(
                 ErrorDTO(
@@ -25,11 +25,10 @@ class UserAccountExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(UserAccountNotFoundException::class)
-    fun handleUserAccountNotFoundException(e: UserAccountNotFoundException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleUserAccountNotFoundException(e: UserAccountNotFoundException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.NOT_FOUND.value())
             .body(
                 ErrorDTO(
@@ -39,11 +38,10 @@ class UserAccountExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(UnauthorizedAccessException::class)
-    fun handleUnauthorizedAccessException(e: UnauthorizedAccessException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleUnauthorizedAccessException(e: UnauthorizedAccessException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.UNAUTHORIZED.value())
             .body(
                 ErrorDTO(
@@ -53,11 +51,10 @@ class UserAccountExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(UserImageNotFoundException::class)
-    fun handleUserImageNotFoundException(e: UserImageNotFoundException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleUserImageNotFoundException(e: UserImageNotFoundException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.NOT_FOUND.value())
             .body(
                 ErrorDTO(
@@ -67,5 +64,4 @@ class UserAccountExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 }

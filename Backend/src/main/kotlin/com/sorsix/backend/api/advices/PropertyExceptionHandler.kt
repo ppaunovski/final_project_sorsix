@@ -13,8 +13,8 @@ import java.time.LocalDateTime
 @ControllerAdvice
 class PropertyExceptionHandler {
     @ExceptionHandler(PropertyNotFoundException::class)
-    fun handlePropertyNotFoundException(e: PropertyNotFoundException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handlePropertyNotFoundException(e: PropertyNotFoundException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(
                 ErrorDTO(
@@ -24,11 +24,10 @@ class PropertyExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(PropertyNotAvailableException::class)
-    fun handlePropertyNotAvailableException(e: PropertyNotAvailableException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handlePropertyNotAvailableException(e: PropertyNotAvailableException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.NOT_FOUND)
             .body(
                 ErrorDTO(
@@ -38,11 +37,10 @@ class PropertyExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(PropertyCapacityException::class)
-    fun handlePropertyCapacityException(e: PropertyCapacityException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handlePropertyCapacityException(e: PropertyCapacityException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .body(
                 ErrorDTO(
@@ -52,5 +50,4 @@ class PropertyExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 }

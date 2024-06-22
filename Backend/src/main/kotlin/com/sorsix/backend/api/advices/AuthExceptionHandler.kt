@@ -12,8 +12,8 @@ import java.time.LocalDateTime
 @ControllerAdvice
 class AuthExceptionHandler {
     @ExceptionHandler(AuthenticationException::class)
-    fun handleAuthenticationException(e: AuthenticationException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleAuthenticationException(e: AuthenticationException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(401)
             .body(
                 ErrorDTO(
@@ -23,11 +23,10 @@ class AuthExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(JwtException::class)
-    fun handleJwtException(e: JwtException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleJwtException(e: JwtException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(401)
             .body(
                 ErrorDTO(
@@ -37,11 +36,10 @@ class AuthExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 
     @ExceptionHandler(ExpiredJwtException::class)
-    fun handleExpiredJwtException(e: ExpiredJwtException): ResponseEntity<ErrorDTO> {
-        return ResponseEntity
+    fun handleExpiredJwtException(e: ExpiredJwtException): ResponseEntity<ErrorDTO> =
+        ResponseEntity
             .status(401)
             .body(
                 ErrorDTO(
@@ -51,5 +49,4 @@ class AuthExceptionHandler {
                     LocalDateTime.now(),
                 ),
             )
-    }
 }

@@ -12,13 +12,12 @@ jobs:
 
     strategy:
       matrix:
-        folder: [Frontend, Backend]
+        folder: [Frontend]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
       - name: Run Super Linter
@@ -27,9 +26,20 @@ jobs:
           DEFAULT_BRANCH: "master"
           VALIDATE_JS: true
           VALIDATE_TS: true
-          VALIDATE_KOTLIN: true
           FILES_TO_LINT: ${{ matrix.folder }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  ktlint:
+    name: Check Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone PR
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Run Ktlint
+        uses: lucasnlm/ktlint-action@master
 
   build-and-push:
     runs-on: ubuntu-latest
