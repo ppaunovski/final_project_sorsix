@@ -3,6 +3,7 @@ package com.sorsix.backend.config
 import com.sorsix.backend.encoder
 import com.sorsix.backend.repository.users.UserAccountRepository
 import com.sorsix.backend.service.UserAccountService
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService
 
 @Configuration
+@EnableConfigurationProperties(ApiConfiguration::class)
 class ApplicationConfig(
     private val userAccountRepository: UserAccountRepository,
     private val userAccountService: UserAccountService,
@@ -32,4 +34,7 @@ class ApplicationConfig(
 
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager = config.authenticationManager
+
+    @Bean
+    fun apiConfiguration(): ApiConfiguration = ApiConfiguration()
 }

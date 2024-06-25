@@ -1,5 +1,6 @@
 package com.sorsix.backend.config.oauth2
 
+import com.sorsix.backend.config.ApiConfiguration
 import com.sorsix.backend.config.JwtService
 import com.sorsix.backend.repository.users.UserAccountRepository
 import jakarta.servlet.http.HttpServletRequest
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class CustomOAUth2SuccessHandler(
     private val jwtService: JwtService,
-    private val userAccountRepository: UserAccountRepository,
+    private val apiConfiguration: ApiConfiguration
 ) : SimpleUrlAuthenticationSuccessHandler() {
     override fun onAuthenticationSuccess(
         request: HttpServletRequest?,
@@ -24,6 +25,6 @@ class CustomOAUth2SuccessHandler(
             token = jwtService.generateToken(userDetails = authentication.principal as UserDetails)
             response?.addHeader("Authorization", "Bearer $token")
         }
-        redirectStrategy.sendRedirect(request, response, "http://localhost:4200/login-callback?token=$token")
+        redirectStrategy.sendRedirect(request, response, "http://${apiConfiguration.host}:4200/login-callback?token=$token")
     }
 }
