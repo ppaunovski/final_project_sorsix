@@ -41,3 +41,5 @@ spec:
                   key: postgres-password
             - name: SPRING_JPA_HIBERNATE_DDL_AUTO
               value: validate
+            - name: API_HOST
+              value: frontend

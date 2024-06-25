@@ -2,7 +2,7 @@ FROM node:18 AS builder
 
 WORKDIR /app
 
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@17.3.8
 
 COPY Frontend/package*.json ./
 RUN npm install
